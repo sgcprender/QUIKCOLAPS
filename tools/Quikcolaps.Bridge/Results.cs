@@ -21,8 +21,8 @@ internal static class Results
 
     public static int Run(cSapModel sap, string scenariosPath, string templateName, string outPath, bool run, bool design)
     {
-        if (run) ColumnStack.Check(sap.Analyze.RunAnalysis(), "Analyze.RunAnalysis");
-        if (design) ColumnStack.Check(sap.DesignSteel.StartDesign(), "DesignSteel.StartDesign");
+        if (run) Api.Check(sap.Analyze.RunAnalysis(), "Analyze.RunAnalysis");
+        if (design) Api.Check(sap.DesignSteel.StartDesign(), "DesignSteel.StartDesign");
 
         var template = CaseTemplate.Read(sap, templateName);
         var scenarios = Json.ActiveScenarios(Json.Read(scenariosPath)).ToList();
@@ -86,7 +86,7 @@ internal static class Results
     {
         var setup = sap.Results.Setup;
         setup.DeselectAllCasesAndCombosForOutput();
-        ColumnStack.Check(setup.SetCaseSelectedForOutput(caseName, true), $"SetCaseSelectedForOutput {caseName}");
+        Api.Check(setup.SetCaseSelectedForOutput(caseName, true), $"SetCaseSelectedForOutput {caseName}");
         setup.SetOptionMultiStepStatic(3);   // last step (VERIFY for staged construction)
         setup.SetOptionNLStatic(3);          // last step (VERIFY)
 
@@ -94,7 +94,7 @@ internal static class Results
         double[] fx = Array.Empty<double>(), fy = Array.Empty<double>(), fz = Array.Empty<double>(),
             mx = Array.Empty<double>(), my = Array.Empty<double>(), mz = Array.Empty<double>();
         double gx = 0, gy = 0, gz = 0;
-        ColumnStack.Check(sap.Results.BaseReact(ref n, ref lc, ref stepType, ref step, ref fx, ref fy, ref fz, ref mx, ref my, ref mz,
+        Api.Check(sap.Results.BaseReact(ref n, ref lc, ref stepType, ref step, ref fx, ref fy, ref fz, ref mx, ref my, ref mz,
             ref gx, ref gy, ref gz), $"Results.BaseReact {caseName}");
         if (n == 0) throw new InvalidOperationException($"no base reaction for {caseName}: has it been run?");
         var last = Enumerable.Range(0, n).OrderBy(k => step[k]).Last();
@@ -111,7 +111,7 @@ internal static class Results
         {
             var setup = sap.Results.Setup;
             setup.DeselectAllCasesAndCombosForOutput();
-            ColumnStack.Check(setup.SetCaseSelectedForOutput(caseName, true), $"SetCaseSelectedForOutput {caseName}");
+            Api.Check(setup.SetCaseSelectedForOutput(caseName, true), $"SetCaseSelectedForOutput {caseName}");
             setup.SetOptionMultiStepStatic(3);
             setup.SetOptionNLStatic(3);
             var outRows = new Dictionary<string, ForceRow>();
@@ -121,7 +121,7 @@ internal static class Results
                 double[] objSta = Array.Empty<double>(), elmSta = Array.Empty<double>(), step = Array.Empty<double>(),
                     P = Array.Empty<double>(), V2 = Array.Empty<double>(), V3 = Array.Empty<double>(), T = Array.Empty<double>(),
                     M2 = Array.Empty<double>(), M3 = Array.Empty<double>();
-                ColumnStack.Check(sap.Results.FrameForce(f, eItemTypeElm.ObjectElm, ref n, ref obj, ref objSta, ref elm, ref elmSta, ref lc,
+                Api.Check(sap.Results.FrameForce(f, eItemTypeElm.ObjectElm, ref n, ref obj, ref objSta, ref elm, ref elmSta, ref lc,
                     ref stepType, ref step, ref P, ref V2, ref V3, ref T, ref M2, ref M3), $"Results.FrameForce {f}");
                 if (n == 0) continue;
                 var lastStep = step.Take(n).Max();

@@ -17,7 +17,9 @@ Read `ap/docs/scope_and_flow.md` first. The Python side has its own
 - On the `ap-pipeline` branch, don't modify `src/`, `tools/Quikcolaps.Cli`,
   `tools/Quikcolaps.Probe`, `README.md`, `QUIKCOLAPS.sln` or the root props
   files. Add, don't edit (ap/docs/decisions.md D14).
-- Never save the ETABS model from code. Commands write only with `--commit`,
+- Never save the original model; the working copy may be saved by ETABS as
+  part of running an analysis (`RunAnalysis` saves the file; measured, see
+  `tools/Quikcolaps.Bridge/CLAUDE.md`). Commands write only with `--commit`,
   and every write is read back.
 - Don't guess ETABS API signatures: check the CSI API help for the installed
   version, and record measured behaviour in the relevant CLAUDE.md.

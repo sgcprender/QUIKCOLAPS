@@ -17,7 +17,8 @@ Read before changing engineering logic:
 - Claude's output always goes through `claude_client/validate.py` and user
   approval before it affects a scenario.
 - AP combinations have no wind; live load is not reduced.
-- Numbers from the code come from `config/config.toml`.
+- Numbers from the code come from `config/config.toml`, except load factors:
+  an ETABS export carries its initial case as `combination` and those win (D17).
 - SI (kN, m, kPa) everywhere here; the bridge converts.
 - Mandatory candidates (corner, mid long side, mid short side) can't be dropped.
 - Names: case `AP_SCnn`, group `AP_SCnn_LOAD`, combo `AP_SCnn_CMB` (D16).

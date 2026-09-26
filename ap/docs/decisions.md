@@ -82,3 +82,17 @@ same patterns at 1.0. `bridge results` checks it through base reactions.
 Case `AP_SCnn`, load group `AP_SCnn_LOAD`, combo `AP_SCnn_CMB` (matches the
 existing tool's `<case>_CMB`, so `quikcolaps design-combos` recognises them as
 collapse combos).
+
+## D17. Load factors come from the ETABS initial case
+The bridge exports the template's initial case (CS1 → `1.2D+0.5L`: 1.2 SW,
+1.2 SDL, 0.5 LL) into `building.json` as `combination`. When it is present,
+`core/loads.py` uses those factors for every bay, roof included, so the
+increment is what ETABS applies to the region group; config factors and the
+roof rule (0.5 Lr / 0.2 S) apply only to buildings without it (the demo).
+Why: the model carries its 100 psf LL on the roof as an ordinary live pattern,
+and the staged case applies 0.5 × LL there; the config roof rule dropped it and
+every roof-reaching region would have failed the reaction check (~128 kN per
+roof bay). A kind whose patterns carry different factors is not exported and
+stops `core` with an error rather than being averaged. Checked on the working
+model (2026-09-26): SW, SDL and LL totals from `building.json` match the ETABS
+base reactions within 0.34%, 0% and 0%.

@@ -81,13 +81,21 @@ def outline_from_bays(bays: list[dict]) -> list[list[float]]:
 
     Works when neighbouring bays share whole edges (one area object per bay, drawn on
     grid). If bays meet at T-junctions the chain breaks; the largest loop found is returned.
+
+    Corners are matched on coordinates rounded to 1 mm but returned as the bays'
+    own coordinates, so columns on the outline test as on it exactly (an ETABS
+    export in feet gives 51.2064 m, which rounded to 51.206 put a whole edge's
+    columns off the outline).
     """
     from collections import Counter
     from .geometry import area
 
     count = Counter()
+    actual: dict = {}
     for a in bays:
         poly = a["polygon"]
+        for p in poly:
+            actual.setdefault(_key(p), (p[0], p[1]))
         for i in range(len(poly)):
             e = tuple(sorted((_key(poly[i]), _key(poly[(i + 1) % len(poly)]))))
             count[e] += 1
@@ -114,7 +122,7 @@ def outline_from_bays(bays: list[dict]) -> list[list[float]]:
             used.add(cur)
             loop.append(cur)
         if len(loop) >= 3:
-            loops.append([list(p) for p in loop])
+            loops.append([list(actual[p]) for p in loop])
     if not loops:
         return []
     best = max(loops, key=area)

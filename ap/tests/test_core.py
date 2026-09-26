@@ -10,8 +10,9 @@ from pathlib import Path
 import pytest
 
 from core.candidates import generate_candidates
+from core.geometry import point_on_boundary
 from core.loads import build_increment
-from core.model import column, load_building, load_config
+from core.model import column, load_building, load_config, outline_from_bays
 from core.regions import amplified_region, simultaneous_removals
 from core.scenarios import build_scenarios
 from core.stories import mid_height_index, select_stories
@@ -107,6 +108,35 @@ def test_increment_corner_hand_calc(b, cfg):
     assert inc["region_amplified_total_kn"] == pytest.approx(2 * inc["region_base_total_kn"], rel=1e-6)
 
 
+def test_increment_combination_factors_roof_hand_calc(b, cfg):
+    # D17: factors exported from the ETABS initial case (1.2 SW + 1.2 SDL + 0.5 LL) apply to
+    # every bay, roof included. The roof bay here carries LL 2.4 kPa as in the ETABS model.
+    # Floor bay 56 m2: 1.2*2.6 + 1.2*1.5 + 0.5*2.4 = 3.12 + 1.8 + 1.2 = 6.12 kPa -> 342.72 kN, x3 = 1028.16
+    # Roof bay 56 m2: 1.2*2.6 + 1.2*1.0 + 0.5*2.4 + 0*1.0 (Lr) + 0*1.2 (S) = 5.52 kPa -> 309.12 kN
+    #   (config path would give 4.82 kPa: 0.5 Lr / 0.2 S instead of 0.5 L)
+    # Beams: self-weight x 1.2 and facade x 1.2, as in the config path.
+    bb = copy.deepcopy(b)
+    bb["combination"] = {"initial_case": "1.2D+0.5L", "patterns": {"SW": 1.2, "SDL": 1.2, "LL": 0.5},
+                         "factors": {"self_weight": 1.2, "sdl": 1.2, "live": 0.5, "roof_live": 0.0, "snow": 0.0}}
+    for a in bb["bays"]:
+        if a["level"] == "ROOF":
+            a["loads"]["live_kpa"] = 2.4
+    sw = 2 * 8 * 65.5 * 9.81e-3 + 2 * 7 * 52.1 * 9.81e-3
+    beams = 3 * 1.2 * (sw + 15 * 3.5) + 1.2 * (sw + 15 * 1.5)
+    expected = 1028.16 + 309.12 + beams
+    inc = build_increment(bb, amplified_region(bb, [column(bb, "A1", "Story1")]), cfg)
+    assert inc["increment_total_kn"] == pytest.approx(expected, rel=1e-4)
+    roof = [x for x in inc["area_loads"] if x["bay_id"] == "A_ROOF_A1"][0]
+    assert roof["q_kpa"] == pytest.approx(5.52, abs=1e-4)
+
+
+def test_combination_missing_factor_raises(b, cfg):
+    bb = copy.deepcopy(b)
+    bb["combination"] = {"initial_case": "1.2D+0.5L", "factors": {"self_weight": 1.2, "sdl": 1.2}}
+    with pytest.raises(ValueError, match="live"):
+        build_increment(bb, amplified_region(bb, [column(bb, "A1", "Story1")]), cfg)
+
+
 def test_no_wind_in_config(cfg):
     assert cfg["loads"]["include_wind"] is False
 
@@ -120,3 +150,28 @@ def test_scenarios_demo(b, cfg):
     for s in scen:
         assert s["increment"]["increment_total_kn"] > 0
         assert s["case_name"].startswith("AP_")
+
+
+# ---------- outlines from an ETABS export ----------
+
+def test_outline_keeps_bay_coordinates():
+    # Two 24 ft bays side by side: 2 x 7.3152 = 14.6304 m by 7.3152 m. Rounding the far corner to
+    # 1 mm (14.630) put the columns at x = 14.6304 0.4 mm off the outline, beyond the 1e-6 tolerance.
+    ft24 = 7.3152
+    bays = [{"polygon": [[0, 0], [ft24, 0], [ft24, ft24], [0, ft24]]},
+            {"polygon": [[ft24, 0], [2 * ft24, 0], [2 * ft24, ft24], [ft24, ft24]]}]
+    outline = outline_from_bays(bays)
+    assert sorted(map(tuple, outline)) == [(0, 0), (0, ft24), (2 * ft24, 0), (2 * ft24, ft24)]
+    grid = [(x, y) for x in (0, ft24, 2 * ft24) for y in (0, ft24)]
+    assert all(point_on_boundary(p, outline) for p in grid)
+
+
+def test_candidates_etabs_fixture(cfg):
+    # ETABS model: 7 x 3 bays of 24 ft (7.3152 m) -> 51.2064 m x 21.9456 m, 20 perimeter columns.
+    # Corner: C1 at (0, 0). Long side y = 0, mid x = 25.6032: C13 (21.9456) and C17 (29.2608) are
+    # both 3.6576 away; tie-break closer to the edge start -> C13.
+    # Short side x = 51.2064, mid y = 10.9728: C30 (7.3152) and the column at 14.6304 tie at
+    # 3.6576; closer to the edge start (51.2064, 0) -> C30.
+    eb = load_building(ROOT / "fixtures" / "etabs_building.json")
+    got = {c["location_id"]: [r["code"] for r in c["reasons"]] for c in generate_candidates(eb, cfg)}
+    assert got == {"C1": ["corner"], "C13": ["mid_long_side"], "C30": ["mid_short_side"]}

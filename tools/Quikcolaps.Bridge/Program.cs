@@ -31,7 +31,7 @@ internal static class Program
             Console.Error.WriteLine($"model     {inst.ModelPath}");
             return cmd switch
             {
-                "export" => Export.Run(sap, inst.ModelPath, Arg("--out", "building.json")),
+                "export" => Export.Run(sap, inst.ModelPath, Arg("--out", "building.json"), Arg("--template", "CS1")),
                 "stacks" => Stacks.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--out", "stacks.json")),
                 "apply" => Apply.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), args.Contains("--commit")),
                 "results" => Results.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), Arg("--out", "results.json"),

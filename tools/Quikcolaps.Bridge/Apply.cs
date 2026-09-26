@@ -78,8 +78,8 @@ internal static class Apply
     private static IReadOnlyList<string> WriteCase(cSapModel sap, CaseTemplate t, string caseName, IReadOnlyList<string> removed, string group)
     {
         var st = sap.LoadCases.StaticNonlinearStaged;
-        ColumnStack.Check(st.SetCase(caseName), $"SetCase {caseName}");
-        ColumnStack.Check(st.SetInitialCase(caseName, t.InitialCase), $"SetInitialCase {caseName}");
+        Api.Check(st.SetCase(caseName), $"SetCase {caseName}");
+        Api.Check(st.SetInitialCase(caseName, t.InitialCase), $"SetInitialCase {caseName}");
         st.SetGeometricNonlinearity(caseName, t.GeometricNonlinearity);
         st.SetMaterialNonlinearity(caseName, t.TimeDependentMaterial);
         st.SetHingeUnloading(caseName, t.HingeUnloading);
@@ -91,7 +91,7 @@ internal static class Apply
         var output = stages.Select(s => s.Output).ToArray();
         var oname = stages.Select(s => s.OutputName).ToArray();
         var comment = stages.Select(s => s.Comment).ToArray();
-        ColumnStack.Check(st.SetStageDefinitions_2(caseName, stages.Count, ref dur, ref output, ref oname, ref comment), $"SetStageDefinitions_2 {caseName}");
+        Api.Check(st.SetStageDefinitions_2(caseName, stages.Count, ref dur, ref output, ref oname, ref comment), $"SetStageDefinitions_2 {caseName}");
         for (var k = 0; k < stages.Count; k++)
         {
             var ops = stages[k].Operations;
@@ -102,7 +102,7 @@ internal static class Apply
             var mt = ops.Select(o => o.LoadType).ToArray();
             var mn = ops.Select(o => o.LoadName).ToArray();
             var sf = ops.Select(o => o.Scale).ToArray();
-            ColumnStack.Check(st.SetStageData_2(caseName, k + 1, ops.Count, ref op, ref ot, ref on, ref age, ref mt, ref mn, ref sf), $"SetStageData_2 {caseName} stage {k + 1}");
+            Api.Check(st.SetStageData_2(caseName, k + 1, ops.Count, ref op, ref ot, ref on, ref age, ref mt, ref mn, ref sf), $"SetStageData_2 {caseName} stage {k + 1}");
         }
 
         var faults = new List<string>();
@@ -123,9 +123,9 @@ internal static class Apply
     {
         int color = 0; bool sel = false, cut = false, steel = false, conc = false, alum = false, stage = false,
             seis = false, wind = false, mass = false, joist = false, wall = false, plate = false, conn = false;
-        ColumnStack.Check(sap.GroupDef.GetGroup_1(templateGroup, ref color, ref sel, ref cut, ref steel, ref conc, ref alum, ref stage,
+        Api.Check(sap.GroupDef.GetGroup_1(templateGroup, ref color, ref sel, ref cut, ref steel, ref conc, ref alum, ref stage,
             ref seis, ref wind, ref mass, ref joist, ref wall, ref plate, ref conn), $"GetGroup_1 {templateGroup}");
-        ColumnStack.Check(sap.GroupDef.SetGroup_1(group, color, sel, cut, steel, conc, alum, stage,
+        Api.Check(sap.GroupDef.SetGroup_1(group, color, sel, cut, steel, conc, alum, stage,
             seis, wind, mass, joist, wall, plate, conn), $"SetGroup_1 {group}");
 
         int n = 0; int[] types = Array.Empty<int>(); string[] names = Array.Empty<string>();
@@ -139,10 +139,10 @@ internal static class Apply
                 ObjectType.Area => sap.AreaObj.SetGroupAssign(names[k], group, true, eItemType.Objects),
                 _ => throw new InvalidOperationException($"group {group} holds object type {types[k]} ({names[k]})")
             };
-            ColumnStack.Check(ret, $"remove {names[k]} from {group}");
+            Api.Check(ret, $"remove {names[k]} from {group}");
         }
-        foreach (var a in areas) ColumnStack.Check(sap.AreaObj.SetGroupAssign(a, group, false, eItemType.Objects), $"AreaObj.SetGroupAssign {a}");
-        foreach (var b in beams) ColumnStack.Check(sap.FrameObj.SetGroupAssign(b, group, false, eItemType.Objects), $"FrameObj.SetGroupAssign {b}");
+        foreach (var a in areas) Api.Check(sap.AreaObj.SetGroupAssign(a, group, false, eItemType.Objects), $"AreaObj.SetGroupAssign {a}");
+        foreach (var b in beams) Api.Check(sap.FrameObj.SetGroupAssign(b, group, false, eItemType.Objects), $"FrameObj.SetGroupAssign {b}");
 
         n = 0; types = Array.Empty<int>(); names = Array.Empty<string>();
         sap.GroupDef.GetAssignments(group, ref n, ref types, ref names);

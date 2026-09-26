@@ -100,7 +100,8 @@
           "loads": {
             "type": "object",
             "properties": {
-              "sdl_kpa": {"type": "number"}, "slab_sw_kpa": {"type": "number"},
+              "sdl_kpa": {"type": "number"},
+              "slab_sw_kpa": {"type": "number", "description": "slab or deck own weight per area, before any self-weight multiplier (factored by combination.factors.self_weight)"},
               "live_kpa": {"type": "number"}, "roof_live_kpa": {"type": "number"}, "snow_kpa": {"type": "number"}
             }
           }
@@ -118,6 +119,23 @@
                 "properties": {"point": {"$ref": "#/$defs/point"}, "level": {"type": "string"}, "p_kn": {"type": "number"}, "bay_id": {"type": "string"}}}
     },
     "zones": {"type": "array", "description": "Parking / uncontrolled public areas (not used in hackathon scope)"},
+    "combination": {
+      "type": "object",
+      "description": "ETABS export only (D17): the template's initial case as load factors. When present, core/loads.py uses these for every bay, roof included, instead of config.",
+      "required": ["initial_case", "factors"],
+      "properties": {
+        "initial_case": {"type": "string"},
+        "template": {"type": "string"},
+        "patterns": {"type": "object", "additionalProperties": {"type": "number"}},
+        "factors": {
+          "type": "object",
+          "properties": {
+            "self_weight": {"type": "number"}, "sdl": {"type": "number"}, "live": {"type": "number"},
+            "roof_live": {"type": "number"}, "snow": {"type": "number"}
+          }
+        }
+      }
+    },
     "flags": {"type": "array", "items": {"type": "string"}, "description": "Model QA flags from extraction, e.g. floating columns"}
   },
   "$defs": {
