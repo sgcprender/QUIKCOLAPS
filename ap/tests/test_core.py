@@ -1,0 +1,122 @@
+"""Hand-checkable tests for the deterministic rules in core/.
+
+Numbers in comments are worked by hand so a failing test points at a real
+rule error, not just a changed output. Keep adding cases like these; they are
+what lets Claude Code verify its own changes.
+"""
+import copy
+from pathlib import Path
+
+import pytest
+
+from core.candidates import generate_candidates
+from core.loads import build_increment
+from core.model import column, load_building, load_config
+from core.regions import amplified_region, simultaneous_removals
+from core.scenarios import build_scenarios
+from core.stories import mid_height_index, select_stories
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+@pytest.fixture(scope="module")
+def cfg():
+    return load_config(ROOT / "config" / "config.toml")
+
+
+@pytest.fixture(scope="module")
+def b():
+    return load_building(ROOT / "fixtures" / "demo_building.json")
+
+
+# ---------- story selection (3-2.9.2.2) ----------
+
+@pytest.mark.parametrize("n,expected", [(3, 1), (4, 1), (5, 2), (10, 4)])
+def test_mid_height_index(n, expected):
+    # UFC example: 10-story building -> fifth story (index 4)
+    assert mid_height_index(n) == expected
+
+
+def test_story_selection_demo(b):
+    # 4 stories, section change at Story3:
+    # first=Story1, top=Story4, mid=Story2, above splice=Story3
+    picks = select_stories(b, "A1")
+    assert [p["story"] for p in picks] == ["Story1", "Story2", "Story3", "Story4"]
+    assert "above_splice_or_size_change" in picks[2]["reasons"]
+
+
+# ---------- candidates ----------
+
+def test_candidates_demo(b, cfg):
+    cands = {c["location_id"]: c for c in generate_candidates(b, cfg)}
+    codes = {loc: {r["code"] for r in c["reasons"]} for loc, c in cands.items()}
+    assert "corner" in codes["A1"]
+    assert "mid_long_side" in codes["A3"]          # long side y=0, midpoint x=18 -> x=16
+    assert "mid_short_side" in codes["B6"]         # short side x=36, midpoint y=10.5 -> y=7 (tie-break)
+    assert "bay_size_change" in codes["A5"]        # spans 8 m / 4 m
+    assert "bay_size_change" in codes["D5"]
+
+
+# ---------- amplified region ----------
+
+@pytest.mark.parametrize("loc,bays_per_level", [("A1", 1), ("A3", 2), ("B3", 4)])
+def test_adjacent_bays(b, loc, bays_per_level):
+    # corner -> 1 bay, edge -> 2, interior -> 4, on each of the 4 levels above Story1
+    col = column(b, loc, "Story1")
+    reg = amplified_region(b, [col])
+    assert reg["levels"] == ["L1", "L2", "L3", "ROOF"]
+    assert len(reg["bays"]) == 4 * bays_per_level
+
+
+def test_region_only_floors_above(b):
+    col = column(b, "A1", "Story3")
+    reg = amplified_region(b, [col])
+    assert reg["levels"] == ["L3", "ROOF"]
+
+
+# ---------- simultaneous removal (30% rule) ----------
+
+def test_no_simultaneous_on_regular_grid(b, cfg):
+    col = column(b, "A3", "Story1")
+    assert simultaneous_removals(b, col, cfg["removal"]["simultaneous_fraction"]) == []
+
+
+def test_simultaneous_close_column(b, cfg):
+    bb = copy.deepcopy(b)
+    # add an extra column 1.5 m from A3 at Story1; bays touching A3 are 8 x 7 -> limit 0.3*8 = 2.4 m
+    extra = dict(column(bb, "A3", "Story1"), id="C_X_S1", location_id="X", x=17.5, y=0.0)
+    bb["columns"].append(extra)
+    got = simultaneous_removals(bb, column(bb, "A3", "Story1"), cfg["removal"]["simultaneous_fraction"])
+    assert [c["id"] for c in got] == ["C_X_S1"]
+
+
+# ---------- increment loads ----------
+
+def test_increment_corner_hand_calc(b, cfg):
+    # Corner A1, Story1 removal, amp = 2.0 -> increment = 1.0 x base combination on region.
+    # Floor bay 8x7=56 m2: 1.2*(1.5+2.6) + 0.5*2.4 = 6.12 kPa -> 342.72 kN, x3 floors = 1028.16
+    # Roof bay: 1.2*(1.0+2.6) + max(0.5*1.0, 0.2*1.2) = 4.82 kPa -> 269.92 kN
+    # Beams per level: 2x8 m W21X44 (65.5 kg/m) + 2x7 m W18X35 (52.1 kg/m) self-weight,
+    #   facade on 8 m + 7 m perimeter beams: 3.5 kN/m floors, 1.5 kN/m roof
+    sw = 2 * 8 * 65.5 * 9.81e-3 + 2 * 7 * 52.1 * 9.81e-3
+    beams = 3 * 1.2 * (sw + 15 * 3.5) + 1.2 * (sw + 15 * 1.5)
+    expected = 1028.16 + 269.92 + beams
+    reg = amplified_region(b, [column(b, "A1", "Story1")])
+    inc = build_increment(b, reg, cfg)
+    assert inc["increment_total_kn"] == pytest.approx(expected, rel=1e-4)
+    assert inc["region_amplified_total_kn"] == pytest.approx(2 * inc["region_base_total_kn"], rel=1e-6)
+
+
+def test_no_wind_in_config(cfg):
+    assert cfg["loads"]["include_wind"] is False
+
+
+# ---------- scenarios ----------
+
+def test_scenarios_demo(b, cfg):
+    scen = build_scenarios(b, generate_candidates(b, cfg), cfg)
+    assert len(scen) == 5 * 4                       # 5 locations x 4 stories
+    assert len({s["id"] for s in scen}) == len(scen)
+    for s in scen:
+        assert s["increment"]["increment_total_kn"] > 0
+        assert s["case_name"].startswith("AP_")

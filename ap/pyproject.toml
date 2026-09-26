@@ -1,0 +1,18 @@
+[project]
+name = "pc-ap-tool"
+version = "0.1.0"
+description = "Progressive collapse Alternate Path automation (UFC 4-023-03) with ETABS and Claude"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+claude = ["anthropic"]
+
+dev = ["pytest", "anthropic"]
+
+[tool.setuptools]
+packages = ["core", "claude_client", "report"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

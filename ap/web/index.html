@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alternate Path review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eef0ec;
+    --panel: #f8f9f6;
+    --ink: #22282c;
+    --muted: #5d676c;
+    --rule: #cfd4cf;
+    --steel: #6e7a80;
+    --removed: #c0392b;
+    --simul: #d98b1f;
+    --region: #3a6ea5;
+    --ok: #2f7d4f;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink); background: var(--paper);
+    display: grid; grid-template-columns: 280px 1fr 340px; grid-template-rows: 52px 1fr;
+    grid-template-areas: "top top top" "list view detail";
+  }
+  header {
+    grid-area: top; display: flex; align-items: center; gap: 16px; padding: 0 16px;
+    border-bottom: 1px solid var(--rule); background: var(--panel);
+  }
+  header h1 { font-size: 16px; font-weight: 600; margin: 0; }
+  header .meta { color: var(--muted); font-size: 13px; }
+  header .spacer { flex: 1; }
+  button {
+    font: inherit; font-size: 13px; border: 1px solid var(--rule); background: #fff; color: var(--ink);
+    padding: 6px 12px; border-radius: 4px; cursor: pointer;
+  }
+  button:hover { border-color: var(--steel); }
+  button:focus-visible { outline: 2px solid var(--region); outline-offset: 2px; }
+  button.primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+  button[aria-pressed="true"] { background: var(--ink); color: #fff; border-color: var(--ink); }
+  #list { grid-area: list; overflow-y: auto; border-right: 1px solid var(--rule); background: var(--panel); }
+  .loc { border-bottom: 1px solid var(--rule); padding: 10px 12px; }
+  .loc h2 { font-size: 14px; font-weight: 600; margin: 0 0 2px; display: flex; gap: 8px; align-items: baseline; }
+  .loc .why { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .loc.rejected h2, .loc.rejected .scen { opacity: .45; }
+  .status { font-size: 11px; font-weight: 500; margin-left: auto; }
+  .status.accepted { color: var(--ok); } .status.rejected { color: var(--removed); } .status.review { color: var(--simul); }
+  .scen {
+    display: flex; justify-content: space-between; width: 100%; text-align: left; border: 0; background: transparent;
+    padding: 4px 6px; border-radius: 3px; font-size: 13px;
+  }
+  .scen:hover { background: #e4e8e3; }
+  .scen.active { background: var(--ink); color: #fff; }
+  .scen small { color: inherit; opacity: .7; }
+  #view { grid-area: view; position: relative; min-width: 0; }
+  #view canvas { display: block; }
+  .legend {
+    position: absolute; right: 12px; bottom: 12px; background: rgba(248,249,246,.92); border: 1px solid var(--rule);
+    border-radius: 4px; padding: 8px 10px; font-size: 12px; display: grid; gap: 4px;
+  }
+  .legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; vertical-align: -1px; background: var(--c); }
+  #detail { grid-area: detail; overflow-y: auto; border-left: 1px solid var(--rule); background: var(--panel); padding: 16px; }
+  #detail h2 { font-size: 18px; margin: 0 0 4px; font-weight: 600; }
+  #detail h3 { font-size: 13px; font-weight: 600; margin: 18px 0 6px; color: var(--muted); }
+  #detail p, #detail li { font-size: 13px; line-height: 1.5; }
+  #detail ul { padding-left: 18px; margin: 4px 0; }
+  .loads { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; font-size: 13px; }
+  .loads b { font-weight: 600; text-align: right; }
+  .ratio { font-size: 28px; font-weight: 600; margin: 4px 0; }
+  .actions { display: flex; gap: 8px; margin-top: 12px; }
+  .empty { color: var(--muted); font-size: 13px; }
+  .flag { color: var(--simul); }
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">Alternate Path review</h1>
+  <span class="meta" id="meta"></span>
+  <span class="spacer"></span>
+  <button id="btn3d" aria-pressed="true">3D</button>
+  <button id="btnplan" aria-pressed="false">Plan</button>
+  <button id="export" class="primary">Export approvals</button>
+</header>
+<nav id="list" aria-label="Removal locations and scenarios"></nav>
+<main id="view">
+  <div class="legend">
+    <span style="--c: var(--removed)">Removed column</span>
+    <span style="--c: var(--simul)">Removed with it (30% rule)</span>
+    <span style="--c: var(--region)">Amplified bays</span>
+    <span style="--c: transparent; border-bottom: 1px dashed var(--removed)">30% simultaneous-removal radius</span>
+  </div>
+</main>
+<aside id="detail"><p class="empty">Select a scenario on the left, or click a column in the model.</p></aside>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const COL = { steel: css("--steel"), removed: css("--removed"), simul: css("--simul"), region: css("--region"), ink: css("--ink") };
+
+const [building, data] = await Promise.all([
+  fetch("data/building.json").then(r => r.json()),
+  fetch("data/scenarios.json").then(r => r.json()),
+]);
+document.getElementById("title").textContent = building.meta.name;
+document.getElementById("meta").textContent =
+  `${data.code.edition} · Risk Category ${data.code.risk_category} · amplification ${data.amplification_factor}`;
+
+// ---------- state ----------
+const status = {};            // location_id -> accepted | rejected
+data.candidates.forEach(c => status[c.location_id] = c.status === "proposed_reject" ? "rejected" : "accepted");
+let active = null;
+
+// ---------- scene ----------
+const view = document.getElementById("view");
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(devicePixelRatio);
+renderer.setClearColor(css("--paper"));
+view.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.add(new THREE.AmbientLight(0xffffff, 0.85));
+const sun = new THREE.DirectionalLight(0xffffff, 0.6); sun.position.set(-30, -40, 60); scene.add(sun);
+
+const xs = building.grids.x.map(g => g.coord), ys = building.grids.y.map(g => g.coord);
+const zTop = Math.max(...building.levels.map(l => l.z));
+const cx = (Math.min(...xs) + Math.max(...xs)) / 2, cy = (Math.min(...ys) + Math.max(...ys)) / 2;
+const span = Math.max(Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys), zTop);
+
+const persp = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+persp.up.set(0, 0, 1); persp.position.set(cx - span * 1.1, cy - span * 1.4, zTop + span * 0.8);
+const ortho = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 1000);
+ortho.up.set(0, 1, 0); ortho.position.set(cx, cy, zTop + 50);
+let camera = persp;
+let controls = makeControls(persp);
+function makeControls(cam) {
+  const c = new OrbitControls(cam, renderer.domElement);
+  c.target.set(cx, cy, cam === ortho ? 0 : zTop / 2);
+  c.enableRotate = cam !== ortho;
+  c.update();
+  return c;
+}
+
+// grid lines and bubbles at base
+const gridMat = new THREE.LineBasicMaterial({ color: 0xb9c0ba });
+const gridPts = [];
+xs.forEach(x => gridPts.push(new THREE.Vector3(x, Math.min(...ys) - 3, 0), new THREE.Vector3(x, Math.max(...ys) + 3, 0)));
+ys.forEach(y => gridPts.push(new THREE.Vector3(Math.min(...xs) - 3, y, 0), new THREE.Vector3(Math.max(...xs) + 3, y, 0)));
+scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(gridPts), gridMat));
+function bubble(text, x, y) {
+  const c = document.createElement("canvas"); c.width = c.height = 64;
+  const g = c.getContext("2d");
+  g.fillStyle = "#fff"; g.strokeStyle = COL.ink; g.lineWidth = 3;
+  g.beginPath(); g.arc(32, 32, 28, 0, Math.PI * 2); g.fill(); g.stroke();
+  g.fillStyle = COL.ink; g.font = "600 30px IBM Plex Sans, sans-serif"; g.textAlign = "center"; g.textBaseline = "middle";
+  g.fillText(text, 32, 34);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false }));
+  s.position.set(x, y, 0); s.scale.set(1.6, 1.6, 1); scene.add(s);
+}
+building.grids.x.forEach(g => bubble(g.name, g.coord, Math.min(...ys) - 4));
+building.grids.y.forEach(g => bubble(g.name, Math.min(...xs) - 4, g.coord));
+
+// members
+const colMeshes = new Map();   // column id -> mesh
+const colGeo = new THREE.BoxGeometry(0.4, 0.4, 1);
+const baseColMat = new THREE.MeshLambertMaterial({ color: COL.steel });
+for (const c of building.columns) {
+  const h = c.top_z - c.bottom_z;
+  const m = new THREE.Mesh(colGeo, baseColMat);
+  m.scale.z = h; m.position.set(c.x, c.y, c.bottom_z + h / 2);
+  m.userData = c; scene.add(m); colMeshes.set(c.id, m);
+}
+const beamPts = [];
+building.beams.forEach(b => beamPts.push(new THREE.Vector3(b.i[0], b.i[1], b.z), new THREE.Vector3(b.j[0], b.j[1], b.z)));
+scene.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(beamPts),
+  new THREE.LineBasicMaterial({ color: COL.steel })));
+
+const bayMeshes = new Map();
+const slabMat = new THREE.MeshBasicMaterial({ color: 0xc9cfca, transparent: true, opacity: 0.18, side: THREE.DoubleSide, depthWrite: false });
+const regionMat = new THREE.MeshBasicMaterial({ color: COL.region, transparent: true, opacity: 0.42, side: THREE.DoubleSide, depthWrite: false });
+for (const a of building.bays) {
+  const shape = new THREE.Shape(a.polygon.map(p => new THREE.Vector2(p[0], p[1])));
+  const m = new THREE.Mesh(new THREE.ShapeGeometry(shape), slabMat);
+  m.position.z = a.z; scene.add(m); bayMeshes.set(a.id, m);
+}
+const highlight = new THREE.Group(); scene.add(highlight);
+
+function resize() {
+  const w = view.clientWidth, h = view.clientHeight;
+  renderer.setSize(w, h);
+  persp.aspect = w / h; persp.updateProjectionMatrix();
+  const half = span * 0.75, ar = w / h;
+  Object.assign(ortho, { left: -half * ar, right: half * ar, top: half, bottom: -half });
+  ortho.updateProjectionMatrix();
+}
+addEventListener("resize", resize); resize();
+renderer.setAnimationLoop(() => renderer.render(scene, camera));
+
+// ---------- selection ----------
+function showScenario(s) {
+  active = s;
+  document.querySelectorAll(".scen").forEach(b => b.classList.toggle("active", b.dataset.id === s?.id));
+  highlight.clear();
+  bayMeshes.forEach(m => m.material = slabMat);
+  colMeshes.forEach(m => m.material = baseColMat);
+  if (!s) return;
+  s.region.bays.forEach(id => bayMeshes.get(id).material = regionMat);
+  const redM = new THREE.MeshLambertMaterial({ color: COL.removed });
+  const ambM = new THREE.MeshLambertMaterial({ color: COL.simul });
+  s.removed_columns.forEach(id => {
+    const m = colMeshes.get(id);
+    m.material = s.simultaneous_columns.includes(id) ? ambM : redM;
+  });
+  const regionBeams = new Set(s.region.beams);
+  const pts = [];
+  building.beams.filter(b => regionBeams.has(b.id))
+    .forEach(b => pts.push(new THREE.Vector3(b.i[0], b.i[1], b.z + 0.02), new THREE.Vector3(b.j[0], b.j[1], b.z + 0.02)));
+  highlight.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.LineBasicMaterial({ color: COL.region })));
+  // markers above the roof so removals read in plan view too, plus the 30% radius
+  const main = building.columns.find(c => c.id === s.removed_columns[0]);
+  s.removed_columns.forEach(id => {
+    const c = building.columns.find(c => c.id === id);
+    const dot = new THREE.Mesh(new THREE.CircleGeometry(0.6, 24),
+      new THREE.MeshBasicMaterial({ color: s.simultaneous_columns.includes(id) ? COL.simul : COL.removed, depthTest: false }));
+    dot.position.set(c.x, c.y, zTop + 0.3); dot.renderOrder = 2; highlight.add(dot);
+  });
+  if (s.simultaneous_radius_m > 0) {
+    const ring = new THREE.EllipseCurve(main.x, main.y, s.simultaneous_radius_m, s.simultaneous_radius_m).getPoints(64)
+      .map(p => new THREE.Vector3(p.x, p.y, zTop + 0.3));
+    const line = new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(ring),
+      new THREE.LineDashedMaterial({ color: COL.removed, dashSize: 0.4, gapSize: 0.3, depthTest: false }));
+    line.computeLineDistances(); line.renderOrder = 2; highlight.add(line);
+  }
+  renderDetail(s);
+}
+
+const reasonText = {
+  corner: "Building corner", mid_long_side: "Near middle of long side", mid_short_side: "Near middle of short side",
+  re_entrant_corner: "Re-entrant corner", bay_size_change: "Abrupt change in bay size", judgment: "Engineering judgment",
+  first_story_above_grade: "first story above grade", story_below_roof: "story below roof",
+  mid_height: "mid-height", above_splice_or_size_change: "above a splice or size change",
+};
+
+function renderDetail(s) {
+  const cand = data.candidates.find(c => c.location_id === s.location_id);
+  const inc = s.increment;
+  const el = document.getElementById("detail");
+  el.innerHTML = `
+    <h2>${s.id}: column ${s.location_id}, ${s.story}</h2>
+    <p>${s.location_reasons.map(r => reasonText[r.code] ?? r.code).join("; ")} (UFC ${s.location_reasons[0].clause}).
+       Story chosen as ${s.story_reasons.map(r => reasonText[r] ?? r).join(", ")}.</p>
+    <h3>Removed</h3>
+    <ul>${s.removed_columns.map(id => `<li>${id}${s.simultaneous_columns.includes(id) ? " (within 30% of bay size)" : ""}</li>`).join("")}</ul>
+    <h3>Amplified region</h3>
+    <p>${s.region.bays.length} bays on ${s.region.levels.join(", ")} (${{rule: "adjacent bays, all floors above", etabs: "ETABS influence area of the column stack", approved: "approved override"}[s.region.source] ?? s.region.source}).</p>
+    <div class="loads">
+      <span>Region load, base combination</span><b>${inc.region_base_total_kn.toFixed(0)} kN</b>
+      <span>Region load, amplified</span><b>${inc.region_amplified_total_kn.toFixed(0)} kN</b>
+      <span>Increment pattern ${inc.pattern_name}</span><b>${inc.increment_total_kn.toFixed(0)} kN</b>
+    </div>
+    <div class="ratio">${(inc.region_amplified_total_kn / inc.region_base_total_kn).toFixed(2)} : 1</div>
+    <p class="empty">No wind. Live load not reduced.</p>
+    ${s.flags.length ? `<h3>Geometry flags</h3><ul>${s.flags.map(f => `<li class="flag">${f}</li>`).join("")}</ul>` : ""}
+    ${cand?.claude ? `<h3>Claude's review (${cand.claude.confidence} confidence)</h3><p>${cand.claude.reason}</p>` : ""}
+    <h3>Location ${s.location_id}</h3>
+    <div class="actions">
+      <button data-set="accepted" aria-pressed="${status[s.location_id] === "accepted"}">Accept location</button>
+      <button data-set="rejected" aria-pressed="${status[s.location_id] === "rejected"}" ${cand?.mandatory ? "disabled title='Required by UFC 3-2.9.2.2'" : ""}>Reject location</button>
+    </div>`;
+  el.querySelectorAll("[data-set]").forEach(b => b.onclick = () => {
+    status[s.location_id] = b.dataset.set; renderList(); renderDetail(s);
+  });
+}
+
+function renderList() {
+  const nav = document.getElementById("list");
+  nav.innerHTML = "";
+  for (const c of data.candidates) {
+    const div = document.createElement("div");
+    div.className = "loc" + (status[c.location_id] === "rejected" ? " rejected" : "");
+    const st = c.needs_review ? "review" : status[c.location_id];
+    div.innerHTML = `<h2>${c.location_id}<span class="status ${st}">${st === "review" ? "Needs review" : st === "accepted" ? "Accepted" : "Rejected"}</span></h2>
+      <div class="why">${c.reasons.map(r => reasonText[r.code] ?? r.code).join("; ")}</div>`;
+    data.scenarios.filter(s => s.location_id === c.location_id).forEach(s => {
+      const b = document.createElement("button");
+      b.className = "scen" + (active?.id === s.id ? " active" : ""); b.dataset.id = s.id;
+      b.innerHTML = `<span>${s.id} · ${s.story}</span><small>${s.removed_columns.length > 1 ? s.removed_columns.length + " cols · " : ""}${s.increment.increment_total_kn.toFixed(0)} kN</small>`;
+      b.onclick = () => showScenario(s);
+      div.appendChild(b);
+    });
+    nav.appendChild(div);
+  }
+}
+renderList();
+
+// click a column in the model
+const ray = new THREE.Raycaster(), mouse = new THREE.Vector2();
+renderer.domElement.addEventListener("click", e => {
+  const r = renderer.domElement.getBoundingClientRect();
+  mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const hit = ray.intersectObjects([...colMeshes.values()])[0];
+  if (!hit) return;
+  const c = hit.object.userData;
+  const s = data.scenarios.find(s => s.location_id === c.location_id && s.story === c.story);
+  if (s) return showScenario(s);
+  showScenario(null);
+  const el = document.getElementById("detail");
+  el.innerHTML = `<h2>Column ${c.location_id}, ${c.story}</h2>
+    <p>${c.id} · ${c.section}. Not a removal candidate.</p>
+    <div class="actions"><button id="add">Add ${c.location_id} as a removal location</button></div>
+    <p class="empty">Stories are chosen by the rules when scenarios are rebuilt (core.cli --candidates).</p>`;
+  el.querySelector("#add").onclick = () => {
+    data.candidates.push({ location_id: c.location_id, x: c.x, y: c.y, source: "user", mandatory: false,
+      reasons: [{ code: "judgment", clause: "3-2.9.2.2", note: "added by user" }], stories: [] });
+    status[c.location_id] = "accepted"; renderList();
+    el.querySelector(".empty").textContent = `${c.location_id} added. Export approvals and rebuild scenarios to analyze it.`;
+  };
+});
+
+// view toggle
+const b3d = document.getElementById("btn3d"), bplan = document.getElementById("btnplan");
+function setView(plan) {
+  controls.dispose();
+  camera = plan ? ortho : persp;
+  controls = makeControls(camera);
+  b3d.setAttribute("aria-pressed", !plan); bplan.setAttribute("aria-pressed", plan);
+}
+b3d.onclick = () => setView(false); bplan.onclick = () => setView(true);
+
+// export approvals -> core.cli --candidates
+document.getElementById("export").onclick = () => {
+  const out = { candidates: data.candidates.map(c => ({ ...c, status: status[c.location_id] })) };
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], { type: "application/json" }));
+  a.download = "approved_candidates.json"; a.click();
+};
+</script>
+</body>
+</html>

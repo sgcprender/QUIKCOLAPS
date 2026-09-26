@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario.schema.json",
+  "title": "Candidates and scenarios",
+  "description": "Produced by core.cli (web/data/scenarios.json). Consumed by web/ and etabs_bridge.build_scenarios().",
+  "type": "object",
+  "required": ["code", "amplification_factor", "candidates", "scenarios"],
+  "properties": {
+    "code": {"type": "object"},
+    "amplification_factor": {"type": "number"},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["location_id", "x", "y", "reasons", "stories", "source", "mandatory"],
+        "properties": {
+          "location_id": {"type": "string"},
+          "x": {"type": "number"}, "y": {"type": "number"},
+          "reasons": {"type": "array", "items": {"type": "object", "properties": {"code": {"type": "string"}, "clause": {"type": "string"}, "note": {"type": "string"}}}},
+          "stories": {"type": "array", "items": {"type": "object", "properties": {"story": {"type": "string"}, "reasons": {"type": "array", "items": {"type": "string"}}}}},
+          "source": {"enum": ["rule", "claude", "user"]},
+          "mandatory": {"type": "boolean"},
+          "status": {"enum": ["proposed", "proposed_reject", "accepted", "rejected"]},
+          "needs_review": {"type": "boolean"},
+          "claude": {"type": "object", "description": "reason, clause, confidence, needs_engineer_review"},
+          "region_proposal": {"type": "object", "description": "Claude's affected region; not used until the user approves it"},
+          "region_override": {"type": "object", "description": "User-approved region: {bays: [...]}"}
+        }
+      }
+    },
+    "scenarios": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "location_id", "story", "removed_columns", "group_name", "case_name", "combo_name", "region", "increment"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^SC[0-9]+$"},
+          "location_id": {"type": "string"},
+          "story": {"type": "string"},
+          "story_reasons": {"type": "array", "items": {"type": "string"}},
+          "location_reasons": {"type": "array"},
+          "removed_columns": {"type": "array", "items": {"type": "string"}, "description": "ETABS column ids, first is the primary removal"},
+          "simultaneous_columns": {"type": "array", "items": {"type": "string"}},
+          "simultaneous_radius_m": {"type": "number"},
+          "group_name": {"type": "string"},
+          "case_name": {"type": "string"},
+          "combo_name": {"type": "string"},
+          "region": {
+            "type": "object",
+            "properties": {
+              "levels": {"type": "array", "items": {"type": "string"}},
+              "bays": {"type": "array", "items": {"type": "string"}},
+              "beams": {"type": "array", "items": {"type": "string"}},
+              "source": {"enum": ["rule", "approved"]}
+            }
+          },
+          "increment": {
+            "type": "object",
+            "description": "Extra load on the region on top of the base combination: (amp - 1) x [1.2D + (0.5L or 0.2S)]",
+            "properties": {
+              "pattern_name": {"type": "string"},
+              "extra_factor": {"type": "number"},
+              "area_loads": {"type": "array", "items": {"type": "object", "properties": {"bay_id": {"type": "string"}, "q_kpa": {"type": "number"}, "area_m2": {"type": "number"}}}},
+              "frame_loads": {"type": "array", "items": {"type": "object", "properties": {"beam_id": {"type": "string"}, "w_kn_per_m": {"type": "number"}, "length_m": {"type": "number"}}}},
+              "point_loads": {"type": "array"},
+              "region_base_total_kn": {"type": "number"},
+              "region_amplified_total_kn": {"type": "number"},
+              "increment_total_kn": {"type": "number", "description": "Must equal reaction(case) - reaction(base) in ETABS"}
+            }
+          },
+          "flags": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "results.schema.json",
+  "title": "Analysis and design results",
+  "description": "Produced by `quikcolaps-bridge results` (tools/Quikcolaps.Bridge). Consumed by web/ and report/.",
+  "type": "object",
+  "required": ["iteration", "cases", "members", "by_scenario"],
+  "properties": {
+    "iteration": {"type": "integer", "description": "0 = original design, 1.. = redesign iterations"},
+    "cases": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "converged": {"type": "boolean"},
+          "base_reaction_fz_kn": {"type": "number"},
+          "reaction_check_ok": {"type": "boolean", "description": "reaction difference within tolerance of increment_total_kn"}
+        }
+      }
+    },
+    "members": {
+      "description": "Per ETABS frame id: envelope over AP combos",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "section": {"type": "string"},
+          "max_ratio": {"type": "number"},
+          "governing_combo": {"type": "string"},
+          "governing_scenario": {"type": "string"},
+          "passes": {"type": "boolean"},
+          "messages": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "by_scenario": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "max_ratio": {"type": "number"},
+          "failing": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    },
+    "redesign": {
+      "type": "object",
+      "properties": {
+        "proposed": {"type": "array", "items": {"type": "object", "properties": {"member_id": {"type": "string"}, "reason": {"enum": ["failing", "similar"]}, "from_section": {"type": "string"}, "to_section": {"type": "string"}}}},
+        "approved": {"type": "array", "items": {"type": "string"}}
+      }
+    }
+  }
+}

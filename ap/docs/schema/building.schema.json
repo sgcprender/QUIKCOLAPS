@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "building.schema.json",
+  "title": "Building model extracted from ETABS",
+  "description": "Produced by `quikcolaps-bridge export` (tools/Quikcolaps.Bridge). outlines and grids are optional: core derives them. Consumed by core/, claude_client/, web/. SI units only: m, kN, kPa.",
+  "type": "object",
+  "required": ["meta", "levels", "stories", "sections", "columns", "beams", "bays", "line_loads"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["name", "source", "units"],
+      "properties": {
+        "name": {"type": "string"},
+        "source": {"enum": ["etabs", "synthetic"]},
+        "etabs_file": {"type": "string"},
+        "units": {"type": "object", "properties": {"length": {"const": "m"}, "force": {"const": "kN"}, "pressure": {"const": "kPa"}}},
+        "material": {"const": "steel"}
+      }
+    },
+    "grids": {
+      "type": "object",
+      "properties": {
+        "x": {"type": "array", "items": {"$ref": "#/$defs/grid"}},
+        "y": {"type": "array", "items": {"$ref": "#/$defs/grid"}}
+      }
+    },
+    "levels": {"type": "array", "items": {"type": "object", "required": ["name", "z"], "properties": {"name": {"type": "string"}, "z": {"type": "number"}}}},
+    "stories": {
+      "description": "Space between two levels. Ordered bottom to top. Column segments belong to a story.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "bottom_level", "top_level", "bottom_z", "top_z"],
+        "properties": {
+          "name": {"type": "string"},
+          "bottom_level": {"type": "string"},
+          "top_level": {"type": "string"},
+          "bottom_z": {"type": "number"},
+          "top_z": {"type": "number"},
+          "below_grade": {"type": "boolean", "default": false},
+          "occupied": {"type": "boolean", "default": true, "description": "UFC 1-2.1: unoccupied stories are not counted"}
+        }
+      }
+    },
+    "outlines": {
+      "description": "Floor plate outline polygon per level name, [[x,y],...], counter-clockwise preferred.",
+      "type": "object",
+      "additionalProperties": {"$ref": "#/$defs/polygon"}
+    },
+    "sections": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["mass_kg_per_m"],
+        "properties": {"shape": {"type": "string"}, "d_m": {"type": "number"}, "mass_kg_per_m": {"type": "number"}}
+      }
+    },
+    "columns": {
+      "description": "One entry per column segment per story. location_id is shared by all segments on one column line.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "location_id", "x", "y", "story", "bottom_z", "top_z", "section"],
+        "properties": {
+          "id": {"type": "string", "description": "ETABS frame object name"},
+          "location_id": {"type": "string", "description": "Grid intersection label, e.g. A3"},
+          "x": {"type": "number"}, "y": {"type": "number"},
+          "story": {"type": "string"},
+          "bottom_z": {"type": "number"}, "top_z": {"type": "number"},
+          "section": {"type": "string"},
+          "splice_at_bottom": {"type": "boolean", "default": false},
+          "lands_on_beam": {"type": "boolean", "default": false, "description": "Column bottom sits on a beam, not a column"}
+        }
+      }
+    },
+    "beams": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "level", "z", "i", "j", "section"],
+        "properties": {
+          "id": {"type": "string", "description": "ETABS frame object name"},
+          "level": {"type": "string"}, "z": {"type": "number"},
+          "i": {"$ref": "#/$defs/point"}, "j": {"$ref": "#/$defs/point"},
+          "section": {"type": "string"},
+          "perimeter": {"type": "boolean"}
+        }
+      }
+    },
+    "bays": {
+      "description": "Floor/roof areas between framing, each with its unfactored area loads.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "level", "z", "polygon", "loads"],
+        "properties": {
+          "id": {"type": "string", "description": "ETABS area object name"},
+          "level": {"type": "string"}, "z": {"type": "number"},
+          "polygon": {"$ref": "#/$defs/polygon"},
+          "loads": {
+            "type": "object",
+            "properties": {
+              "sdl_kpa": {"type": "number"}, "slab_sw_kpa": {"type": "number"},
+              "live_kpa": {"type": "number"}, "roof_live_kpa": {"type": "number"}, "snow_kpa": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "line_loads": {
+      "type": "array",
+      "items": {"type": "object", "required": ["beam_id", "pattern", "w_kn_per_m"],
+                "properties": {"beam_id": {"type": "string"}, "pattern": {"type": "string"}, "w_kn_per_m": {"type": "number"}}}
+    },
+    "point_loads": {
+      "type": "array",
+      "items": {"type": "object", "required": ["point", "level", "p_kn"],
+                "properties": {"point": {"$ref": "#/$defs/point"}, "level": {"type": "string"}, "p_kn": {"type": "number"}, "bay_id": {"type": "string"}}}
+    },
+    "zones": {"type": "array", "description": "Parking / uncontrolled public areas (not used in hackathon scope)"},
+    "flags": {"type": "array", "items": {"type": "string"}, "description": "Model QA flags from extraction, e.g. floating columns"}
+  },
+  "$defs": {
+    "grid": {"type": "object", "required": ["name", "coord"], "properties": {"name": {"type": "string"}, "coord": {"type": "number"}}},
+    "point": {"type": "array", "items": {"type": "number"}, "minItems": 2, "maxItems": 2},
+    "polygon": {"type": "array", "items": {"$ref": "#/$defs/point"}, "minItems": 3}
+  }
+}

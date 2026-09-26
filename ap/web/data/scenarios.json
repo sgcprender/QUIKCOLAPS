@@ -1,0 +1,4902 @@
+{
+  "code": {
+    "edition": "UFC 4-023-03 (2009, Change 4)",
+    "risk_category": "II",
+    "method": "Linear Static (simplified, all m-factors = 1.0)"
+  },
+  "amplification_factor": 2.0,
+  "candidates": [
+    {
+      "location_id": "A1",
+      "x": 0.0,
+      "y": 0.0,
+      "reasons": [
+        {
+          "code": "corner",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "stories": [
+        {
+          "story": "Story1",
+          "reasons": [
+            "first_story_above_grade"
+          ]
+        },
+        {
+          "story": "Story2",
+          "reasons": [
+            "mid_height"
+          ]
+        },
+        {
+          "story": "Story3",
+          "reasons": [
+            "above_splice_or_size_change"
+          ]
+        },
+        {
+          "story": "Story4",
+          "reasons": [
+            "story_below_roof"
+          ]
+        }
+      ],
+      "source": "rule",
+      "mandatory": true
+    },
+    {
+      "location_id": "A3",
+      "x": 16.0,
+      "y": 0.0,
+      "reasons": [
+        {
+          "code": "mid_long_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "stories": [
+        {
+          "story": "Story1",
+          "reasons": [
+            "first_story_above_grade"
+          ]
+        },
+        {
+          "story": "Story2",
+          "reasons": [
+            "mid_height"
+          ]
+        },
+        {
+          "story": "Story3",
+          "reasons": [
+            "above_splice_or_size_change"
+          ]
+        },
+        {
+          "story": "Story4",
+          "reasons": [
+            "story_below_roof"
+          ]
+        }
+      ],
+      "source": "rule",
+      "mandatory": true
+    },
+    {
+      "location_id": "A5",
+      "x": 32.0,
+      "y": 0.0,
+      "reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 8.00 m / 4.00 m"
+        }
+      ],
+      "stories": [
+        {
+          "story": "Story1",
+          "reasons": [
+            "first_story_above_grade"
+          ]
+        },
+        {
+          "story": "Story2",
+          "reasons": [
+            "mid_height"
+          ]
+        },
+        {
+          "story": "Story3",
+          "reasons": [
+            "above_splice_or_size_change"
+          ]
+        },
+        {
+          "story": "Story4",
+          "reasons": [
+            "story_below_roof"
+          ]
+        }
+      ],
+      "source": "rule",
+      "mandatory": false
+    },
+    {
+      "location_id": "B6",
+      "x": 36.0,
+      "y": 7.0,
+      "reasons": [
+        {
+          "code": "mid_short_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "stories": [
+        {
+          "story": "Story1",
+          "reasons": [
+            "first_story_above_grade"
+          ]
+        },
+        {
+          "story": "Story2",
+          "reasons": [
+            "mid_height"
+          ]
+        },
+        {
+          "story": "Story3",
+          "reasons": [
+            "above_splice_or_size_change"
+          ]
+        },
+        {
+          "story": "Story4",
+          "reasons": [
+            "story_below_roof"
+          ]
+        }
+      ],
+      "source": "rule",
+      "mandatory": true
+    },
+    {
+      "location_id": "D5",
+      "x": 32.0,
+      "y": 21.0,
+      "reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 4.00 m / 8.00 m"
+        }
+      ],
+      "stories": [
+        {
+          "story": "Story1",
+          "reasons": [
+            "first_story_above_grade"
+          ]
+        },
+        {
+          "story": "Story2",
+          "reasons": [
+            "mid_height"
+          ]
+        },
+        {
+          "story": "Story3",
+          "reasons": [
+            "above_splice_or_size_change"
+          ]
+        },
+        {
+          "story": "Story4",
+          "reasons": [
+            "story_below_roof"
+          ]
+        }
+      ],
+      "source": "rule",
+      "mandatory": false
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "SC01",
+      "location_id": "A1",
+      "story": "Story1",
+      "story_reasons": [
+        "first_story_above_grade"
+      ],
+      "location_reasons": [
+        {
+          "code": "corner",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A1_S1"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC01",
+      "group_name": "AP_SC01_LOAD",
+      "combo_name": "AP_SC01_CMB",
+      "region": {
+        "levels": [
+          "L1",
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L1_A1",
+          "A_L2_A1",
+          "A_L3_A1",
+          "A_ROOF_A1"
+        ],
+        "beams": [
+          "B_L1_A1-A2",
+          "B_L1_B1-B2",
+          "B_L1_A1-B1",
+          "B_L1_A2-B2",
+          "B_L2_A1-A2",
+          "B_L2_B1-B2",
+          "B_L2_A1-B1",
+          "B_L2_A2-B2",
+          "B_L3_A1-A2",
+          "B_L3_B1-B2",
+          "B_L3_A1-B1",
+          "B_L3_A2-B2",
+          "B_ROOF_A1-A2",
+          "B_ROOF_B1-B2",
+          "B_ROOF_A1-B1",
+          "B_ROOF_A2-B2"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC01",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L1_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A1",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L1_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-A2",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-B1",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1597.774,
+        "region_amplified_total_kn": 3195.548,
+        "increment_total_kn": 1597.774
+      },
+      "flags": []
+    },
+    {
+      "id": "SC02",
+      "location_id": "A1",
+      "story": "Story2",
+      "story_reasons": [
+        "mid_height"
+      ],
+      "location_reasons": [
+        {
+          "code": "corner",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A1_S2"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC02",
+      "group_name": "AP_SC02_LOAD",
+      "combo_name": "AP_SC02_CMB",
+      "region": {
+        "levels": [
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L2_A1",
+          "A_L3_A1",
+          "A_ROOF_A1"
+        ],
+        "beams": [
+          "B_L2_A1-A2",
+          "B_L2_B1-B2",
+          "B_L2_A1-B1",
+          "B_L2_A2-B2",
+          "B_L3_A1-A2",
+          "B_L3_B1-B2",
+          "B_L3_A1-B1",
+          "B_L3_A2-B2",
+          "B_ROOF_A1-A2",
+          "B_ROOF_B1-B2",
+          "B_ROOF_A1-B1",
+          "B_ROOF_A2-B2"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC02",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L2_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A1",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L2_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-A2",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-B1",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1171.131,
+        "region_amplified_total_kn": 2342.261,
+        "increment_total_kn": 1171.131
+      },
+      "flags": []
+    },
+    {
+      "id": "SC03",
+      "location_id": "A1",
+      "story": "Story3",
+      "story_reasons": [
+        "above_splice_or_size_change"
+      ],
+      "location_reasons": [
+        {
+          "code": "corner",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A1_S3"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC03",
+      "group_name": "AP_SC03_LOAD",
+      "combo_name": "AP_SC03_CMB",
+      "region": {
+        "levels": [
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L3_A1",
+          "A_ROOF_A1"
+        ],
+        "beams": [
+          "B_L3_A1-A2",
+          "B_L3_B1-B2",
+          "B_L3_A1-B1",
+          "B_L3_A2-B2",
+          "B_ROOF_A1-A2",
+          "B_ROOF_B1-B2",
+          "B_ROOF_A1-B1",
+          "B_ROOF_A2-B2"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC03",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L3_A1",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A1",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L3_A1-A2",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A1-B1",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-A2",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-B1",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 744.487,
+        "region_amplified_total_kn": 1488.974,
+        "increment_total_kn": 744.487
+      },
+      "flags": []
+    },
+    {
+      "id": "SC04",
+      "location_id": "A1",
+      "story": "Story4",
+      "story_reasons": [
+        "story_below_roof"
+      ],
+      "location_reasons": [
+        {
+          "code": "corner",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A1_S4"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC04",
+      "group_name": "AP_SC04_LOAD",
+      "combo_name": "AP_SC04_CMB",
+      "region": {
+        "levels": [
+          "ROOF"
+        ],
+        "bays": [
+          "A_ROOF_A1"
+        ],
+        "beams": [
+          "B_ROOF_A1-A2",
+          "B_ROOF_B1-B2",
+          "B_ROOF_A1-B1",
+          "B_ROOF_A2-B2"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC04",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_ROOF_A1",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_ROOF_A1-A2",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B1-B2",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A1-B1",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 317.844,
+        "region_amplified_total_kn": 635.687,
+        "increment_total_kn": 317.844
+      },
+      "flags": []
+    },
+    {
+      "id": "SC05",
+      "location_id": "A3",
+      "story": "Story1",
+      "story_reasons": [
+        "first_story_above_grade"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_long_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A3_S1"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC05",
+      "group_name": "AP_SC05_LOAD",
+      "combo_name": "AP_SC05_CMB",
+      "region": {
+        "levels": [
+          "L1",
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L1_A2",
+          "A_L1_A3",
+          "A_L2_A2",
+          "A_L2_A3",
+          "A_L3_A2",
+          "A_L3_A3",
+          "A_ROOF_A2",
+          "A_ROOF_A3"
+        ],
+        "beams": [
+          "B_L1_A2-A3",
+          "B_L1_A3-A4",
+          "B_L1_B2-B3",
+          "B_L1_B3-B4",
+          "B_L1_A2-B2",
+          "B_L1_A3-B3",
+          "B_L1_A4-B4",
+          "B_L2_A2-A3",
+          "B_L2_A3-A4",
+          "B_L2_B2-B3",
+          "B_L2_B3-B4",
+          "B_L2_A2-B2",
+          "B_L2_A3-B3",
+          "B_L2_A4-B4",
+          "B_L3_A2-A3",
+          "B_L3_A3-A4",
+          "B_L3_B2-B3",
+          "B_L3_B3-B4",
+          "B_L3_A2-B2",
+          "B_L3_A3-B3",
+          "B_L3_A4-B4",
+          "B_ROOF_A2-A3",
+          "B_ROOF_A3-A4",
+          "B_ROOF_B2-B3",
+          "B_ROOF_B3-B4",
+          "B_ROOF_A2-B2",
+          "B_ROOF_A3-B3",
+          "B_ROOF_A4-B4"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC05",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L1_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L1_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A2",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A3",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L1_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-A3",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-A4",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 2976.775,
+        "region_amplified_total_kn": 5953.551,
+        "increment_total_kn": 2976.775
+      },
+      "flags": []
+    },
+    {
+      "id": "SC06",
+      "location_id": "A3",
+      "story": "Story2",
+      "story_reasons": [
+        "mid_height"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_long_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A3_S2"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC06",
+      "group_name": "AP_SC06_LOAD",
+      "combo_name": "AP_SC06_CMB",
+      "region": {
+        "levels": [
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L2_A2",
+          "A_L2_A3",
+          "A_L3_A2",
+          "A_L3_A3",
+          "A_ROOF_A2",
+          "A_ROOF_A3"
+        ],
+        "beams": [
+          "B_L2_A2-A3",
+          "B_L2_A3-A4",
+          "B_L2_B2-B3",
+          "B_L2_B3-B4",
+          "B_L2_A2-B2",
+          "B_L2_A3-B3",
+          "B_L2_A4-B4",
+          "B_L3_A2-A3",
+          "B_L3_A3-A4",
+          "B_L3_B2-B3",
+          "B_L3_B3-B4",
+          "B_L3_A2-B2",
+          "B_L3_A3-B3",
+          "B_L3_A4-B4",
+          "B_ROOF_A2-A3",
+          "B_ROOF_A3-A4",
+          "B_ROOF_B2-B3",
+          "B_ROOF_B3-B4",
+          "B_ROOF_A2-B2",
+          "B_ROOF_A3-B3",
+          "B_ROOF_A4-B4"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC06",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L2_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A2",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A3",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L2_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-A3",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-A4",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 2186.582,
+        "region_amplified_total_kn": 4373.163,
+        "increment_total_kn": 2186.582
+      },
+      "flags": []
+    },
+    {
+      "id": "SC07",
+      "location_id": "A3",
+      "story": "Story3",
+      "story_reasons": [
+        "above_splice_or_size_change"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_long_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A3_S3"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC07",
+      "group_name": "AP_SC07_LOAD",
+      "combo_name": "AP_SC07_CMB",
+      "region": {
+        "levels": [
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L3_A2",
+          "A_L3_A3",
+          "A_ROOF_A2",
+          "A_ROOF_A3"
+        ],
+        "beams": [
+          "B_L3_A2-A3",
+          "B_L3_A3-A4",
+          "B_L3_B2-B3",
+          "B_L3_B3-B4",
+          "B_L3_A2-B2",
+          "B_L3_A3-B3",
+          "B_L3_A4-B4",
+          "B_ROOF_A2-A3",
+          "B_ROOF_A3-A4",
+          "B_ROOF_B2-B3",
+          "B_ROOF_B3-B4",
+          "B_ROOF_A2-B2",
+          "B_ROOF_A3-B3",
+          "B_ROOF_A4-B4"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC07",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L3_A2",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A3",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A2",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A3",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L3_A2-A3",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-A4",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-A3",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-A4",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1396.388,
+        "region_amplified_total_kn": 2792.775,
+        "increment_total_kn": 1396.388
+      },
+      "flags": []
+    },
+    {
+      "id": "SC08",
+      "location_id": "A3",
+      "story": "Story4",
+      "story_reasons": [
+        "story_below_roof"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_long_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_A3_S4"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC08",
+      "group_name": "AP_SC08_LOAD",
+      "combo_name": "AP_SC08_CMB",
+      "region": {
+        "levels": [
+          "ROOF"
+        ],
+        "bays": [
+          "A_ROOF_A2",
+          "A_ROOF_A3"
+        ],
+        "beams": [
+          "B_ROOF_A2-A3",
+          "B_ROOF_A3-A4",
+          "B_ROOF_B2-B3",
+          "B_ROOF_B3-B4",
+          "B_ROOF_A2-B2",
+          "B_ROOF_A3-B3",
+          "B_ROOF_A4-B4"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC08",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_ROOF_A2",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A3",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_ROOF_A2-A3",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-A4",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B2-B3",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B3-B4",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A2-B2",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A3-B3",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 606.194,
+        "region_amplified_total_kn": 1212.388,
+        "increment_total_kn": 606.194
+      },
+      "flags": []
+    },
+    {
+      "id": "SC09",
+      "location_id": "A5",
+      "story": "Story1",
+      "story_reasons": [
+        "first_story_above_grade"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 8.00 m / 4.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_A5_S1"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC09",
+      "group_name": "AP_SC09_LOAD",
+      "combo_name": "AP_SC09_CMB",
+      "region": {
+        "levels": [
+          "L1",
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L1_A4",
+          "A_L1_A5",
+          "A_L2_A4",
+          "A_L2_A5",
+          "A_L3_A4",
+          "A_L3_A5",
+          "A_ROOF_A4",
+          "A_ROOF_A5"
+        ],
+        "beams": [
+          "B_L1_A4-A5",
+          "B_L1_A5-A6",
+          "B_L1_B4-B5",
+          "B_L1_B5-B6",
+          "B_L1_A4-B4",
+          "B_L1_A5-B5",
+          "B_L1_A6-B6",
+          "B_L2_A4-A5",
+          "B_L2_A5-A6",
+          "B_L2_B4-B5",
+          "B_L2_B5-B6",
+          "B_L2_A4-B4",
+          "B_L2_A5-B5",
+          "B_L2_A6-B6",
+          "B_L3_A4-A5",
+          "B_L3_A5-A6",
+          "B_L3_B4-B5",
+          "B_L3_B5-B6",
+          "B_L3_A4-B4",
+          "B_L3_A5-B5",
+          "B_L3_A6-B6",
+          "B_ROOF_A4-A5",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B4-B5",
+          "B_ROOF_B5-B6",
+          "B_ROOF_A4-B4",
+          "B_ROOF_A5-B5",
+          "B_ROOF_A6-B6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC09",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L1_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L1_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L2_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L1_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-A5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 2346.261,
+        "region_amplified_total_kn": 4692.523,
+        "increment_total_kn": 2346.261
+      },
+      "flags": []
+    },
+    {
+      "id": "SC10",
+      "location_id": "A5",
+      "story": "Story2",
+      "story_reasons": [
+        "mid_height"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 8.00 m / 4.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_A5_S2"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC10",
+      "group_name": "AP_SC10_LOAD",
+      "combo_name": "AP_SC10_CMB",
+      "region": {
+        "levels": [
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L2_A4",
+          "A_L2_A5",
+          "A_L3_A4",
+          "A_L3_A5",
+          "A_ROOF_A4",
+          "A_ROOF_A5"
+        ],
+        "beams": [
+          "B_L2_A4-A5",
+          "B_L2_A5-A6",
+          "B_L2_B4-B5",
+          "B_L2_B5-B6",
+          "B_L2_A4-B4",
+          "B_L2_A5-B5",
+          "B_L2_A6-B6",
+          "B_L3_A4-A5",
+          "B_L3_A5-A6",
+          "B_L3_B4-B5",
+          "B_L3_B5-B6",
+          "B_L3_A4-B4",
+          "B_L3_A5-B5",
+          "B_L3_A6-B6",
+          "B_ROOF_A4-A5",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B4-B5",
+          "B_ROOF_B5-B6",
+          "B_ROOF_A4-B4",
+          "B_ROOF_A5-B5",
+          "B_ROOF_A6-B6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC10",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L2_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L2_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-A5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1720.996,
+        "region_amplified_total_kn": 3441.992,
+        "increment_total_kn": 1720.996
+      },
+      "flags": []
+    },
+    {
+      "id": "SC11",
+      "location_id": "A5",
+      "story": "Story3",
+      "story_reasons": [
+        "above_splice_or_size_change"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 8.00 m / 4.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_A5_S3"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC11",
+      "group_name": "AP_SC11_LOAD",
+      "combo_name": "AP_SC11_CMB",
+      "region": {
+        "levels": [
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L3_A4",
+          "A_L3_A5",
+          "A_ROOF_A4",
+          "A_ROOF_A5"
+        ],
+        "beams": [
+          "B_L3_A4-A5",
+          "B_L3_A5-A6",
+          "B_L3_B4-B5",
+          "B_L3_B5-B6",
+          "B_L3_A4-B4",
+          "B_L3_A5-B5",
+          "B_L3_A6-B6",
+          "B_ROOF_A4-A5",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B4-B5",
+          "B_ROOF_B5-B6",
+          "B_ROOF_A4-B4",
+          "B_ROOF_A5-B5",
+          "B_ROOF_A6-B6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC11",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L3_A4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L3_A4-A5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-A5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1095.731,
+        "region_amplified_total_kn": 2191.461,
+        "increment_total_kn": 1095.731
+      },
+      "flags": []
+    },
+    {
+      "id": "SC12",
+      "location_id": "A5",
+      "story": "Story4",
+      "story_reasons": [
+        "story_below_roof"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 8.00 m / 4.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_A5_S4"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC12",
+      "group_name": "AP_SC12_LOAD",
+      "combo_name": "AP_SC12_CMB",
+      "region": {
+        "levels": [
+          "ROOF"
+        ],
+        "bays": [
+          "A_ROOF_A4",
+          "A_ROOF_A5"
+        ],
+        "beams": [
+          "B_ROOF_A4-A5",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B4-B5",
+          "B_ROOF_B5-B6",
+          "B_ROOF_A4-B4",
+          "B_ROOF_A5-B5",
+          "B_ROOF_A6-B6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC12",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_ROOF_A4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_ROOF_A4-A5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B4-B5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A4-B4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 470.465,
+        "region_amplified_total_kn": 940.931,
+        "increment_total_kn": 470.465
+      },
+      "flags": []
+    },
+    {
+      "id": "SC13",
+      "location_id": "B6",
+      "story": "Story1",
+      "story_reasons": [
+        "first_story_above_grade"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_short_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_B6_S1"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.1,
+      "case_name": "AP_SC13",
+      "group_name": "AP_SC13_LOAD",
+      "combo_name": "AP_SC13_CMB",
+      "region": {
+        "levels": [
+          "L1",
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L1_A5",
+          "A_L1_B5",
+          "A_L2_A5",
+          "A_L2_B5",
+          "A_L3_A5",
+          "A_L3_B5",
+          "A_ROOF_A5",
+          "A_ROOF_B5"
+        ],
+        "beams": [
+          "B_L1_A5-A6",
+          "B_L1_B5-B6",
+          "B_L1_C5-C6",
+          "B_L1_A5-B5",
+          "B_L1_B5-C5",
+          "B_L1_A6-B6",
+          "B_L1_B6-C6",
+          "B_L2_A5-A6",
+          "B_L2_B5-B6",
+          "B_L2_C5-C6",
+          "B_L2_A5-B5",
+          "B_L2_B5-C5",
+          "B_L2_A6-B6",
+          "B_L2_B6-C6",
+          "B_L3_A5-A6",
+          "B_L3_B5-B6",
+          "B_L3_C5-C6",
+          "B_L3_A5-B5",
+          "B_L3_B5-C5",
+          "B_L3_A6-B6",
+          "B_L3_B6-C6",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B5-B6",
+          "B_ROOF_C5-C6",
+          "B_ROOF_A5-B5",
+          "B_ROOF_B5-C5",
+          "B_ROOF_A6-B6",
+          "B_ROOF_B6-C6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC13",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L1_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L1_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L2_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L2_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_B5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L1_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B6-C6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1662.983,
+        "region_amplified_total_kn": 3325.966,
+        "increment_total_kn": 1662.983
+      },
+      "flags": []
+    },
+    {
+      "id": "SC14",
+      "location_id": "B6",
+      "story": "Story2",
+      "story_reasons": [
+        "mid_height"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_short_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_B6_S2"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.1,
+      "case_name": "AP_SC14",
+      "group_name": "AP_SC14_LOAD",
+      "combo_name": "AP_SC14_CMB",
+      "region": {
+        "levels": [
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L2_A5",
+          "A_L2_B5",
+          "A_L3_A5",
+          "A_L3_B5",
+          "A_ROOF_A5",
+          "A_ROOF_B5"
+        ],
+        "beams": [
+          "B_L2_A5-A6",
+          "B_L2_B5-B6",
+          "B_L2_C5-C6",
+          "B_L2_A5-B5",
+          "B_L2_B5-C5",
+          "B_L2_A6-B6",
+          "B_L2_B6-C6",
+          "B_L3_A5-A6",
+          "B_L3_B5-B6",
+          "B_L3_C5-C6",
+          "B_L3_A5-B5",
+          "B_L3_B5-C5",
+          "B_L3_A6-B6",
+          "B_L3_B6-C6",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B5-B6",
+          "B_ROOF_C5-C6",
+          "B_ROOF_A5-B5",
+          "B_ROOF_B5-C5",
+          "B_ROOF_A6-B6",
+          "B_ROOF_B6-C6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC14",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L2_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L2_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_B5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L2_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B6-C6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1218.237,
+        "region_amplified_total_kn": 2436.475,
+        "increment_total_kn": 1218.237
+      },
+      "flags": []
+    },
+    {
+      "id": "SC15",
+      "location_id": "B6",
+      "story": "Story3",
+      "story_reasons": [
+        "above_splice_or_size_change"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_short_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_B6_S3"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.1,
+      "case_name": "AP_SC15",
+      "group_name": "AP_SC15_LOAD",
+      "combo_name": "AP_SC15_CMB",
+      "region": {
+        "levels": [
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L3_A5",
+          "A_L3_B5",
+          "A_ROOF_A5",
+          "A_ROOF_B5"
+        ],
+        "beams": [
+          "B_L3_A5-A6",
+          "B_L3_B5-B6",
+          "B_L3_C5-C6",
+          "B_L3_A5-B5",
+          "B_L3_B5-C5",
+          "B_L3_A6-B6",
+          "B_L3_B6-C6",
+          "B_ROOF_A5-A6",
+          "B_ROOF_B5-B6",
+          "B_ROOF_C5-C6",
+          "B_ROOF_A5-B5",
+          "B_ROOF_B5-C5",
+          "B_ROOF_A6-B6",
+          "B_ROOF_B6-C6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC15",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L3_A5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_B5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_B5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L3_A5-A6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_A6-B6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_B6-C6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B6-C6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 773.492,
+        "region_amplified_total_kn": 1546.983,
+        "increment_total_kn": 773.492
+      },
+      "flags": []
+    },
+    {
+      "id": "SC16",
+      "location_id": "B6",
+      "story": "Story4",
+      "story_reasons": [
+        "story_below_roof"
+      ],
+      "location_reasons": [
+        {
+          "code": "mid_short_side",
+          "clause": "3-2.9.2.2",
+          "note": ""
+        }
+      ],
+      "removed_columns": [
+        "C_B6_S4"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.1,
+      "case_name": "AP_SC16",
+      "group_name": "AP_SC16_LOAD",
+      "combo_name": "AP_SC16_CMB",
+      "region": {
+        "levels": [
+          "ROOF"
+        ],
+        "bays": [
+          "A_ROOF_A5",
+          "A_ROOF_B5"
+        ],
+        "beams": [
+          "B_ROOF_A5-A6",
+          "B_ROOF_B5-B6",
+          "B_ROOF_C5-C6",
+          "B_ROOF_A5-B5",
+          "B_ROOF_B5-C5",
+          "B_ROOF_A6-B6",
+          "B_ROOF_B6-C6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC16",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_ROOF_A5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_B5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_ROOF_A5-A6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-B6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A5-B5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B5-C5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_A6-B6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_B6-C6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 328.746,
+        "region_amplified_total_kn": 657.492,
+        "increment_total_kn": 328.746
+      },
+      "flags": []
+    },
+    {
+      "id": "SC17",
+      "location_id": "D5",
+      "story": "Story1",
+      "story_reasons": [
+        "first_story_above_grade"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 4.00 m / 8.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_D5_S1"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC17",
+      "group_name": "AP_SC17_LOAD",
+      "combo_name": "AP_SC17_CMB",
+      "region": {
+        "levels": [
+          "L1",
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L1_C4",
+          "A_L1_C5",
+          "A_L2_C4",
+          "A_L2_C5",
+          "A_L3_C4",
+          "A_L3_C5",
+          "A_ROOF_C4",
+          "A_ROOF_C5"
+        ],
+        "beams": [
+          "B_L1_C4-C5",
+          "B_L1_C5-C6",
+          "B_L1_D4-D5",
+          "B_L1_D5-D6",
+          "B_L1_C4-D4",
+          "B_L1_C5-D5",
+          "B_L1_C6-D6",
+          "B_L2_C4-C5",
+          "B_L2_C5-C6",
+          "B_L2_D4-D5",
+          "B_L2_D5-D6",
+          "B_L2_C4-D4",
+          "B_L2_C5-D5",
+          "B_L2_C6-D6",
+          "B_L3_C4-C5",
+          "B_L3_C5-C6",
+          "B_L3_D4-D5",
+          "B_L3_D5-D6",
+          "B_L3_C4-D4",
+          "B_L3_C5-D5",
+          "B_L3_C6-D6",
+          "B_ROOF_C4-C5",
+          "B_ROOF_C5-C6",
+          "B_ROOF_D4-D5",
+          "B_ROOF_D5-D6",
+          "B_ROOF_C4-D4",
+          "B_ROOF_C5-D5",
+          "B_ROOF_C6-D6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC17",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L1_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L1_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L2_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_C4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_C5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L1_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L1_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L1_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D4-D5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D5-D6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C6-D6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 2346.261,
+        "region_amplified_total_kn": 4692.523,
+        "increment_total_kn": 2346.261
+      },
+      "flags": []
+    },
+    {
+      "id": "SC18",
+      "location_id": "D5",
+      "story": "Story2",
+      "story_reasons": [
+        "mid_height"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 4.00 m / 8.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_D5_S2"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC18",
+      "group_name": "AP_SC18_LOAD",
+      "combo_name": "AP_SC18_CMB",
+      "region": {
+        "levels": [
+          "L2",
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L2_C4",
+          "A_L2_C5",
+          "A_L3_C4",
+          "A_L3_C5",
+          "A_ROOF_C4",
+          "A_ROOF_C5"
+        ],
+        "beams": [
+          "B_L2_C4-C5",
+          "B_L2_C5-C6",
+          "B_L2_D4-D5",
+          "B_L2_D5-D6",
+          "B_L2_C4-D4",
+          "B_L2_C5-D5",
+          "B_L2_C6-D6",
+          "B_L3_C4-C5",
+          "B_L3_C5-C6",
+          "B_L3_D4-D5",
+          "B_L3_D5-D6",
+          "B_L3_C4-D4",
+          "B_L3_C5-D5",
+          "B_L3_C6-D6",
+          "B_ROOF_C4-C5",
+          "B_ROOF_C5-C6",
+          "B_ROOF_D4-D5",
+          "B_ROOF_D5-D6",
+          "B_ROOF_C4-D4",
+          "B_ROOF_C5-D5",
+          "B_ROOF_C6-D6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC18",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L2_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L2_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_L3_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_C4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_C5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L2_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L2_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L2_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D4-D5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D5-D6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C6-D6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1720.996,
+        "region_amplified_total_kn": 3441.992,
+        "increment_total_kn": 1720.996
+      },
+      "flags": []
+    },
+    {
+      "id": "SC19",
+      "location_id": "D5",
+      "story": "Story3",
+      "story_reasons": [
+        "above_splice_or_size_change"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 4.00 m / 8.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_D5_S3"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC19",
+      "group_name": "AP_SC19_LOAD",
+      "combo_name": "AP_SC19_CMB",
+      "region": {
+        "levels": [
+          "L3",
+          "ROOF"
+        ],
+        "bays": [
+          "A_L3_C4",
+          "A_L3_C5",
+          "A_ROOF_C4",
+          "A_ROOF_C5"
+        ],
+        "beams": [
+          "B_L3_C4-C5",
+          "B_L3_C5-C6",
+          "B_L3_D4-D5",
+          "B_L3_D5-D6",
+          "B_L3_C4-D4",
+          "B_L3_C5-D5",
+          "B_L3_C6-D6",
+          "B_ROOF_C4-C5",
+          "B_ROOF_C5-C6",
+          "B_ROOF_D4-D5",
+          "B_ROOF_D5-D6",
+          "B_ROOF_C4-D4",
+          "B_ROOF_C5-D5",
+          "B_ROOF_C6-D6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC19",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_L3_C4",
+            "q_kpa": 6.12,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_L3_C5",
+            "q_kpa": 6.12,
+            "area_m2": 28.0
+          },
+          {
+            "bay_id": "A_ROOF_C4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_C5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_L3_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_D4-D5",
+            "w_kn_per_m": 4.9711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_D5-D6",
+            "w_kn_per_m": 4.9711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_L3_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_L3_C6-D6",
+            "w_kn_per_m": 4.8133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 4.2
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D4-D5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D5-D6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C6-D6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 1095.731,
+        "region_amplified_total_kn": 2191.461,
+        "increment_total_kn": 1095.731
+      },
+      "flags": []
+    },
+    {
+      "id": "SC20",
+      "location_id": "D5",
+      "story": "Story4",
+      "story_reasons": [
+        "story_below_roof"
+      ],
+      "location_reasons": [
+        {
+          "code": "bay_size_change",
+          "clause": "3-2.9.2.2",
+          "note": "adjacent spans 4.00 m / 8.00 m"
+        }
+      ],
+      "removed_columns": [
+        "C_D5_S4"
+      ],
+      "simultaneous_columns": [],
+      "simultaneous_radius_m": 2.4,
+      "case_name": "AP_SC20",
+      "group_name": "AP_SC20_LOAD",
+      "combo_name": "AP_SC20_CMB",
+      "region": {
+        "levels": [
+          "ROOF"
+        ],
+        "bays": [
+          "A_ROOF_C4",
+          "A_ROOF_C5"
+        ],
+        "beams": [
+          "B_ROOF_C4-C5",
+          "B_ROOF_C5-C6",
+          "B_ROOF_D4-D5",
+          "B_ROOF_D5-D6",
+          "B_ROOF_C4-D4",
+          "B_ROOF_C5-D5",
+          "B_ROOF_C6-D6"
+        ],
+        "source": "rule"
+      },
+      "increment": {
+        "pattern_name": "AP_INC_SC20",
+        "extra_factor": 1.0,
+        "area_loads": [
+          {
+            "bay_id": "A_ROOF_C4",
+            "q_kpa": 4.82,
+            "area_m2": 56.0
+          },
+          {
+            "bay_id": "A_ROOF_C5",
+            "q_kpa": 4.82,
+            "area_m2": 28.0
+          }
+        ],
+        "frame_loads": [
+          {
+            "beam_id": "B_ROOF_C4-C5",
+            "w_kn_per_m": 0.7711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-C6",
+            "w_kn_per_m": 0.7711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D4-D5",
+            "w_kn_per_m": 2.5711,
+            "length_m": 8.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_D5-D6",
+            "w_kn_per_m": 2.5711,
+            "length_m": 4.0,
+            "components": {
+              "self_weight": 0.7711,
+              "facade": 1.8
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C4-D4",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C5-D5",
+            "w_kn_per_m": 0.6133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 0.0
+            }
+          },
+          {
+            "beam_id": "B_ROOF_C6-D6",
+            "w_kn_per_m": 2.4133,
+            "length_m": 7.0,
+            "components": {
+              "self_weight": 0.6133,
+              "facade": 1.8
+            }
+          }
+        ],
+        "point_loads": [],
+        "region_base_total_kn": 470.465,
+        "region_amplified_total_kn": 940.931,
+        "increment_total_kn": 470.465
+      },
+      "flags": []
+    }
+  ]
+}

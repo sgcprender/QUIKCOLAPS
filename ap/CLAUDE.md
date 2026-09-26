@@ -1,0 +1,46 @@
+# ap/ (Python side of the Alternate Path pipeline)
+
+Automates the progressive collapse Alternate Path check of a steel frame per
+UFC 4-023-03 (2009, Change 4). Python owns the rules, Claude calls, viewer and
+report; the C# bridge (`../tools/Quikcolaps.Bridge`) owns everything that
+touches ETABS. They exchange JSON (`docs/schema/`).
+
+Read before changing engineering logic:
+- `docs/scope_and_flow.md`: scope, 13-step flow, build order, status
+- `docs/ufc_notes.md`: the clauses we implement
+- `docs/decisions.md`: why things are the way they are (D12–D16 cover the bridge)
+
+## Hard rules
+
+- Geometry, story selection, regions and loads are deterministic code in
+  `core/`. LLM output never sets loads, capacities or story selection.
+- Claude's output always goes through `claude_client/validate.py` and user
+  approval before it affects a scenario.
+- AP combinations have no wind; live load is not reduced.
+- Numbers from the code come from `config/config.toml`.
+- SI (kN, m, kPa) everywhere here; the bridge converts.
+- Mandatory candidates (corner, mid long side, mid short side) can't be dropped.
+- Names: case `AP_SCnn`, group `AP_SCnn_LOAD`, combo `AP_SCnn_CMB` (D16).
+- When `stacks.json` exists, ETABS influence areas define regions (D12).
+
+## Modules
+
+| Module | Owns | Reads | Writes |
+|---|---|---|---|
+| `core/` | candidates, stories, 30% rule, regions, increment totals | building, stacks, approvals | scenarios, web/data/building |
+| `claude_client/` | Claude calls + validation | building, candidates | reviewed candidates |
+| `web/` | viewer, approvals, results display | web/data/*.json | approved_candidates.json |
+| `report/` | submittal report | scenarios, results | report.md |
+| `scripts/` | fixture generator, bridge wrapper, force comparison | | |
+
+## Commands (run from ap/)
+
+- Tests: `pytest` (before every commit)
+- Scenarios: `python -m core.cli <building.json> [--stacks stacks.json] [--candidates approved.json]`
+- Viewer: `python -m http.server 8000`, open `http://localhost:8000/web/`
+- Bridge: `python scripts/bridge.py export|stacks|apply|results [...]` (Windows + ETABS)
+- Report: `python -m report.build_report web/data/scenarios.json --out report.md`
+
+## Lessons learned
+
+(Add a line whenever Claude repeats a mistake.)
