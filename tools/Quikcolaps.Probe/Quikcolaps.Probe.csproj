@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="../../src/Quikcolaps.Etabs/Csi.props" />
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Quikcolaps.Probe</RootNamespace>
+    <AssemblyName>quikcolaps-probe</AssemblyName>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../src/Quikcolaps.Etabs/Quikcolaps.Etabs.csproj" />
+  </ItemGroup>
+</Project>

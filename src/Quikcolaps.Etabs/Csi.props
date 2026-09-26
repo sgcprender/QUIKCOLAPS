@@ -1,0 +1,34 @@
+<Project>
+  <!-- Newest available wins. A client referencing a pre-2.0.0 library does not work with the
+       current products at all, so an old reference is the choice that breaks. -->
+  <PropertyGroup>
+    <_Csi>C:\Program Files\Computers and Structures</_Csi>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <_CsiCandidate Include="$(_Csi)\ETABS 23\CSiAPIv1.dll" />
+    <_CsiCandidate Include="$(_Csi)\ETABS 22\CSiAPIv1.dll" />
+    <_CsiCandidate Include="$(_Csi)\SAP2000 27\CSiAPIv1.dll" />
+    <_CsiCandidate Include="$(_Csi)\ETABS 21\CSiAPIv1.dll" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CsiDll Condition="'$(CsiDll)' == '' AND Exists('$(_Csi)\ETABS 23\CSiAPIv1.dll')">$(_Csi)\ETABS 23\CSiAPIv1.dll</CsiDll>
+    <CsiDll Condition="'$(CsiDll)' == '' AND Exists('$(_Csi)\SAP2000 27\CSiAPIv1.dll')">$(_Csi)\SAP2000 27\CSiAPIv1.dll</CsiDll>
+    <CsiDll Condition="'$(CsiDll)' == '' AND Exists('$(_Csi)\ETABS 22\CSiAPIv1.dll')">$(_Csi)\ETABS 22\CSiAPIv1.dll</CsiDll>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(CsiDll)' != ''">
+    <!-- Copied local because .NET does not probe the GAC. An external client without it throws
+         FileNotFoundException on the first call. An in-process plugin must do the opposite. -->
+    <Reference Include="CSiAPIv1">
+      <HintPath>$(CsiDll)</HintPath>
+      <Private>true</Private>
+      <EmbedInteropTypes>false</EmbedInteropTypes>
+    </Reference>
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(CsiDll)' != ''">
+    <DefineConstants>$(DefineConstants);CSI</DefineConstants>
+  </PropertyGroup>
+</Project>

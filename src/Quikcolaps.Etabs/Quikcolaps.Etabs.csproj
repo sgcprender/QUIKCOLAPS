@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Csi.props" />
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Quikcolaps.Etabs</RootNamespace>
+    <!-- The COM server is 64-bit. AnyCPU fails at attach with an error that reads exactly like
+         the program not running. -->
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+</Project>
