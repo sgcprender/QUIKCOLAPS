@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuickColApps</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f4f2; --surface: #fcfcfb; --line: #e4e3df; --hover: #f0efec;
+  --text: #0b0b0b; --text-2: #52514e; --text-3: #8a8984;
+  --accent: #fe0000; --removed: #0b0b0b; --warning: #fab219;
+  --idle: #c9c8c3; --deck: #fe0000;
+  --seq-0: #ffd6d6; --seq-1: #fe0000;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111110; --surface: #1a1a19; --line: #2c2c2a; --hover: #383835;
+    --text: #ffffff; --text-2: #c3c2b7; --text-3: #8a8984;
+    --accent: #fe0000; --removed: #ffffff; --idle: #4a4a47; --deck: #fe0000;
+    --seq-0: #5c0a0a; --seq-1: #fe0000;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111110; --surface: #1a1a19; --line: #2c2c2a; --hover: #383835;
+  --text: #ffffff; --text-2: #c3c2b7; --text-3: #8a8984;
+  --accent: #fe0000; --removed: #ffffff; --idle: #4a4a47; --deck: #fe0000;
+  --seq-0: #5c0a0a; --seq-1: #fe0000;
+}
+* { box-sizing: border-box; margin: 0; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--text); font: 14px/1.45 Inter, system-ui, sans-serif;
+  display: grid; grid-template-columns: 340px 1fr; overflow: hidden; }
+aside { background: var(--surface); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+header { padding: 20px 20px 12px; }
+h1 { font-size: 16px; font-weight: 600; }
+.sub { color: var(--text-3); font-size: 12px; overflow-wrap: anywhere; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 20px 16px; }
+.stat { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.stat.wide { grid-column: span 2; }
+.stat b { display: block; font-size: 22px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.stat.wide b { font-size: 28px; }
+.stat span { color: var(--text-2); font-size: 12px; }
+.listhead { display: flex; justify-content: space-between; padding: 8px 20px; color: var(--text-3); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .04em; border-top: 1px solid var(--line); }
+ul { list-style: none; padding: 0 8px 12px; overflow-y: auto; flex: 1; }
+li button { all: unset; box-sizing: border-box; width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px;
+  padding: 8px 12px; border-radius: 8px; cursor: pointer; }
+li button:hover { background: var(--hover); }
+li button[aria-pressed="true"] { background: var(--hover); box-shadow: inset 3px 0 0 var(--accent); }
+li button:focus-visible { outline: 2px solid var(--accent); }
+.name { font-weight: 500; }
+.val { color: var(--text-2); font-variant-numeric: tabular-nums; text-align: right; }
+.bar { grid-column: span 2; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--accent); border-radius: 2px; }
+main { position: relative; min-width: 0; overflow: hidden; }
+canvas { display: block; }
+.top { position: absolute; top: 16px; left: 16px; right: 16px; display: flex; gap: 12px; align-items: flex-start;
+  justify-content: space-between; pointer-events: none; flex-wrap: wrap; }
+.top > * { pointer-events: auto; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / .05); }
+.title b { font-size: 18px; font-weight: 600; }
+.title .sub { margin-top: 2px; }
+.seg { display: inline-flex; background: var(--bg); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button { all: unset; padding: 6px 12px; border-radius: 6px; cursor: pointer; color: var(--text-2); font-weight: 500; font-size: 13px; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgb(0 0 0 / .1); }
+.seg button:focus-visible { outline: 2px solid var(--accent); }
+.legend { position: absolute; left: 16px; bottom: 16px; display: grid; gap: 6px; font-size: 12px; color: var(--text-2); }
+.legend div { display: flex; align-items: center; gap: 8px; }
+.sw { width: 14px; height: 4px; border-radius: 2px; }
+.ramp { width: 90px; height: 6px; border-radius: 3px; background: linear-gradient(90deg, var(--seq-0), var(--seq-1)); }
+#tip { position: absolute; pointer-events: none; display: none; min-width: 180px; font-size: 12px; }
+#tip b { font-size: 13px; }
+#tip table { border-spacing: 0; margin-top: 4px; }
+#tip td { padding: 1px 0; color: var(--text-2); }
+#tip td + td { padding-left: 12px; color: var(--text); text-align: right; font-variant-numeric: tabular-nums; }
+.bubble { position: absolute; left: 0; top: 0; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%;
+  border: 1.5px solid var(--text-3); background: var(--surface); color: var(--text-2); font-size: 11px; font-weight: 600;
+  display: grid; place-items: center; pointer-events: none; }
+.tools { display: flex; gap: 8px; }
+.hint { position: absolute; right: 16px; bottom: 16px; color: var(--text-3); font-size: 12px; }
+@media (max-width: 760px) {
+  body { grid-template-columns: 1fr; grid-template-rows: 55vh 1fr; overflow: auto; }
+  main { grid-row: 1; } aside { grid-row: 2; border-right: 0; }
+  .hint { display: none; }
+}
+</style>
+</head>
+<body>
+<aside>
+  <header>
+    <h1>QuickColApps</h1>
+    <div class="sub" id="model"></div>
+  </header>
+  <div class="stats">
+    <div class="stat wide"><b id="sTotal">–</b><span>Extra steel for collapse resistance</span></div>
+    <div class="stat"><b id="sPct">–</b><span>Over baseline frame weight</span></div>
+    <div class="stat"><b id="sMembers">–</b><span>Members upsized</span></div>
+  </div>
+  <div class="listhead"><span>Removed column</span><span>Extra steel</span></div>
+  <ul id="cases"></ul>
+</aside>
+<main>
+  <div class="top">
+    <div class="card title"><b id="cTitle"></b><div class="sub" id="cSub"></div></div>
+    <div class="tools">
+      <div class="card seg" id="modes" role="group" aria-label="View">
+        <button data-mode="load" aria-pressed="true">Load path</button>
+        <button data-mode="steel" aria-pressed="false">Upsized members</button>
+      </div>
+    </div>
+  </div>
+  <div class="legend card" id="legend"></div>
+  <div class="card" id="tip"></div>
+  <div class="hint">Drag to rotate · Scroll to zoom · Right-drag to pan</div>
+</main>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const data = await (await fetch('data.json')).json();
+const $ = id => document.getElementById(id);
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const lb = v => v >= 2000 ? (v / 2000).toFixed(1) + ' tons' : Math.round(v).toLocaleString() + ' lb';
+const caseLabel = c => c.removed.map(r => { const f = data.frames[r]; return `${f.label} (${f.grid}) @ ${f.story}`; }).join(', ');
+
+// ETABS is Z-up; three.js is Y-up
+const v3 = ([x, y, z]) => new THREE.Vector3(x, z, -y);
+
+// ---------- scene ----------
+const main = document.querySelector('main');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(devicePixelRatio);
+main.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -5000, 5000);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+scene.add(new THREE.HemisphereLight(0xffffff, 0x888888, 2.2));
+const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(1, 2, 1.5); scene.add(sun);
+
+const box = new THREE.Box3();
+Object.values(data.frames).forEach(f => box.expandByPoint(v3(f.a)).expandByPoint(v3(f.b)));
+const center = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3()).length();
+const ISO = v3([1, -1, 1]).normalize();  // true isometric: equal angle to X, Y, Z
+controls.target.copy(center);
+camera.position.copy(center).addScaledVector(ISO, size);
+
+// grid lines + bubbles at the base
+const base = box.min.y, ext = 12;
+const X = data.grids.filter(g => g.axis === 'X'), Y = data.grids.filter(g => g.axis === 'Y');
+const [x0, x1] = [Math.min(...X.map(g => g.at)), Math.max(...X.map(g => g.at))];
+const [y0, y1] = [Math.min(...Y.map(g => g.at)), Math.max(...Y.map(g => g.at))];
+const gridMat = new THREE.LineDashedMaterial({ dashSize: 3, gapSize: 2, transparent: true, opacity: 0.7 });
+const bubbles = data.grids.map(g => {
+  const [a, b, tag] = g.axis === 'X'
+    ? [[g.at, y0 - ext, 0], [g.at, y1 + ext, 0], [g.at, y0 - ext - 4, 0]]
+    : [[x0 - ext, g.at, 0], [x1 + ext, g.at, 0], [x0 - ext - 4, g.at, 0]];
+  const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([a, b].map(p => v3(p).setY(base))), gridMat);
+  line.computeLineDistances(); scene.add(line);
+  const el = Object.assign(document.createElement('div'), { className: 'bubble', textContent: g.id });
+  renderer.domElement.after(el);  // under the UI cards
+  return { el, at: v3(tag).setY(base) };
+});
+const _p = new THREE.Vector3();
+function placeBubbles() {
+  for (const b of bubbles) {
+    _p.copy(b.at).project(camera);
+    b.el.style.transform = `translate(${(_p.x + 1) / 2 * main.clientWidth}px, ${(1 - _p.y) / 2 * main.clientHeight}px)`;
+  }
+}
+
+// members as thin cylinders (WebGL lines are always 1px)
+const geo = new THREE.CylinderGeometry(1, 1, 1, 6, 1).translate(0, 0.5, 0).rotateX(Math.PI / 2);
+const meshes = [];
+for (const [id, f] of Object.entries(data.frames)) {
+  const a = v3(f.a), b = v3(f.b);
+  const m = new THREE.Mesh(geo, new THREE.MeshLambertMaterial({ transparent: true }));
+  m.position.copy(a); m.lookAt(b); m.scale.set(1, 1, a.distanceTo(b));
+  m.userData = { id, f };
+  scene.add(m); meshes.push(m);
+}
+
+// deck panels for the influence area
+const decks = {};
+for (const [id, pts] of Object.entries(data.areas)) {
+  const p = pts.map(v3);
+  const g = new THREE.BufferGeometry().setFromPoints(p.slice(1, -1).flatMap((q, i) => [p[0], q, p[i + 2]]));
+  const m = new THREE.Mesh(g, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.09, side: THREE.DoubleSide, depthWrite: false }));
+  m.visible = false; scene.add(m); decks[id] = m;
+}
+
+// ---------- state + paint ----------
+const upsizedAll = Object.values(data.frames).filter(f => f.extraLb > 0).length;
+let cur = data.cases[0], mode = 'load';
+
+function paint() {
+  const col = k => new THREE.Color(css(k));
+  const idle = col('--idle'), lo = col('--seq-0'), hi = col('--seq-1');
+  const crit = col('--removed'), warn = col('--warning');
+  scene.background = col('--bg');
+  gridMat.color.copy(col('--text-3'));
+  const removed = new Set(cur.removed), up = new Set(cur.upsized);
+  const peak = d => Math.max(1, ...Object.entries(d).filter(([k]) => !removed.has(k)).map(([, v]) => v));
+  const maxP = peak(cur.dP), maxM = peak(cur.dM);
+
+  for (const m of meshes) {
+    const { id, f } = m.userData, mat = m.material;
+    let t = 0, c = idle, op = 0.35;
+    if (removed.has(id)) { c = crit; op = 1; t = 1; }
+    else if (mode === 'load') {
+      t = f.col ? (cur.dP[id] || 0) / maxP : (cur.dM[id] || 0) / maxM;
+      if (t > 0.05) { c = lo.clone().lerp(hi, Math.sqrt(t)); op = 1; }
+      else t = 0;
+    } else if (up.has(id)) { c = warn; op = 1; t = 0.6; }
+    mat.color.copy(c); mat.opacity = op; mat.depthWrite = op === 1;
+    const r = 0.18 + 0.45 * t;
+    m.scale.x = m.scale.y = r;
+  }
+  const infl = new Set(cur.influence), deck = col('--deck');
+  for (const [id, m] of Object.entries(decks)) { m.visible = infl.has(id); m.material.color.copy(deck); }
+
+  $('cTitle').textContent = `Column ${caseLabel(cur)} removed`;
+  $('cSub').textContent = `${cur.name} · ${cur.upsized.length} members upsized · +${lb(cur.extraLb)}`;
+  $('legend').innerHTML = `
+    <div><span class="sw" style="background:var(--removed)"></span>Removed column</div>
+    <div><span class="sw" style="background:var(--deck);opacity:.4;height:10px"></span>Loaded influence area</div>` +
+    (mode === 'load'
+      ? `<div><span class="ramp"></span>Force change vs. intact (low → high)</div>`
+      : `<div><span class="sw" style="background:var(--warning)"></span>Upsized for this case</div>`);
+}
+
+// ---------- sidebar ----------
+$('model').textContent = data.model.split(/[\\/]/).pop();
+$('sTotal').textContent = lb(data.totalExtraLb);
+$('sPct').textContent = '+' + (100 * data.totalExtraLb / data.baseTotalLb).toFixed(1) + '%';
+$('sMembers').textContent = upsizedAll;
+const maxCase = Math.max(...data.cases.map(c => c.extraLb));
+$('cases').innerHTML = data.cases.map((c, i) => `
+  <li><button data-i="${i}" aria-pressed="${i === 0}">
+    <span class="name">${caseLabel(c)}</span><span class="val">${c.extraLb ? '+' + lb(c.extraLb) : '—'}</span>
+    <span class="bar"><i style="width:${100 * c.extraLb / maxCase}%"></i></span>
+  </button></li>`).join('');
+$('cases').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#cases button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  cur = data.cases[+b.dataset.i]; paint();
+};
+$('modes').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  document.querySelectorAll('#modes button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  mode = b.dataset.mode; paint();
+};
+addEventListener('keydown', e => {
+  if (!['ArrowUp', 'ArrowDown'].includes(e.key)) return;
+  const i = data.cases.indexOf(cur) + (e.key === 'ArrowDown' ? 1 : -1);
+  const b = document.querySelector(`#cases button[data-i="${i}"]`);
+  if (b) { e.preventDefault(); b.click(); b.focus(); b.scrollIntoView({ block: 'nearest' }); }
+});
+matchMedia('(prefers-color-scheme: dark)').onchange = paint;
+
+// ---------- hover tooltip ----------
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), tip = $('tip');
+renderer.domElement.addEventListener('pointermove', e => {
+  const r = renderer.domElement.getBoundingClientRect();
+  ptr.set((e.clientX - r.left) / r.width * 2 - 1, -(e.clientY - r.top) / r.height * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(meshes).find(h => h.object.material.opacity === 1)
+    || ray.intersectObjects(meshes)[0];
+  if (!hit) { tip.style.display = 'none'; return; }
+  const { id, f } = hit.object.userData;
+  const [F, dF, u] = f.col ? [cur.P, cur.dP, 'kip'] : [cur.M, cur.dM, 'kip·ft'];
+  const force = `${(F[id] || 0).toFixed(1)} ${u}`, change = `${(dF[id] || 0).toFixed(1)} ${u}`;
+  const row = (k, v) => `<tr><td>${k}</td><td>${v}</td></tr>`;
+  tip.innerHTML = `<b>${f.col ? 'Column' : 'Beam'} ${f.label}</b> <span class="sub">${f.story}</span><table>` +
+    (f.col ? row('Grid', f.grid) : '') +
+    (cur.removed.includes(id) ? row('Status', 'Removed in this case') :
+      row(f.col ? 'Axial |P|' : 'Moment |M3|', force) + row('Change vs. intact', change)) +
+    row('Section', f.baseSec === f.sec ? f.sec : `${f.baseSec} → ${f.sec}`) +
+    (f.extraLb > 0 ? row('Added steel', '+' + lb(f.extraLb)) : '') +
+    (f.ratio != null ? row('D/C ratio', f.ratio.toFixed(2)) : '') +
+    (f.combo ? row('Governed by', f.combo.replace('_CMB', '')) : '') + '</table>';
+  tip.style.display = 'block';
+  const x = Math.min(e.clientX - r.left + 14, r.width - tip.offsetWidth - 8);
+  tip.style.left = x + 'px'; tip.style.top = (e.clientY - r.top + 14) + 'px';
+});
+renderer.domElement.addEventListener('pointerleave', () => tip.style.display = 'none');
+
+// ---------- loop ----------
+function resize() {
+  const w = main.clientWidth, h = main.clientHeight;
+  const half = size * 0.55;
+  renderer.setSize(w, h);
+  Object.assign(camera, { left: -half * w / h, right: half * w / h, top: half, bottom: -half });
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(main);
+renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); placeBubbles(); });
+paint();
+</script>
+</body>
+</html>
