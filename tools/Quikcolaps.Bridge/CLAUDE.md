@@ -38,6 +38,21 @@ total from `building.json` against ETABS base reaction FZ:
 | SDL | 4.788 kPa × 11,237.8 m² = 53,806.8 kN | 53,806.8 kN | 0.00% |
 | LL | 4.788 kPa × 11,237.8 m² = 53,806.8 kN | 53,806.8 kN | 0.00% |
 
+## Open issue: design ratios for staged combos are not trusted
+
+On AP2 (2026-09-26), all 23 scenarios run and pass the reaction check, but
+steel design does not appear to use the staged cases' final forces for the
+`AP_*_CMB` combos. Column 165 carries P = 3,914 kN, M3 = 433 kN·m under
+`AP_SC02_CMB` (4,094 kN under `AP_SC03_CMB`), more than a W14X61's squash
+load (about 3,580 kN), yet design keeps W14X61 at ratio 0.903 (axial part
+0.49), governed by `AP_SC02_CMB(C)`. No auto-select frame changed size. The
+first working copy, with only SC03 applied, did move 165 to W14X120.
+Changing "Multi-Response Case Design" (AISC 360-16 item 2) from 5
+(Step-by-Step - All) to 3 (Last step) changed nothing; it was put back to 5.
+Until this is explained, **do not use steel or composite design ratios from
+`results` for AP combos** (`results.json` is not committed). Reactions and
+frame forces (`forces`) are fine.
+
 ## Contract
 
 | Command | Reads | Writes | Model changes |
@@ -178,6 +193,26 @@ seen on the working copy, ETABS 23, 2026-09-26.
   no ratio from it. `PMMCombo` comes back **with a suffix**, e.g.
   `AP_SC03_CMB(C)`, so matching it to a combo name needs the suffix removed
   (`Results.ComboName` strips a trailing `(...)` before matching).
+- Composite beam design (documented + measured): `DesignCompositeBeam`
+  `SetComboStrength`/`GetComboStrength`/`StartDesign`/`GetSummaryResults`.
+  The composite strength selection was empty on the original model and ETABS
+  has no default composite combos (`RespCombo.AddDesignDefaultCombos` covers
+  steel and concrete only), so `apply --commit` mirrors the whole steel
+  strength selection (DStlS1, DStlS2 and every AP combo) into it and reads it
+  back. `GetSummaryResults` names neither the frame nor the governing combo:
+  `results` reads it one frame at a time (item type Objects) and reports the
+  strength ratio only, max(StrPMRat, StrShrRat); the stud ratio and ETABS's
+  overall ratio and pass/fail (which include deflection and construction
+  stage) go in the status text. The conventional check this covers is gravity
+  strength only (DStlS1, DStlS2).
+- `Analyze.GetRunCaseFlag` (measured): after an analysis it no longer lists the
+  internal `~LLRF` case, though the case and pattern are still defined.
+- `DesignSteel.AISC360_16.GetPreference`/`SetPreference(Item, Value)`
+  (measured): item 2 is "Multi-Response Case Design" (1 envelopes, 2 step by
+  step, 3 last step, 4 envelopes all, 5 step by step all; AP2 has 5), item 3
+  framing type (3 = OMF), item 4 seismic design category (4 = D), item 5
+  importance factor. It can be set while the model is locked. The composite
+  beam preferences have no multi-step setting.
 - Auto-select lists (measured): all columns `AS-W14` (35 sections), all
   girders `AS-W24` (21 sections), start Median; infill beams fixed W24X55.
   `FrameObj.GetSection` gives the current analysis section and the list name;

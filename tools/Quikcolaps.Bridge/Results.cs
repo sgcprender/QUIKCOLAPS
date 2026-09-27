@@ -7,6 +7,9 @@ namespace Quikcolaps.Bridge;
 /// <summary>
 /// results: case status, the base-reaction check per scenario, and every steel frame's design
 /// ratio with its governing combination, mapped back to a scenario (ap/docs/schema/results.schema.json).
+/// Composite beams (design procedure 3) are designed and read separately: their results name
+/// neither the frame nor the governing combination, so each beam is read on its own and counts
+/// toward every scenario whose region holds it.
 /// forces: frame forces at the last step of one case, for the staged-case validation.
 ///
 /// Read-only on the model unless --run (runs analysis) or --design (runs steel design) is given.
@@ -25,6 +28,9 @@ internal static class Results
         if (run && !SectionGuard.Allows(sap, acceptDesignSections)) return SectionGuard.ExitSectionsDiffer;
         if (run) Api.Check(Watch.During(pid, "Analyze.RunAnalysis", () => sap.Analyze.RunAnalysis()), "Analyze.RunAnalysis");
         if (design) Api.Check(Watch.During(pid, "DesignSteel.StartDesign", () => sap.DesignSteel.StartDesign()), "DesignSteel.StartDesign");
+        var composite = FramesWithProcedure(sap, CompositeBeamDesign);
+        if (design && composite.Count > 0)
+            Api.Check(Watch.During(pid, "DesignCompositeBeam.StartDesign", () => sap.DesignCompositeBeam.StartDesign()), "DesignCompositeBeam.StartDesign");
 
         var template = CaseTemplate.Read(sap, templateName);
         var scenarios = Json.ActiveScenarios(Json.Read(scenariosPath)).ToList();
@@ -71,6 +77,25 @@ internal static class Results
             if (!passes) agg.Failing.Add(frame[k]);
         }
 
+        // Composite beams: read one at a time (VERIFY GetSummaryResults: no frame names in its output).
+        var regionOf = scenarios.SelectMany(s => Json.Strings(s["region"]?["beams"]).Select(b => (Beam: b, Id: (string)s["id"]!)))
+            .ToLookup(x => x.Beam, x => x.Id);
+        var compositeMissing = new List<string>();
+        foreach (var f in composite)
+        {
+            var row = CompositeResult(sap, f);
+            if (row is null) { compositeMissing.Add(f); continue; }
+            members[f] = row;
+            foreach (var sid in regionOf[f].Where(byScenario.ContainsKey))
+            {
+                var agg = byScenario[sid];
+                byScenario[sid] = (Math.Max(agg.Max, row.MaxRatio), agg.Failing);
+                if (!row.Passes) agg.Failing.Add(f);
+            }
+        }
+        if (compositeMissing.Count > 0)
+            Console.Error.WriteLine($"{compositeMissing.Count} of {composite.Count} composite beams have no composite design result (run composite design: --design), e.g. {string.Join(", ", compositeMissing.Take(5))}");
+
         Json.Write(outPath, new
         {
             iteration = 0,
@@ -79,8 +104,42 @@ internal static class Results
             by_scenario = byScenario.ToDictionary(kv => kv.Key, kv => new { max_ratio = kv.Value.Max, failing = kv.Value.Failing }),
         });
         Console.Error.WriteLine($"{cases.Count} cases, {cases.Values.Count(c => !c.ReactionCheckOk)} failing the reaction check; " +
-                                $"{members.Count} designed frames, {members.Values.Count(m => !m.Passes)} over 1.0");
+                                $"{members.Count} designed frames ({composite.Count - compositeMissing.Count} composite), {members.Values.Count(m => !m.Passes)} failing");
         return 0;
+    }
+
+    /// <summary>FrameObj.GetDesignProcedure codes (documented): 1 steel frame, 3 composite beam.</summary>
+    private const int CompositeBeamDesign = 3;
+
+    private static List<string> FramesWithProcedure(cSapModel sap, int procedure)
+    {
+        int n = 0; string[] frames = Array.Empty<string>();
+        Api.Check(sap.FrameObj.GetNameList(ref n, ref frames), "FrameObj.GetNameList");
+        return frames.Take(n).Where(f => { int t = -1; return sap.FrameObj.GetDesignProcedure(f, ref t) == 0 && t == procedure; }).ToList();
+    }
+
+    /// <summary>
+    /// One composite beam's design, or null without a result. The ratio is strength only, the larger
+    /// of the strength bending (StrPMRat) and strength shear (StrShrRat) ratios: deflection and
+    /// construction-stage checks are not collapse checks. The stud ratio and ETABS's overall
+    /// ratio and pass/fail (which include them) are kept in the status text.
+    /// </summary>
+    private static MemberRow? CompositeResult(cSapModel sap, string frame)
+    {
+        int n = 0;
+        string[] sect = Array.Empty<string>(), layout = Array.Empty<string>(), passFail = Array.Empty<string>();
+        bool[] shored = Array.Empty<bool>();
+        double[] fy = Array.Empty<double>(), dia = Array.Empty<double>(), camber = Array.Empty<double>(), reacL = Array.Empty<double>(), reacR = Array.Empty<double>(),
+            mNeg = Array.Empty<double>(), mPos = Array.Empty<double>(), pcc = Array.Empty<double>(), overall = Array.Empty<double>(), stud = Array.Empty<double>(),
+            strPM = Array.Empty<double>(), conPM = Array.Empty<double>(), strShr = Array.Empty<double>(), conShr = Array.Empty<double>(),
+            pcdl = Array.Empty<double>(), sdl = Array.Empty<double>(), ll = Array.Empty<double>(), totCam = Array.Empty<double>(), freq = Array.Empty<double>(), damp = Array.Empty<double>();
+        var ret = sap.DesignCompositeBeam.GetSummaryResults(frame, ref n, ref sect, ref fy, ref dia, ref layout, ref shored, ref camber, ref passFail,
+            ref reacL, ref reacR, ref mNeg, ref mPos, ref pcc, ref overall, ref stud, ref strPM, ref conPM, ref strShr, ref conShr,
+            ref pcdl, ref sdl, ref ll, ref totCam, ref freq, ref damp, eItemType.Objects);
+        if (ret != 0 || n == 0) return null;
+        var strength = Math.Max(strPM[0], strShr[0]);
+        return new MemberRow(sect[0], "CompositeBeam", strength, "", null, strength <= 1.0,
+            $"strength PM {strPM[0]:0.###} shear {strShr[0]:0.###}; studs {stud[0]:0.###}; overall {overall[0]:0.###} {passFail[0]}");
     }
 
     /// <summary>

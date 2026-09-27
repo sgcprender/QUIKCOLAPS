@@ -54,6 +54,11 @@ internal static class Apply
         }
 
         if (!commit) { Console.WriteLine($"\n{scenarios.Count} scenario(s). Dry run — add --commit to write."); return 0; }
+
+        var composite = MirrorCompositeSelection(sap);
+        Console.WriteLine($"composite strength selection: {(composite.Count == 0 ? "matches steel" : "READ BACK DIFFERS")}");
+        foreach (var f in composite) Console.WriteLine($"      {f}");
+        if (composite.Count > 0) failed++;
         Console.WriteLine($"\n{scenarios.Count - failed} of {scenarios.Count} written and verified. The model is not saved.");
         return failed == 0 ? 0 : 1;
     }
@@ -151,6 +156,24 @@ internal static class Apply
         if (!heldAreas.SetEquals(areas)) faults.Add($"group {group} holds {heldAreas.Count} areas; expected {areas.Count}");
         if (!heldBeams.SetEquals(beams)) faults.Add($"group {group} holds {heldBeams.Count} frames; expected {beams.Count}");
         return faults;
+    }
+
+    /// <summary>
+    /// Every combo in the steel frame strength selection (the gravity strength combos and, after
+    /// WriteCombo, the AP combos) is selected for composite beam strength design too: WriteCombo
+    /// sets steel only, and the infill beams are composite. ETABS has no default composite
+    /// combos (AddDesignDefaultCombos covers steel and concrete), so steel's are mirrored. Read back.
+    /// </summary>
+    private static IReadOnlyList<string> MirrorCompositeSelection(cSapModel sap)
+    {
+        int n = 0; string[] steel = Array.Empty<string>();
+        Api.Check(sap.DesignSteel.GetComboStrength(ref n, ref steel), "DesignSteel.GetComboStrength");
+        foreach (var c in steel.Take(n))
+            Api.Check(sap.DesignCompositeBeam.SetComboStrength(c, true), $"DesignCompositeBeam.SetComboStrength {c}");
+        int m = 0; string[] comp = Array.Empty<string>();
+        Api.Check(sap.DesignCompositeBeam.GetComboStrength(ref m, ref comp), "DesignCompositeBeam.GetComboStrength");
+        Console.WriteLine($"          composite strength combos: {string.Join(", ", comp.Take(m))}");
+        return steel.Take(n).Except(comp.Take(m)).Select(c => $"{c} is not in the composite beam strength selection after setting it").ToList();
     }
 
     private static bool Is(string a, string b) => string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
