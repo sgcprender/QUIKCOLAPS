@@ -115,26 +115,59 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 | Step | Owner | State |
 |---|---|---|
 | Existing: attach, stacks, cases, combos, design selection, takeoff | src/, tools/Cli | working on the team model |
-| 1, 5, 6 | tools/Quikcolaps.Bridge | working on the AP2 working copy: export checked against base reactions, 23 scenarios applied, run, converged and within 1% on reactions; steel and composite design results in `web/data/results.json` (one design pass, before any redesign iteration) |
+| 1, 5, 6 | tools/Quikcolaps.Bridge | working on the AP2 working copy (2026-09-26): export checked against base reactions; 30 scenarios (SC24–SC30 = C5) applied and read back; design sections reset to the original analysis sections (`DesignSteel.SetDesignSection(f, "", LastAnalysis: true)`, measured), then run with lean flags: 30/30 finished, 30/30 within 1% on reactions (−0.17% to −0.39%); one design pass (composite, then steel) in `web/data/results.json`: 1,260 frames, none over 1.0 with their design sections; 404 frames designed heavier than their original section (318 governed by an AP combo, 86 by DStlS2) |
 | 3 (stacks), 7 | tools/Quikcolaps.Bridge | written, not yet run |
 | 2, 4 | web | working on the synthetic fixture |
 | 3 (rules, ETABS-region merge) | core | working, tested on the fixture |
 | 3 (intact axial, condition table) | bridge forces, core.conditions | run on AP2 (read-only): Story1 column sum 141,439.9 kN against 141,440.4 kN from the measured base reactions (1.2 SW + 1.2 SDL + 0.5 LL); 200 perimeter rows, 5 symmetry groups (framing symmetric about both axes; a 0.15 × 0.15 m deck area at C29 on every floor, ids 50…455, has no mirror image) |
-| 3 (Claude review) | claude_client | run on AP2 with the API key (claude-opus-5-5, structured output), 2026-09-26: (a) raw geometry, $0.22, the minimum set only; (b) candidates + condition table, $0.47, accepts the 3 rule locations and proposes C5 (lightly loaded adjacent corner). All cited values match the table. **Awaiting approval; scenario set unchanged (23)** |
+| 3 (Claude review) | claude_client | run on AP2 with the API key (claude-opus-5-5, structured output), 2026-09-26: (a) raw geometry, $0.22, the minimum set only; (b) candidates + condition table, $0.47, accepts the 3 rule locations and proposes C5 (lightly loaded adjacent corner). All cited values match the table. C5 approved by the user: 30 scenarios |
 | 8–12 | web, core | not started |
 | 13 | report | tables only; tonnage from the existing Cli tool |
 
-## Next session
+## Build plan (demo)
 
-1. ~~**Design forces for staged combos.**~~ Resolved 2026-09-26: composite beam
-   design was resetting the steel design sections after steel design; the
-   bridge now runs composite first (`tools/Quikcolaps.Bridge/CLAUDE.md`).
-2. **Redesign loop with similarity.** Propose section changes for failing
-   members and similar members (`results.redesign`), apply with approval,
-   re-run with `--accept-design-sections` as a deliberate iteration.
-3. ~~**Claude review with the API key.**~~ Run 2026-09-26 (see status); the
-   decision on the proposed additions is the user's.
-4. **Viewer results view.** Show reaction checks, ratios and failing members
-   per scenario from `results.json`.
-5. **Local server.** Serve the viewer and data locally for the team
-   (`python -m http.server` today).
+Worked one item at a time; after each item: commit, push, update the status
+here, and stop with a short report. Plan written 2026-09-26.
+
+| Item | What | Status |
+|---|---|---|
+| A | **Bridge commands** (a local server will call these; each exits non-zero with a clear message on failure): `apply --commit` unlocks the model itself with read-back; `axial --case "1.2D+0.5L" --out <file>`; `assign-sections --file ap/web/data/propagation.json` sets analysis sections as fixed sections (no auto-select), dry run by default, `--commit` to write, with read-back. | not started |
+| B | **Similarity propagation** (`ap/core`, no ETABS): `python -m core.propagate` writes `ap/web/data/propagation.json`. Equivalent locations: all columns in the same symmetry group from `conditions.json` (G1–G5). For each member whose design section is heavier than its analysis section, record its position relative to the removed column of its governing scenario (bay offsets x/y, story offset, member type and direction). Apply that at every equivalent location, mirrored as needed, to find the counterpart; check it matches (type, direction, original section), else flag and don't copy. Biggest required section wins; never lighter than a member's own design section. Rows: member, counterpart, from → to, source scenario, reason, flags. Hand-checked tests. | not started |
+| C | **Strength-only baseline**: copy the original `progressive collapse.edb` on disk to `baseline strength.edb` (don't open or modify the original). Select only DStlS1 and DStlS2 for steel and composite design; iterate design (composite first, then steel) → accept design sections → run SW, SDL, LL → design, until no sections change (max 3 rounds). Save the tonnage (weigh) to `ap/web/data/baseline_tonnage.json`. Close it and return to AP2. | not started |
+| D | **Collapse redesign in AP2**: iterate accept design sections → run all 30 → design, until no sections change (max 3 rounds). Run propagation, stop and show the list. After approval: assign-sections, run all 30, design once, confirm all ≤ 1.0, save tonnage, compare with the baseline. | not started |
+| E | **Report**: `python -m report.build_report` with baseline vs collapse tonnage, member counts (collapse-driven, propagated, strength) and a short Claude narrative. Mention the stray 0.15 × 0.15 m deck area at C29 and the roof loads (100 psf LL and SDL, as typical floors); both stay as they are. | not started |
+| F | **Demo app** (`ap/server` + `ap/web`, built in a separate chat): FastAPI + uvicorn, one step at a time, live log and status. Buttons: 1 Load model, 2 Claude review (+ approve in 3D), 3 Write to ETABS, 4 Run + design, 5 Redesign round, 6 Copy to similar (propagate, approve in 3D, assign-sections, run + design), 7 Tonnage & report. Results view colored by ratio. A "use cached results" fallback per step. | not started |
+| G | **Extras**: automated validation (SC03 deleted-column copy vs staged case, record in D5); a Claude redesign summary shown in the app. | not started |
+
+Before the plan (done 2026-09-26): Claude review with the condition table,
+C5 approved, 30 scenarios applied, run and designed on AP2 (status above).
+
+## Commands
+
+Every command with its arguments, updated as commands are added. From the repo
+root unless marked `ap/` (run those from `ap/`). Anything that writes to ETABS
+needs the user's approval; pass the working copy with `--model "progressive collapse - AP2"`.
+
+| Step | Command |
+|---|---|
+| export | `dotnet run --project tools/Quikcolaps.Bridge -- export --model "progressive collapse - AP2" --out ap/web/data/building.json` |
+| intact axial | `dotnet run --project tools/Quikcolaps.Bridge -- forces --model "progressive collapse - AP2" --case "1.2D+0.5L" --frames <all column ids> --out <file>` (read-only; A adds `axial`) |
+| rule candidates, scenarios | `ap/`: `python -m core.cli web/data/building.json --out web/data/scenarios.json [--candidates web/data/approved_candidates.json] [--stacks web/data/stacks.json]` |
+| condition table | `ap/`: `python -m core.conditions web/data/building.json --axial web/data/intact_axial.json --out web/data/conditions.json` |
+| Claude review | `ap/`: `python -m claude_client.run_review --mode raw\|conditions [--out web/data/review_<mode>.json]` (costs money) |
+| compare reviews | `ap/`: `python -m claude_client.run_review --compare web/data/review_raw.json web/data/review_conditions.json` |
+| stacks | `dotnet run --project tools/Quikcolaps.Bridge -- stacks --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out ap/web/data/stacks.json` |
+| apply | `dotnet run --project tools/Quikcolaps.Bridge -- apply --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json [--template CS1] [--commit]` |
+| section check | `dotnet run --project tools/Quikcolaps.Bridge -- sections --model "progressive collapse - AP2"` (exit 4 when design ≠ analysis) |
+| run | `dotnet run --project tools/Quikcolaps.Bridge -- results --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out <file> --run [--accept-design-sections]` (lean flags set before, restored after: scratch `flags set/restore` today) |
+| design | `dotnet run --project tools/Quikcolaps.Bridge -- results --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out ap/web/data/results.json --design` (composite first, then steel) |
+| forces | `dotnet run --project tools/Quikcolaps.Bridge -- forces --model "progressive collapse - AP2" --case AP_SC01 --frames 101,102 --out forces.json` |
+| tests | `ap/`: `pytest` |
+| viewer | `ap/`: `python -m http.server 8000`, open `http://localhost:8000/web/` |
+| report | `ap/`: `python -m report.build_report web/data/scenarios.json --out report.md` |
+
+Not yet bridge commands (scratch programs, measured on AP2): unlock
+(`SetModelIsLocked(false)` + read-back), lean run flags (`Analyze.SetRunCaseFlag`,
+saved and restored), design-section reset (`DesignSteel.SetDesignSection(f, "",
+true)`: design section → analysis section; analysis section and auto-select
+list unchanged, measured on frame 78 and 399 more).
