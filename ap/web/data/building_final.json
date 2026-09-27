@@ -165,8 +165,8 @@
     }
   ],
   "sections": {
-    "W14X145": {
-      "mass_kg_per_m": 216.1543334222569
+    "W14X176": {
+      "mass_kg_per_m": 262.22001103683624
     },
     "W14X132": {
       "mass_kg_per_m": 196.41190015886573
@@ -180,11 +180,11 @@
     "W14X74": {
       "mass_kg_per_m": 110.35513977998129
     },
-    "W14X109": {
-      "mass_kg_per_m": 161.98919600731196
-    },
     "W14X43": {
       "mass_kg_per_m": 63.78324592787908
+    },
+    "W14X109": {
+      "mass_kg_per_m": 161.98919600731196
     },
     "W14X68": {
       "mass_kg_per_m": 101.24324750456998
@@ -195,17 +195,14 @@
     "W14X61": {
       "mass_kg_per_m": 90.61270651659012
     },
-    "W14X120": {
-      "mass_kg_per_m": 178.69433184556598
-    },
-    "W14X176": {
-      "mass_kg_per_m": 262.22001103683624
-    },
     "W14X193": {
       "mass_kg_per_m": 287.53082291297875
     },
     "W14X211": {
       "mass_kg_per_m": 313.85406726416693
+    },
+    "W14X145": {
+      "mass_kg_per_m": 216.1543334222569
     },
     "W14X99": {
       "mass_kg_per_m": 147.3089251191493
@@ -215,6 +212,9 @@
     },
     "W14X257": {
       "mass_kg_per_m": 382.69947556727453
+    },
+    "W14X120": {
+      "mass_kg_per_m": 178.69433184556598
     },
     "W14X283": {
       "mass_kg_per_m": 421.67812585653394
@@ -364,7 +364,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X145",
+      "section": "W14X159",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -376,8 +376,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X145",
-      "splice_at_bottom": false,
+      "section": "W14X176",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -724,7 +724,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X145",
+      "section": "W14X159",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -736,8 +736,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X145",
-      "splice_at_bottom": false,
+      "section": "W14X176",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -1336,8 +1336,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X109",
-      "splice_at_bottom": true,
+      "section": "W14X132",
+      "splice_at_bottom": false,
       "lands_on_beam": false
     },
     {
@@ -1696,8 +1696,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X109",
-      "splice_at_bottom": true,
+      "section": "W14X132",
+      "splice_at_bottom": false,
       "lands_on_beam": false
     },
     {
@@ -1924,7 +1924,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X120",
+      "section": "W14X132",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -2044,7 +2044,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X120",
+      "section": "W14X132",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -2404,7 +2404,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X120",
+      "section": "W14X132",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -2524,7 +2524,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X120",
+      "section": "W14X132",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -2776,8 +2776,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X109",
-      "splice_at_bottom": true,
+      "section": "W14X132",
+      "splice_at_bottom": false,
       "lands_on_beam": false
     },
     {
@@ -3136,8 +3136,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X109",
-      "splice_at_bottom": true,
+      "section": "W14X132",
+      "splice_at_bottom": false,
       "lands_on_beam": false
     },
     {
@@ -3724,7 +3724,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X145",
+      "section": "W14X159",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -3736,8 +3736,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X145",
-      "splice_at_bottom": false,
+      "section": "W14X176",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -4084,7 +4084,7 @@
       "story": "Story9",
       "bottom_z": 29.2608,
       "top_z": 32.9184,
-      "section": "W14X145",
+      "section": "W14X159",
       "splice_at_bottom": true,
       "lands_on_beam": false
     },
@@ -4096,8 +4096,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X145",
-      "splice_at_bottom": false,
+      "section": "W14X176",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     }
   ],

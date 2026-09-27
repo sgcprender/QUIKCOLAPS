@@ -13,6 +13,8 @@ Deterministic engineering rules. No ETABS, no network, no LLM calls here.
 - `propagate.py`: copies collapse-driven section increases to the symmetry-equivalent
   locations (counterpart by the plan symmetry, checked for type, direction, original section);
   writes `assignments` for `bridge assign-sections` and detailed rows
+- `stepup.py`: steps named members (and their symmetry images) to the next heavier W14
+  in `propagation.json`'s assignments, for members over 1.0 after the final run
 - `loads.py`: increment load spec for one scenario
 - `scenarios.py`: candidates → scenarios
 - `cli.py`: building JSON → web/data/scenarios.json

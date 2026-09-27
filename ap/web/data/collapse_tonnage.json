@@ -2,60 +2,78 @@
  "model": "progressive collapse - AP2",
  "date": "2026-09-26",
  "units": "short tons (2000 lb)",
- "state": "658 fixed sections from propagation.json; all 30 AP cases run; design once (composite, then steel)",
+ "state": "658 fixed sections (propagation.json incl. two step-up rounds on frames 9, 29, 46, 61 and their symmetry images); all 30 AP cases run; design once (composite, then steel)",
  "tonnage": {
-  "total": 1155.1,
-  "columns": 372.03,
+  "total": 1157.02,
+  "columns": 373.95,
   "steel_beams": 505.87,
   "composite_beams": 277.2
  },
  "baseline_total": 790.18,
  "premium": {
-  "short_tons": 364.92,
-  "percent": 46.2
+  "short_tons": 366.84,
+  "percent": 46.4
  },
  "split_over_original_sections": {
   "original": 776.74,
-  "collapse_driven": 175.73,
-  "propagated": 203.31,
+  "collapse_driven": 176.55,
+  "propagated": 204.41,
   "strength_and_other": -0.67
  },
  "split_of_premium_over_baseline": {
-  "collapse_driven": 175.73,
-  "propagated": 203.31,
+  "collapse_driven": 176.55,
+  "propagated": 204.41,
   "strength": -14.11,
-  "note": "strength = unassigned frames' change over the original (-0.67) less the baseline's own strength redesign over the original (13.44)"
+  "note": "strength = unassigned frames' change over the original less the baseline's own strength redesign over the original (13.44)"
  },
  "check": {
   "all_at_or_below_1": false,
-  "steel_max": 1.144,
+  "steel_max": 1.039,
   "composite_max": 0.587,
   "over_1": [
    {
     "frame": "9",
-    "section": "W14X109",
-    "ratio": 1.144,
+    "location": [
+     "C9",
+     "Story10"
+    ],
+    "section": "W14X132",
+    "ratio": 1.039,
     "governing_combo": "AP_SC15_CMB(C)"
    },
    {
-    "frame": "29",
-    "section": "W14X145",
-    "ratio": 1.097,
-    "governing_combo": "AP_SC22_CMB(C)"
-   },
-   {
-    "frame": "46",
-    "section": "W14X120",
-    "ratio": 1.027,
-    "governing_combo": "AP_SC14_CMB(C)"
-   },
-   {
-    "frame": "61",
-    "section": "W14X145",
-    "ratio": 1.02,
+    "frame": "422",
+    "location": null,
+    "section": "W24X76",
+    "ratio": 1.009,
     "governing_combo": "AP_SC21_CMB(C)"
    }
-  ]
+  ],
+  "step_up_rounds": [
+   {
+    "frames": [
+     "9",
+     "29",
+     "46",
+     "61"
+    ],
+    "with_images": 16,
+    "tons": 1156.33,
+    "steel_max": 1.094,
+    "over": 2
+   },
+   {
+    "frames": [
+     "9",
+     "29"
+    ],
+    "with_images": 8,
+    "tons": 1157.02,
+    "steel_max": 1.039,
+    "over": 2
+   }
+  ],
+  "note": "max 2 step-up rounds reached; frames 9 and 29 still over 1.0"
  },
  "reactions_vs_fresh_export": [
   {
@@ -70,7 +88,7 @@
    "scenario": "SC02",
    "status": 4,
    "expected_kn": 6410.1,
-   "from_reactions_kn": 6376.7,
+   "from_reactions_kn": 6376.6,
    "diff_percent": -0.52,
    "ok": true
   },
@@ -86,7 +104,7 @@
    "scenario": "SC04",
    "status": 4,
    "expected_kn": 4000.6,
-   "from_reactions_kn": 3976.4,
+   "from_reactions_kn": 3976.3,
    "diff_percent": -0.61,
    "ok": true
   },
@@ -94,31 +112,31 @@
    "scenario": "SC05",
    "status": 4,
    "expected_kn": 2397.4,
-   "from_reactions_kn": 2382.2,
-   "diff_percent": -0.63,
+   "from_reactions_kn": 2382.1,
+   "diff_percent": -0.64,
    "ok": true
   },
   {
    "scenario": "SC06",
    "status": 4,
    "expected_kn": 1600.3,
-   "from_reactions_kn": 1586.4,
-   "diff_percent": -0.87,
+   "from_reactions_kn": 1585.5,
+   "diff_percent": -0.92,
    "ok": true
   },
   {
    "scenario": "SC07",
    "status": 4,
    "expected_kn": 801.9,
-   "from_reactions_kn": 790.2,
-   "diff_percent": -1.45,
+   "from_reactions_kn": 788.2,
+   "diff_percent": -1.7,
    "ok": false
   },
   {
    "scenario": "SC08",
    "status": 4,
    "expected_kn": 15823.4,
-   "from_reactions_kn": 15770.7,
+   "from_reactions_kn": 15770.6,
    "diff_percent": -0.33,
    "ok": true
   },
@@ -134,7 +152,7 @@
    "scenario": "SC10",
    "status": 4,
    "expected_kn": 11063.8,
-   "from_reactions_kn": 11024.2,
+   "from_reactions_kn": 11024.1,
    "diff_percent": -0.36,
    "ok": true
   },
@@ -182,7 +200,7 @@
    "scenario": "SC16",
    "status": 4,
    "expected_kn": 1578.1,
-   "from_reactions_kn": 1568.0,
+   "from_reactions_kn": 1567.9,
    "diff_percent": -0.64,
    "ok": true
   },
@@ -295,7 +313,7 @@
    "status": 4,
    "expected_kn": 1583.2,
    "from_reactions_kn": 1574.4,
-   "diff_percent": -0.55,
+   "diff_percent": -0.56,
    "ok": true
   }
  ],

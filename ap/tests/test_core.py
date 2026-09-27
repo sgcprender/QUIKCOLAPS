@@ -383,3 +383,18 @@ def test_propagate_after_redesign_rounds(b):
     assert out["summary"]["frames_changing_now"] == 1
     # added over the original: (62 - 44) x 2 frames = 36 lb/ft
     assert out["summary"]["added_lb_per_ft_over_original"] == pytest.approx(36.0)
+
+
+def test_stepup_member_and_mirror(b):
+    from core.stepup import next_heavier, step_up
+    # W14 ladder: 90 -> 99, 61 -> 68; nothing after 730
+    assert next_heavier("W14X90") == "W14X99" and next_heavier("W14X61") == "W14X68"
+    assert next_heavier("W14X730") is None and next_heavier("W21X44") is None
+    current = {c["id"]: c["section"] for c in b["columns"]} | {m["id"]: m["section"] for m in b["beams"]}
+    prop = {"assignments": [{"frame": "C_D2_S2", "section": "W14X120", "from": "W14X90"}], "summary": {}}
+    # C_A2_S2 is W14X90 -> W14X99; its mirror about y = 10.5 is C_D2_S2, already assigned W14X120:
+    # heavier, so it keeps W14X120
+    out, msgs = step_up(b, prop, ["C_A2_S2"], current)
+    a = {x["frame"]: (x["from"], x["section"]) for x in out["assignments"]}
+    assert a == {"C_A2_S2": ("W14X90", "W14X99"), "C_D2_S2": ("W14X90", "W14X120")}
+    assert msgs == []
