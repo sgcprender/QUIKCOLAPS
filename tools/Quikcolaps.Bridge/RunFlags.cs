@@ -32,6 +32,31 @@ internal static class RunFlags
         return original;
     }
 
+    /// <summary>
+    /// run --cases A,B [--commit]: analysis of only these cases (lean flags, restored afterwards),
+    /// no design, so no section changes. For the intact gravity run before `axial` (app step 1).
+    /// RunAnalysis runs under Watch; every case must finish (GetCaseStatus 4). The section guard
+    /// applies as for `results --run`: a pending design section would be adopted, so that stops it.
+    /// </summary>
+    public static int RunCases(cSapModel sap, int pid, string casesCsv, bool commit)
+    {
+        var cases = casesCsv.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+        if (cases.Count == 0) { Console.Error.WriteLine("run --cases A,B [--commit]"); return 2; }
+        Console.WriteLine($"cases     {string.Join(", ", cases)}");
+        if (!commit) { Console.WriteLine("Dry run — add --commit to run the analysis."); return 0; }
+        if (!SectionGuard.Allows(sap, false)) return SectionGuard.ExitSectionsDiffer;
+        var saved = Only(sap, cases);
+        try { Api.Check(Watch.During(pid, "Analyze.RunAnalysis", () => sap.Analyze.RunAnalysis()), "Analyze.RunAnalysis"); }
+        finally { Restore(sap, saved); }
+        int n = 0; string[] names = Array.Empty<string>(); int[] status = Array.Empty<int>();
+        Api.Check(sap.Analyze.GetCaseStatus(ref n, ref names, ref status), "Analyze.GetCaseStatus");
+        var of = names.Take(n).Zip(status).ToDictionary(p => p.First, p => p.Second);
+        var bad = cases.Where(c => of.GetValueOrDefault(c, -1) != 4).ToList();
+        if (bad.Count > 0) throw new InvalidOperationException($"case(s) did not finish: {string.Join(", ", bad)}");
+        Console.WriteLine($"{cases.Count} of {cases.Count} case(s) finished.");
+        return 0;
+    }
+
     public static void Restore(cSapModel sap, Dictionary<string, bool> saved)
     {
         foreach (var (c, v) in saved) Api.Check(sap.Analyze.SetRunCaseFlag(c, v), $"Analyze.SetRunCaseFlag {c}");

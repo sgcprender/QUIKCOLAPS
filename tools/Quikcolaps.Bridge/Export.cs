@@ -161,7 +161,7 @@ internal static class Export
     }
 
     /// <summary>Load pattern name → sdl | live | roof_live | snow; anything else is ignored and reported.</summary>
-    private static Dictionary<string, string> PatternKinds(cSapModel sap, List<string> flags)
+    internal static Dictionary<string, string> PatternKinds(cSapModel sap, List<string> flags)
     {
         var kinds = new Dictionary<string, string>();
         int n = 0; string[] names = Array.Empty<string>();
@@ -315,7 +315,7 @@ internal static class Export
         return 0;
     }
 
-    private static bool IsDeck(cSapModel sap, string prop)
+    internal static bool IsDeck(cSapModel sap, string prop)
     {
         eDeckType deck = default; eShellType shell = default; string mat = "", notes = "", guid = ""; double t = 0; int color = 0;
         return sap.PropArea.GetDeck(prop, ref deck, ref shell, ref mat, ref t, ref color, ref notes, ref guid) == 0;   // VERIFY

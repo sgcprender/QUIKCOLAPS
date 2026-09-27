@@ -17,6 +17,9 @@ dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/da
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json --commit
 dotnet run --project tools/Quikcolaps.Bridge -- autoselect --frames 9,422 [--commit]            # back on (a copy of) their auto-select list
 dotnet run --project tools/Quikcolaps.Bridge -- autoselect --cleanup [--commit]                 # delete FIN_* lists no frame uses
+dotnet run --project tools/Quikcolaps.Bridge -- check-model --out check_model.json                # read-only readiness check
+dotnet run --project tools/Quikcolaps.Bridge -- run     --cases SW,SDL,LL,1.2D+0.5L [--commit]    # analysis only, lean flags
+dotnet run --project tools/Quikcolaps.Bridge -- scenario-ratios --scenarios s.json --out r.json [--commit]
 dotnet run --project tools/Quikcolaps.Bridge -- open    --file "<path>.EDB"                 # switch model (never saves)
 dotnet run --project tools/Quikcolaps.Bridge -- design-select --combos DStlS1,DStlS2 [--commit]
 dotnet run --project tools/Quikcolaps.Bridge -- iterate --cases SW,SDL,LL --max-rounds 3 --out rounds.json [--commit]
@@ -77,6 +80,9 @@ still available (420, sections match).
 | `assign-sections` | `propagation.json` (`assignments`: frame, section, optional `from`) | — | with `--commit`: unlocks, then fixed analysis sections (auto-select list removed), each read back; refuses the whole file if a frame, section or `from` doesn't match |
 
 | `autoselect` | frames | — | with `--commit`: unlocks, defines `FIN_<list>_<section>` (the frame's original steel auto-select list starting at its current section) and assigns it, read back |
+| `check-model` | open model | `check_model.json` | none; exit 6 if an item fails |
+| `run` | cases | — | with `--commit`: those cases only (lean flags, restored), no design; section guard applies |
+| `scenario-ratios` | `scenarios.json` | `scenario_ratios.json` | with `--commit`: one steel design per scenario combo (auto-select design sections pinned), then selection and design restored |
 | `open` | a model file | — | opens it in the running ETABS; the previous model is closed unsaved (bridge never saves) |
 | `design-select` | combos | — | with `--commit`: steel and composite strength selection = exactly these, read back |
 | `iterate` | cases, design selection | `rounds.json`, `<rounds>_roundN.csv` (takeoff per round) | with `--commit --accept-design-sections`: unlock, lean run → composite → steel design, repeated until no auto-select frame would change (or, with `--weight-tol`, the weight changes less than that between rounds and nothing is over 1.0) or `--max-rounds`; flags restored |
@@ -241,6 +247,16 @@ seen on the working copy, ETABS 23, 2026-09-26.
   strength only (DStlS1, DStlS2).
 - `PropFrame.Delete` (measured 2026-09-27, AP2 unlocked): deleting the two unused
   FIN_* lists answered 0; `GetNameList` no longer lists them.
+- Design database tables (measured 2026-09-27, ETABS 23.3.0): 13 steel/composite
+  design tables; "Steel Frame Design Summary - AISC 360-16" has one row per frame
+  with the governing PMM combo only, and no table gives the ratio per combination.
+  So `scenario-ratios` runs one steel design per scenario combo instead.
+- `DesignSteel.SetDesignSection(frame, section, LastAnalysis: false)` pins a design
+  section: in 30 single-combo designs on AP2 no auto-select frame moved (182
+  frames). After the batch and a reset (`SetDesignSection(f, "", true)`) + full steel
+  design, all 1,260 sections and ratios were identical to before.
+- `SapModel.GetVersion` on ETABS 23.3.0: the version string is "23.3.0"; the
+  number is not the major version (it is not >= 23), so `check-model` reads the string.
 - Section lists on a locked model (measured 2026-09-26, AP2 locked with
   results): `PropFrame.SetAutoSelectSteel` (new list) and `FrameObj.SetSection`
   (assigning it) both answer 1 and change nothing; the lock and the results

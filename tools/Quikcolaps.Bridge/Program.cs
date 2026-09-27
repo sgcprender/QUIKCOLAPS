@@ -19,6 +19,9 @@ namespace Quikcolaps.Bridge;
 ///   assign-sections --file propagation.json [--commit]                fixed analysis sections from a file
 ///   autoselect --frames F1,F2 [--commit]                              fixed frames back on (a copy of) their auto-select list
 ///   autoselect --cleanup [--commit]                                   delete FIN_* lists no frame uses
+///   run      --cases SW,SDL,LL,1.2D+0.5L [--commit]                  analysis of these cases only (lean flags), no design
+///   check-model [--template CS1] --out check_model.json               read-only readiness check (app step 0)
+///   scenario-ratios --scenarios scenarios.json --out ratios.json [--commit]   each member's ratio per scenario combo
 ///   open     --file PATH                                               open another model file (never saves)
 ///   design-select --combos DStlS1,DStlS2 [--commit]                   steel + composite strength selection
 ///   iterate  --cases SW,SDL,LL [--max-rounds 3] [--weight-tol 0.005] --out rounds.json [--commit --accept-design-sections]
@@ -56,6 +59,9 @@ internal static class Program
                 "iterate" => Iterate.Run(sap, inst.ProcessId, inst.ModelPath, Arg("--cases", ""), int.TryParse(Arg("--max-rounds", "3"), out var mr) ? mr : 3,
                     double.TryParse(Arg("--weight-tol", ""), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var wt) ? wt : null,
                     Arg("--out", "rounds.json"), args.Contains("--commit"), args.Contains(SectionGuard.AcceptFlag)),
+                "run" => RunFlags.RunCases(sap, inst.ProcessId, Arg("--cases", ""), args.Contains("--commit")),
+                "check-model" => CheckModel.Run(sap, inst.ModelPath, Arg("--template", "CS1"), Arg("--out", "check_model.json")),
+                "scenario-ratios" => ScenarioRatios.Run(sap, inst.ProcessId, Arg("--scenarios", "scenarios.json"), Arg("--out", "scenario_ratios.json"), args.Contains("--commit")),
                 "autoselect" => args.Contains("--cleanup") ? AutoSelect.Cleanup(sap, args.Contains("--commit"))
                     : AutoSelect.Run(sap, Arg("--frames", ""), args.Contains("--commit")),
                 "assign-sections" => AssignSections.Run(sap, Arg("--file", "ap/web/data/propagation.json"), args.Contains("--commit")),
@@ -71,7 +77,7 @@ internal static class Program
 
     private static int Usage()
     {
-        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|autoselect|open|design-select|iterate|sections [--model NAME] ... (see Program.cs)");
+        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|autoselect|run|check-model|scenario-ratios|open|design-select|iterate|sections [--model NAME] ... (see Program.cs)");
         return 2;
     }
 }
