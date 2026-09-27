@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import subprocess
 import threading
+from datetime import datetime
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -104,6 +105,7 @@ def project(pid: str):
     p = _p(pid)
     return {**p.summary(), "steps": [{"n": n, "name": name, **p.step(n)} for n, name in STEPS],
             "files": sorted(x.name for x in p.folder.glob("*.json")),
+            "file_times": {x.name: datetime.fromtimestamp(x.stat().st_mtime).isoformat(timespec="seconds") for x in p.folder.glob("*.json")},
             "strength_combos": p.state.get("strength_combos"), "notes": p.state.get("notes", []), "etabs": _etabs_running()}
 
 

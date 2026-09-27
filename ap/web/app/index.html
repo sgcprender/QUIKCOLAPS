@@ -59,17 +59,12 @@
   <main class="workspace">
     <div class="viewer-wrap">
       <div class="viewer-tools">
-        <label>View
-          <select id="mode">
-            <option value="changed">What changed</option>
-            <option value="ratio">Ratio</option>
-            <option value="heat">Scenario heat map</option>
-            <option value="weight">Added weight</option>
-            <option value="sizes">Sizes</option>
-          </select>
-        </label>
+        <label>View <select id="mode"></select></label>
         <label class="toggle" id="ratio-toggle-wrap">
-          <input type="checkbox" id="ratio-original"> original design
+          <select id="ratio-basis">
+            <option value="latest">latest design</option>
+            <option value="first">first design (step 4)</option>
+          </select>
         </label>
         <label class="toggle" id="weight-toggle-wrap">
           <select id="weight-basis">
@@ -80,10 +75,7 @@
         <label class="toggle" id="sizes-toggle-wrap">
           <input type="checkbox" id="sizes-before"> before
         </label>
-        <label class="loc-toggle hidden" id="loc-toggle-wrap">
-          <input type="checkbox" id="show-loc"> locations
-        </label>
-        <label>Scenario
+        <label id="scenario-wrap">Scenario
           <span class="stepper">
             <button id="sc-prev" class="secondary" title="Previous scenario">‹</button>
             <select id="scenario"></select>
@@ -92,11 +84,7 @@
           </span>
         </label>
         <label>Group <select id="group"><option value="">all</option></select></label>
-        <label class="stories">Stories
-          <input type="range" id="story-min" min="0" max="9" value="0">
-          <input type="range" id="story-max" min="0" max="9" value="9">
-          <span id="story-label" class="mono"></span>
-        </label>
+        <label>Stories <select id="story-min"></select> to <select id="story-max"></select></label>
       </div>
       <div id="viewer" class="viewer"></div>
       <div id="legend" class="legend"></div>

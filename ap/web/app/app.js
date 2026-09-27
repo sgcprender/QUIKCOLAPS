@@ -1,5 +1,5 @@
 // QUIKCOLAPS demo app: landing page, project steps, results, live log.
-import { Viewer } from "./viewer.js";
+import { Viewer, MODES, SCENARIO_MODES } from "./viewer.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -26,7 +26,7 @@ const STEP_HELP = {
   7: "Computes the strength-only baseline on the baseline copy if it is missing, and the premium. The report comes later (item E).",
 };
 
-let S = { project: null, step: null, files: {}, viewer: null, vdata: null, job: null, logLen: 0, poll: null, etabs: false };
+let S = { project: null, step: null, files: {}, viewer: null, vdata: null, job: null, logLen: 0, poll: null, etabs: false, render: 0 };
 
 // ---------- landing ----------
 let PROJECTS = [];
@@ -38,6 +38,7 @@ async function showLanding() {
   $("#project").classList.add("hidden");
   $("#landing").classList.remove("hidden");
   S.project = null;
+  for (const k in PREVIEWS) delete PREVIEWS[k];   // projects may have moved on since
   PROJECTS = await api("/api/projects");
   $("#project-list").innerHTML = PROJECTS.length ? PROJECTS.map(row).join("") : `<p class="muted">No projects yet.</p>`;
   $("#preview").classList.toggle("hidden", !PROJECTS.length);
@@ -115,15 +116,21 @@ $("#create").onclick = async () => {
 
 // ---------- project ----------
 async function openProject(id, step) {
+  stopPlay();
   $("#landing").classList.add("hidden");
   $("#project").classList.remove("hidden");
   if (!S.viewer) initViewer();
-  S.files = {}; S.vdata = null; S.locStep = null;
+  S.files = {}; S.vdata = null; S.render++;
+  $("#log").textContent = ""; S.jobId = undefined;
+  // nothing of the previous project stays clickable while this one loads
+  $("#stepbar").innerHTML = ""; $("#tab-step").innerHTML = `<p class="muted">Loading…</p>`; $("#tab-results").innerHTML = "";
+  $("#p-name").textContent = "…"; $("#p-model").textContent = "";
   await refresh(id);
   const p = S.project;
   S.step = step ?? (p.steps.find((s) => s.status === "awaiting" || s.status === "failed" || s.status === "running")?.n ?? Math.min(p.last_completed + 1, 7));
-  if (p.last_completed >= 6) switchTab("results");
-  await loadViewer();
+  switchTab(p.last_completed >= 6 ? "results" : "step");
+  await loadViewer(true);
+  showStepView(S.step);
   renderAll();
   startPolling();
 }
@@ -140,38 +147,94 @@ async function file(name, force = false) {
   return S.files[name];
 }
 
-async function loadViewer() {
+// ---------- viewer ----------
+// Which views have data, and the one each step opens with (so the 3D view matches the step).
+const has = (...names) => names.some((n) => S.project.files.includes(n));
+function available() {
+  const b = S.vdata?.members.length > 0, sc = S.viewer.extra.scenarios;
+  return {
+    model: b ? "" : "after step 1",
+    locations: b && sc?.candidates?.length ? "" : "after step 1",
+    influence: b && sc?.scenarios?.length ? "" : "after step 1",
+    ratio: b && has("results.json", "results_original.json") ? "" : "after step 4",
+    heat: b && has("scenario_ratios.json") ? "" : "compute ratios in step 6",
+    changed: b && has("building_final.json", "building_current.json") ? "" : "after step 6",
+    weight: b && has("building_final.json", "building_current.json") ? "" : "after step 6",
+    sizes: b && has("building_final.json", "building_current.json") ? "" : "after step 6",
+  };
+}
+const STEP_VIEW = { 0: ["model"], 1: ["locations"], 2: ["locations"], 3: ["influence"], 4: ["ratio", "first"], 5: ["ratio", "latest"], 6: ["changed"], 7: ["weight"] };
+const FALLBACK = ["changed", "ratio", "influence", "locations", "model"];
+
+function fillModes() {
+  const av = available(), cur = $("#mode").value;
+  $("#mode").innerHTML = Object.entries(MODES).map(([k, label]) =>
+    `<option value="${k}" ${av[k] ? "disabled" : ""}>${label}${av[k] ? ` (${av[k]})` : ""}</option>`).join("");
+  if (cur && !av[cur]) $("#mode").value = cur;
+  else $("#mode").value = FALLBACK.find((k) => !av[k]) || "model";
+}
+
+// Clicking a step shows its view; the user can switch views freely afterwards.
+function showStepView(n) {
+  const [mode, basis] = STEP_VIEW[n] || ["model"];
+  const av = available();
+  if (!av[mode]) {
+    $("#mode").value = mode;
+    if (basis) $("#ratio-basis").value = basis === "first" && !has("results_original.json") ? "latest" : basis;
+  }
+  if (!SCENARIO_MODES.has($("#mode").value)) stopPlay();
+  applyViewerControls();
+}
+
+// Reloads the member data; keeps the view, scenario and story filter unless the project changed.
+async function loadViewer(fresh = false) {
   S.vdata = await api(`/api/projects/${S.project.id}/viewer`);
-  const [scenarios, ratios] = [await file("scenarios.json", true), await file("scenario_ratios.json", true)];
+  const [scenarios, ratios, review] = [await file("scenarios.json", true), await file("scenario_ratios.json", true), await file("review_conditions.json", true)];
   $("#viewer-empty").classList.toggle("hidden", S.vdata.members.length > 0);
-  S.viewer.setData(S.vdata, { scenarios, scenarioRatios: ratios });
-  const stories = S.vdata.stories || [];
-  for (const id of ["#story-min", "#story-max"]) { $(id).max = Math.max(0, stories.length - 1); }
-  $("#story-max").value = Math.max(0, stories.length - 1);
+  S.viewer.setData(S.vdata, { scenarios, scenarioRatios: ratios, review }, S.project.id);
+
+  const stories = S.vdata.stories || [], keep = !fresh && S.storyList === stories.join("|");
+  const [lo, hi] = [$("#story-min").value, $("#story-max").value];
+  const opts = stories.map((s, i) => `<option value="${i}">${s}</option>`).join("");
+  $("#story-min").innerHTML = opts; $("#story-max").innerHTML = opts;
+  $("#story-min").value = keep ? lo : 0;
+  $("#story-max").value = keep ? hi : Math.max(0, stories.length - 1);
+  S.storyList = stories.join("|");
+
+  const sc = $("#scenario").value, g = $("#group").value;
   $("#scenario").innerHTML = (scenarios?.scenarios || []).map((s) => `<option value="${s.id}">${s.id} · ${s.location_id} ${s.story}</option>`).join("");
-  $("#group").innerHTML = `<option value="">all</option>` + Object.entries(S.vdata.groups || {}).map(([g, l]) => `<option value="${g}">${g}: ${l.join(" ")}</option>`).join("");
+  if (!fresh && [...$("#scenario").options].some((o) => o.value === sc)) $("#scenario").value = sc;
+  $("#group").innerHTML = `<option value="">all</option>` + Object.entries(S.vdata.groups || {}).map(([k, l]) => `<option value="${k}">${k}: ${l.join(" ")}</option>`).join("");
+  if (!fresh && [...$("#group").options].some((o) => o.value === g)) $("#group").value = g;
+  if (fresh) $("#mode").value = "";
+  fillModes();
   applyViewerControls();
 }
 
 function initViewer() {
   S.viewer = new Viewer($("#viewer"), $("#legend"), $("#info"));
-  for (const id of ["#ratio-original", "#sizes-before", "#weight-basis", "#scenario", "#group", "#story-min", "#story-max", "#show-loc"]) $(id).oninput = applyViewerControls;
-  // picking a view is a request to see it: the step's location highlight gives way
-  $("#mode").oninput = () => { $("#show-loc").checked = false; applyViewerControls(); };
-  $("#sc-prev").onclick = () => stepScenario(-1);
-  $("#sc-next").onclick = () => stepScenario(1);
+  for (const id of ["#ratio-basis", "#sizes-before", "#weight-basis", "#scenario", "#group"]) $(id).oninput = applyViewerControls;
+  // the story range stays ordered: moving one end past the other moves both
+  $("#story-min").oninput = () => { if (+$("#story-min").value > +$("#story-max").value) $("#story-max").value = $("#story-min").value; applyViewerControls(); };
+  $("#story-max").oninput = () => { if (+$("#story-max").value < +$("#story-min").value) $("#story-min").value = $("#story-max").value; applyViewerControls(); };
+  $("#mode").oninput = () => { if (!SCENARIO_MODES.has($("#mode").value)) stopPlay(); applyViewerControls(); };
+  $("#scenario").addEventListener("input", () => stopPlay());
+  $("#sc-prev").onclick = () => { stopPlay(); stepScenario(-1); };
+  $("#sc-next").onclick = () => { stopPlay(); stepScenario(1); };
   $("#sc-play").onclick = () => (S.play ? stopPlay() : startPlay());
 }
 
-// Step through the scenarios; the heat map is the view that shows one scenario.
+// Step through the scenarios. They show in the scenario views: the heat map when its ratios exist,
+// otherwise the influence area.
 function stepScenario(d) {
   const sel = $("#scenario"), n = sel.options.length;
   if (!n) return;
   sel.selectedIndex = (sel.selectedIndex + d + n) % n;
-  if ($("#mode").value !== "heat") { $("#mode").value = "heat"; $("#show-loc").checked = false; }
+  if (!SCENARIO_MODES.has($("#mode").value)) $("#mode").value = available().heat ? "influence" : "heat";
   applyViewerControls();
 }
 function startPlay() {
+  if (!$("#scenario").options.length) return;
   stepScenario(0);
   S.play = setInterval(() => stepScenario(1), 1600);
   $("#sc-play").textContent = "❚❚"; $("#sc-play").classList.add("on"); $("#sc-play").title = "Stop";
@@ -182,26 +245,26 @@ function stopPlay() {
 }
 
 function applyViewerControls() {
-  const mode = $("#mode").value;
-  let lo = +$("#story-min").value, hi = +$("#story-max").value;
-  if (lo > hi) [lo, hi] = [hi, lo];
-  const st = S.vdata?.stories || [];
-  $("#story-label").textContent = st.length ? `${st[lo]}–${st[hi]}` : "";
+  if (!S.viewer || !S.vdata) return;
+  const mode = $("#mode").value || "model";
   $("#ratio-toggle-wrap").classList.toggle("hidden", mode !== "ratio");
   $("#sizes-toggle-wrap").classList.toggle("hidden", mode !== "sizes");
   $("#weight-toggle-wrap").classList.toggle("hidden", mode !== "weight");
-  const showLoc = !!S.locations && $("#show-loc").checked;
-  S.viewer.set({ mode, ratioOriginal: $("#ratio-original").checked, sizesBefore: $("#sizes-before").checked,
+  $("#scenario-wrap").classList.toggle("dim", !SCENARIO_MODES.has(mode));
+  $("#ratio-basis").querySelector('[value="first"]').disabled = !has("results_original.json");
+  S.viewer.set({ mode, ratioBasis: $("#ratio-basis").value, sizesBefore: $("#sizes-before").checked,
     weightBasis: $("#weight-basis").value, scenario: $("#scenario").value, group: $("#group").value,
-    storyMin: lo, storyMax: hi, highlight: showLoc ? S.locations : null });
-  viewerNote(mode, showLoc);
+    storyMin: +$("#story-min").value || 0, storyMax: $("#story-max").value === "" ? 99 : +$("#story-max").value });
+  viewerNote(mode);
 }
 
-function viewerNote(mode, showLoc) {
+// The per-scenario ratios are one design per scenario at the time they were computed: say when,
+// and flag them when the design has changed since.
+function viewerNote(mode) {
   let t = "";
-  if (S.vdata?.members.length && mode === "heat" && !showLoc && !S.viewer.extra?.scenarioRatios)
-    t = `<b>No per-scenario ratios for this project yet.</b> ETABS reports only each member's governing ratio, so the heat map needs
-      one design per scenario: step 6 → "Compute per-scenario ratios" (ETABS, about 5 min). Until then use the Ratio view.`;
+  const ft = S.project.file_times || {};
+  if (mode === "heat" && ft["scenario_ratios.json"] && ft["results.json"] > ft["scenario_ratios.json"])
+    t = `Per-scenario ratios computed ${day(ft["scenario_ratios.json"])}, before the latest design (${day(ft["results.json"])}): they show the design at that time. Recompute in step 6.`;
   $("#viewer-note").innerHTML = t;
   $("#viewer-note").classList.toggle("hidden", !t);
 }
@@ -218,9 +281,10 @@ function renderAll() {
     return `<div class="step ${s.status} ${locked ? "locked" : ""} ${s.n === S.step ? "selected" : ""}" data-step="${s.n}" title="${esc(s.message || "")}">
       <span class="n">${s.status === "done" ? "✓" : s.status === "failed" ? "!" : s.n}</span><span class="t">${esc(s.name)}</span></div>`;
   }).join("");
-  document.querySelectorAll(".step").forEach((el) => (el.onclick = () => { S.step = +el.dataset.step; switchTab("step"); renderAll(); }));
-  renderStep();
-  renderResults();
+  document.querySelectorAll(".step").forEach((el) => (el.onclick = () => { S.step = +el.dataset.step; switchTab("step"); showStepView(S.step); renderAll(); }));
+  const token = ++S.render;
+  renderStep(token);
+  renderResults(token);
 }
 
 document.querySelectorAll(".tab").forEach((b) => (b.onclick = () => switchTab(b.dataset.tab)));
@@ -231,7 +295,7 @@ function switchTab(t) {
 }
 
 // ---------- step panels ----------
-async function renderStep() {
+async function renderStep(token) {
   const n = S.step, p = S.project, s = p.steps[n];
   const locked = n > 0 && p.steps[n - 1].status !== "done";
   const running = S.job?.status === "running";
@@ -244,11 +308,11 @@ async function renderStep() {
     </div>
     ${locked ? `<p class="muted">Unlocks when step ${n - 1} is done.</p>` : needsEtabs ? `<p class="muted">Needs ETABS running with the model open.</p>` : ""}`;
   const body = await stepBody(n);
+  if (token !== S.render) return;
   $("#tab-step").innerHTML = head + body;
   $("#run-step").onclick = () => runStep(n, false);
   $("#cached-step").onclick = () => runStep(n, true);
   bindStepActions(n);
-  highlightFor(n);
 }
 
 function statusText(s) {
@@ -268,6 +332,7 @@ async function runStep(n, cached) {
 async function afterAction() {
   await refresh();
   S.files = {};
+  await loadViewer();
   renderAll();
   pollNow();
 }
@@ -293,7 +358,9 @@ async function stepBody(n) {
     const others = r.review.decisions.filter((d) => d.decision !== "add");
     const ev = (d) => d.evidence.map((e) => `${e.location_id} ${e.story} ${e.field} = ${e.value}`).join("<br>");
     const ok = r.evidence.filter((e) => e.status === "ok").length;
-    const dec = (d, add) => `<div class="decision ${add ? "add" : ""}"><h4>${add ? `<input type="checkbox" class="accept" value="${d.location_id}" ${S.project.steps[2].status === "done" ? "checked" : "checked"}>` : ""}${d.location_id} · ${d.decision} · ${d.condition.replace(/_/g, " ")} <span class="muted">${d.confidence}</span></h4>${esc(d.reason)}<div class="evidence">${ev(d)}</div></div>`;
+    const appr = await file("approved_candidates.json");
+    const accepted = (loc) => !appr || appr.candidates.some((c) => c.location_id === loc && c.status !== "rejected");
+    const dec = (d, add) => `<div class="decision ${add ? "add" : ""}"><h4>${add ? `<input type="checkbox" class="accept" value="${d.location_id}" ${accepted(d.location_id) ? "checked" : ""}>` : ""}${d.location_id} · ${d.decision} · ${d.condition.replace(/_/g, " ")} <span class="muted">${d.confidence}</span></h4>${esc(d.reason)}<div class="evidence">${ev(d)}</div></div>`;
     return `<p>Claude ${esc(r.meta.model)} · $${fmt(r.meta.cost_usd, 2)} · cited values checked: ${ok}/${r.evidence.length} match the condition table${r.issues.length ? ` · ${r.issues.length} validation issues` : ""}.</p>
       <h3>Suggested additions</h3>${adds.length ? adds.map((d) => dec(d, true)).join("") : `<p class="muted">none</p>`}
       <div class="actions"><button id="approve-scenarios" ${S.job?.status === "running" ? "disabled" : ""}>Approve scenario set</button></div>
@@ -377,30 +444,10 @@ function bindStepActions(n) {
   };
 }
 
-// Steps 1-2 show the UFC locations (and Claude's additions) in 3D, as a toggle in the toolbar that
-// only exists when there is a building and locations to show.
-async function highlightFor(n) {
-  if (!S.viewer) return;
-  S.locations = null;
-  if ((n === 1 || n === 2) && S.vdata?.members.length) {
-    const s = await file("scenarios.json"), r = n === 2 ? await file("review_conditions.json") : null;
-    const h = {};
-    for (const c of s?.candidates || []) if ((c.source || "rule") === "rule") h[c.location_id] = "#c0392b";
-    for (const d of r?.review?.decisions || []) if (d.decision === "add") h[d.location_id] = "#7d4ab0";
-    if (Object.keys(h).length) {
-      S.locations = h;
-      S.viewer.extra.highlightKey = [["UFC rule location", "#c0392b"], ...(n === 2 ? [["Claude suggestion", "#7d4ab0"]] : [])];
-    }
-  }
-  $("#loc-toggle-wrap").classList.toggle("hidden", !S.locations);
-  if (S.locations && S.locStep !== n) $("#show-loc").checked = true;   // on when a location step opens
-  S.locStep = S.locations ? n : null;
-  applyViewerControls();
-}
-
 // ---------- results ----------
-async function renderResults() {
+async function renderResults(token) {
   const ct = await file("collapse_tonnage.json"), base = await file("baseline_tonnage.json"), fin = await file("finalize.json");
+  if (token !== S.render) return;
   if (!ct) { $("#tab-results").innerHTML = `<p class="muted">Results appear after step 6.</p>` + notes(); return; }
   const t = ct.tonnage.total, b = ct.baseline_total ?? base?.tonnage?.total, mx = Math.max(t, b || 0);
   const sp = ct.split_of_premium_over_baseline || {};
@@ -427,10 +474,8 @@ function reactionNote(ct) {
 }
 
 function notes() {
-  const open = (S.project.notes || []).length ? S.project.notes : [];
   return `<h3>Open notes</h3><ul class="notes">
-    <li>SC07 load check: −1.70% against the final model (C1 removed at Story10, one roof bay). Open.</li>
-    ${open.filter((n) => !n.startsWith("SC07")).map((n) => `<li>${esc(n)}</li>`).join("")}
+    ${(S.project.notes || []).map((n) => `<li>${esc(n)}</li>`).join("")}
     <li>Simplifications: every m-factor 1.0; amplification 2.0 on every member; deck load at shared region edges counted conservatively (the neighbour's strip is amplified too); collapse sizes copied to every location in the symmetry group; gravity strength only (no connections, no wind).</li>
   </ul>`;
 }
@@ -454,12 +499,14 @@ async function pollNow() {
     if (atEnd) el.scrollTop = el.scrollHeight;
   }
   S.logLen = j.log_len || 0;
-  $("#job-status").textContent = j.status === "idle" ? "idle" : `${j.step}: ${j.status}${j.seconds != null ? ` (${j.seconds} s)` : ""}${j.error ? ` — ${j.error}` : ""}`;
-  if (S.project && was === "running" && j.status !== "running") {
+  const other = j.project && S.project && j.project !== S.project.id ? " (another project)" : "";
+  $("#job-status").textContent = j.status === "idle" ? "idle" : `${j.step}${other}: ${j.status}${j.seconds != null ? ` (${j.seconds} s)` : ""}${j.error ? ` — ${j.error}` : ""}`;
+  if (!S.project || was === j.status) return;
+  if (was === "running") {   // a job just ended: its files and the step states changed
     await refresh(); S.files = {};
-    if (S.vdata) await loadViewer();
-    renderAll();
+    await loadViewer();
   }
+  renderAll();   // buttons follow the job state (disabled while one runs)
 }
 $("#log-toggle").onclick = () => {
   const bar = document.querySelector(".logbar");

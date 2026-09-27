@@ -8,6 +8,13 @@ from `ap/` (FastAPI, `ap/server`); `index.html` below is the original static vie
 axis to the ray, since members are a pixel wide at full view). Member rows come from
 `/api/projects/<id>/viewer` (ap/server/viewer.py); the viewer does no engineering.
 
+Views (`MODES` in viewer.js) are enabled only when their files exist (`available()` in app.js),
+and clicking a step opens its view: 0 model, 1–2 UFC locations, 3 influence area, 4 ratio (first
+design), 5 ratio (latest), 6 what changed, 7 added weight. The user can switch freely afterwards;
+reloads after a job keep the view, scenario and story range. The story/group filter hides members
+(a faint wireframe of the whole frame stays). Step and results panels render with a token, so an
+older, slower render never overwrites a newer one.
+
 
 Static single-page viewer: `index.html` (three.js from a CDN via import map).
 Serve from the repo root (`python -m http.server 8000`) so it can fetch

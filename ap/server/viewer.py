@@ -90,6 +90,7 @@ def build(p: Project) -> dict:
         "members": members,
         "levels": b["levels"],
         "stories": [s["name"] for s in sorted(b["stories"], key=lambda s: s["bottom_z"])],
-        "bays": [{"id": a["id"], "level": a["level"], "z": a["z"], "polygon": a["polygon"]} for a in b["bays"]],
+        "bays": [{"id": a["id"], "level": a["level"], "story": story_of_level.get(a["level"], a["level"]), "z": a["z"],
+                  "polygon": a["polygon"]} for a in b["bays"]],
         "groups": cond.get("symmetry", {}).get("groups", {}),
     }
