@@ -61,6 +61,34 @@ internal static class AutoSelect
         return failed.Count == 0 ? 0 : 1;
     }
 
+    /// <summary>
+    /// autoselect --cleanup [--commit]: deletes the FIN_* lists no frame uses any more
+    /// (PropFrame.Delete, documented), each read back as gone. Needs an unlocked model like any
+    /// section-property change: --commit unlocks only when there is something to delete.
+    /// </summary>
+    public static int Cleanup(cSapModel sap, bool commit)
+    {
+        int n = 0; string[] props = Array.Empty<string>();
+        Api.Check(sap.PropFrame.GetNameList(ref n, ref props), "PropFrame.GetNameList");
+        var fin = props.Take(n).Where(p => p.StartsWith("FIN_", StringComparison.Ordinal)).ToList();
+        n = 0; string[] frames = Array.Empty<string>();
+        Api.Check(sap.FrameObj.GetNameList(ref n, ref frames), "FrameObj.GetNameList");
+        var used = new HashSet<string>();
+        foreach (var f in frames.Take(n)) { string s = "", auto = ""; sap.FrameObj.GetSection(f, ref s, ref auto); if (auto.Length > 0) used.Add(auto); }
+        var unused = fin.Where(p => !used.Contains(p)).ToList();
+        Console.WriteLine($"cleanup   {fin.Count} FIN_* list(s), {unused.Count} unused{(unused.Count > 0 ? ": " + string.Join(", ", unused) : "")}");
+        if (unused.Count == 0) return 0;
+        if (!commit) { ModelLock.EnsureUnlocked(sap, false, "autoselect --cleanup"); Console.WriteLine("Dry run — add --commit to delete."); return 0; }
+        ModelLock.EnsureUnlocked(sap, true, "autoselect --cleanup");
+        foreach (var p in unused) Api.Check(sap.PropFrame.Delete(p), $"PropFrame.Delete {p}");
+        n = 0; props = Array.Empty<string>();
+        Api.Check(sap.PropFrame.GetNameList(ref n, ref props), "PropFrame.GetNameList");
+        var still = unused.Intersect(props.Take(n)).ToList();
+        if (still.Count > 0) { Console.Error.WriteLine($"READ BACK still defined: {string.Join(", ", still)}"); return 1; }
+        Console.WriteLine($"{unused.Count} of {unused.Count} deleted, read back gone. The model is not saved.");
+        return 0;
+    }
+
     /// <summary>Every steel auto-select list (GetAutoSelectSteel answers 0) except the FIN_* copies: name → its sections.</summary>
     private static Dictionary<string, List<string>> SteelLists(cSapModel sap)
     {

@@ -2,114 +2,126 @@
  "status": "passed",
  "max_rounds": 5,
  "limit": 1.0,
- "rounds": [
-  {
-   "round": 1,
-   "moves": [
-    {
-     "frame": "9",
-     "from": "W14X132",
-     "ratio_before": 1.039,
-     "governing_combo": "AP_SC15_CMB(C)",
-     "etabs_pick": "W14X145",
-     "etabs_pick_ratio": 0.907,
-     "to": "W14X145",
-     "reason": "auto-select"
-    },
-    {
-     "frame": "422",
-     "from": "W24X76",
-     "ratio_before": 1.009,
-     "governing_combo": "AP_SC21_CMB(C)",
-     "etabs_pick": "W24X84",
-     "etabs_pick_ratio": 0.901,
-     "to": "W24X84",
-     "reason": "auto-select"
-    }
-   ],
-   "applied": [
-    {
-     "member": "9",
-     "counterpart": "9",
-     "symmetry": "identity",
-     "from": "W14X132",
-     "to": "W14X145",
-     "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145",
-     "flags": []
-    },
-    {
-     "member": "9",
-     "counterpart": "21",
-     "symmetry": "mirror_x",
-     "from": "W14X132",
-     "to": "W14X145",
-     "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_x",
-     "flags": []
-    },
-    {
-     "member": "9",
-     "counterpart": "12",
-     "symmetry": "mirror_y",
-     "from": "W14X132",
-     "to": "W14X145",
-     "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_y",
-     "flags": []
-    },
-    {
-     "member": "9",
-     "counterpart": "24",
-     "symmetry": "rotate_180",
-     "from": "W14X132",
-     "to": "W14X145",
-     "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by rotate_180",
-     "flags": []
-    },
-    {
-     "member": "422",
-     "counterpart": "422",
-     "symmetry": "identity",
-     "from": "W24X76",
-     "to": "W24X84",
-     "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84",
-     "flags": []
-    },
-    {
-     "member": "422",
-     "counterpart": "401",
-     "symmetry": "mirror_x",
-     "from": "W24X68",
-     "to": "W24X84",
-     "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_x",
-     "flags": []
-    },
-    {
-     "member": "422",
-     "counterpart": "424",
-     "symmetry": "mirror_y",
-     "from": "W24X68",
-     "to": "W24X84",
-     "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_y",
-     "flags": []
-    },
-    {
-     "member": "422",
-     "counterpart": "403",
-     "symmetry": "rotate_180",
-     "from": "W24X68",
-     "to": "W24X84",
-     "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by rotate_180",
-     "flags": []
-    }
-   ],
-   "messages": [],
-   "after": {
-    "steel_over": {},
-    "composite_over": {}
-   }
-  }
- ],
+ "rounds": [],
  "steel_over": {},
  "composite_over_reported": {},
  "steel_max": 0.992,
- "composite_max": 0.587
+ "composite_max": 0.587,
+ "history": [
+  {
+   "status": "passed",
+   "max_rounds": 5,
+   "limit": 1.0,
+   "rounds": [
+    {
+     "round": 1,
+     "moves": [
+      {
+       "frame": "9",
+       "from": "W14X132",
+       "ratio_before": 1.039,
+       "governing_combo": "AP_SC15_CMB(C)",
+       "etabs_pick": "W14X145",
+       "etabs_pick_ratio": 0.907,
+       "to": "W14X145",
+       "reason": "auto-select"
+      },
+      {
+       "frame": "422",
+       "from": "W24X76",
+       "ratio_before": 1.009,
+       "governing_combo": "AP_SC21_CMB(C)",
+       "etabs_pick": "W24X84",
+       "etabs_pick_ratio": 0.901,
+       "to": "W24X84",
+       "reason": "auto-select"
+      }
+     ],
+     "applied": [
+      {
+       "member": "9",
+       "counterpart": "9",
+       "symmetry": "identity",
+       "from": "W14X132",
+       "to": "W14X145",
+       "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145",
+       "flags": []
+      },
+      {
+       "member": "9",
+       "counterpart": "21",
+       "symmetry": "mirror_x",
+       "from": "W14X132",
+       "to": "W14X145",
+       "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_x",
+       "flags": []
+      },
+      {
+       "member": "9",
+       "counterpart": "12",
+       "symmetry": "mirror_y",
+       "from": "W14X132",
+       "to": "W14X145",
+       "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_y",
+       "flags": []
+      },
+      {
+       "member": "9",
+       "counterpart": "24",
+       "symmetry": "rotate_180",
+       "from": "W14X132",
+       "to": "W14X145",
+       "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by rotate_180",
+       "flags": []
+      },
+      {
+       "member": "422",
+       "counterpart": "422",
+       "symmetry": "identity",
+       "from": "W24X76",
+       "to": "W24X84",
+       "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84",
+       "flags": []
+      },
+      {
+       "member": "422",
+       "counterpart": "401",
+       "symmetry": "mirror_x",
+       "from": "W24X68",
+       "to": "W24X84",
+       "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_x",
+       "flags": []
+      },
+      {
+       "member": "422",
+       "counterpart": "424",
+       "symmetry": "mirror_y",
+       "from": "W24X68",
+       "to": "W24X84",
+       "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_y",
+       "flags": []
+      },
+      {
+       "member": "422",
+       "counterpart": "403",
+       "symmetry": "rotate_180",
+       "from": "W24X68",
+       "to": "W24X84",
+       "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by rotate_180",
+       "flags": []
+      }
+     ],
+     "messages": [],
+     "after": {
+      "steel_over": {},
+      "composite_over": {}
+     }
+    }
+   ],
+   "steel_over": {},
+   "composite_over_reported": {},
+   "steel_max": 0.992,
+   "composite_max": 0.587
+  }
+ ]
 }

@@ -2,7 +2,7 @@
  "model": "progressive collapse - AP2",
  "date": "2026-09-26",
  "units": "short tons (2000 lb)",
- "state": "finalize: passed after 1 round(s); fixed sections from propagation.json",
+ "state": "finalize: passed after 0 round(s); fixed sections from propagation.json",
  "tonnage": {
   "total": 1158.01,
   "columns": 374.26,

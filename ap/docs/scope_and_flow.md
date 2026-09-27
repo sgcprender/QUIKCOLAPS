@@ -136,7 +136,7 @@ here, and stop with a short report. Plan written 2026-09-26.
 | C | **Strength-only baseline**: copy the original `progressive collapse.edb` on disk to `baseline strength.edb` (don't open or modify the original). Select only DStlS1 and DStlS2 for steel and composite design; iterate design (composite first, then steel) → accept design sections → run SW, SDL, LL → design, until no sections change (max 3 rounds). Save the tonnage (weigh) to `ap/web/data/baseline_tonnage.json`. Close it and return to AP2. | **done (not converged)** 2026-09-26. Original is `QUIKCOLAPS.EDB` (same sections and frame ids as AP2's original export); copied on disk (hash unchanged) to `baseline strength.EDB`. Bridge `open`, `design-select`, `iterate`. DStlS1 + DStlS2 for steel and composite; 3 rounds of SW, SDL, LL + design: 260 → 172 → 76 frames still changing (last ones step between neighbouring W14 sizes both ways), steel max ratio 0.948. **790.18 short tons** (columns 146.26, steel beams 366.72, composite beams 277.20; original sections 776.74); 228 frames differ from the original sizes (144 heavier, 84 lighter; 204 columns, 24 girders). `ap/web/data/baseline_tonnage.json`, `baseline_rounds.json`, `takeoffs/baseline_strength.csv`. AP2 reopened: locked, analysis results kept, design results not kept. |
 | D | **Collapse redesign in AP2**: iterate accept design sections → run all 30 → design, until no sections change (max 3 rounds). Run propagation, stop and show the list. After approval: assign-sections, run all 30, design once, confirm all ≤ 1.0, save tonnage, compare with the baseline. | **done, passed** 2026-09-26. Redesign 3 rounds (896.12 → 911.70 → 913.57 short tons); 658 fixed sections from `propagation.json` (270 collapse-driven + 388 propagated); two manual step-up rounds (frames 9, 29, 46, 61, then 9, 29, with their symmetry images); then `finalize` (1 round): frame 9 W14X132 → W14X145 and girder 422 W24X76 → W24X84 (ETABS's picks, 0.907 and 0.901), each with its 3 symmetry images. **All steel ≤ 1.0 (max 0.992), composite max 0.587. 1,158.01 short tons, +367.83 (+46.5%) over the 790.18 baseline** (collapse-driven +176.92, propagated +205.03, strength −14.11). Reactions against the fresh export: 29/30 within 1% (−0.33% to −0.9%), SC07 −1.70% (open). `web/data/finalize.json`, `collapse_tonnage.json`. |
 | E | **Report**: `python -m report.build_report` with baseline vs collapse tonnage, member counts (collapse-driven, propagated, strength) and a short Claude narrative. Mention the stray 0.15 × 0.15 m deck area at C29 and the roof loads (100 psf LL and SDL, as typical floors); both stay as they are. | not started |
-| F | **Demo app** (`ap/server` + `ap/web`, built in a separate chat): FastAPI + uvicorn, one step at a time, live log and status. Buttons: 1 Load model, 2 Claude review (+ approve in 3D), 3 Write to ETABS, 4 Run + design, 5 Redesign round, 6 Copy to similar & finalize (propagate, approve in 3D, assign-sections, run + design, then `finalize` until every steel member ≤ 1.0), 7 Tonnage & report. Results view colored by ratio. A "use cached results" fallback per step. | not started |
+| F | **Demo app**: `ap/server` + `ap/web`, landing page with projects, steps 0–7, 3D view modes, results panel. Full spec below ("Item F: demo app"). | in progress |
 | G | **Extras**: automated validation (SC03 deleted-column copy vs staged case, record in D5); a Claude redesign summary shown in the app. | not started |
 
 ### Open items
@@ -145,9 +145,86 @@ here, and stop with a short report. Plan written 2026-09-26.
   export after the redesign rounds, −1.45% after the final assignment (790 kN
   against 802 kN), −1.70% after the step-ups; −0.39% before the redesign. Every case drifts negative as the
   beams get heavier (−0.33% to −0.87% for the other 29). Not investigated yet.
-- **Temporary auto-select lists in AP2**: `finalize` left `FIN_AS-W14_W14X132` and
-  `FIN_AS-W24_W24X76` defined (no frame uses them now). Harmless; delete before
-  handing the model over.
+### Item F: demo app (spec, 2026-09-27)
+
+Demo app in `ap/server` and `ap/web`, using the commands in the command list
+below (open, design-select, iterate, assign-sections, finalize, axial, apply,
+results and the rest). Server: FastAPI + uvicorn, one step at a time, with a
+live log and status. Start with `python -m server` from `ap/`; it opens in the
+browser. Every step shows a clear error if its command fails.
+
+**Landing page.** The app opens on a landing page with "Start new project" (file
+picker for a .edb, then step 0) and a list of past projects. Each project card
+shows name, model file, dates, the last completed step and status, and the
+headline premium if available, with "Open" (view results from the saved data
+without needing ETABS; resume from the last completed step if ETABS is
+available) and "Remove from list" (never deletes files). Each project's data is
+stored in its "<name> - quikcolaps" folder next to the model; a small project
+index (JSON) is what the landing page reads. The current AP2 work is registered
+as the first project so it opens with all its results.
+
+**Model and files.** Never modify the model file the user picks. Working copies
+are created in the same folder: "<name> - AP.edb" (collapse) and
+"<name> - baseline.edb" (strength only). All app data for the project
+(scenarios, conditions, review, results, propagation, finalize, tonnage, report)
+goes in the project's "<name> - quikcolaps" folder. The working model's name is
+passed explicitly to every bridge command.
+
+**Steps** (a step bar across the top; each step unlocks the next; live log at
+the bottom; a per-step "use cached results" fallback):
+
+0. Open model + Check model: a read-only readiness check (deck floors with one
+   area per bay; CS1 present with initial case 1.2D+0.5L, removing one column and
+   loading one group; load pattern types recognised; auto-select lists on
+   columns and girders; ETABS version) shown as pass / warning / fail with a
+   one-line explanation each. Bridge command for it if needed.
+1. Load model: export, intact axial loads, rule-based scenarios. The building in
+   3D with the UFC locations and stories.
+2. Claude review: condition table + review. Decisions with reasons and cited
+   values; suggested additions highlighted in 3D; the user approves the
+   scenario set.
+3. Write to ETABS: cases, load groups and combos; counts written and verified.
+4. Run + design: the load check per scenario (pass/fail) and the first results.
+5. Redesign rounds: iterate; weight per round as a small chart and members
+   changed per round.
+6. Copy to similar & finalize: propagation list in 3D (originals vs copies) → the
+   user approves → assign-sections → finalize loop; the rounds, members stepped
+   up, and status (passed / not converged).
+7. Tonnage & report: compute the baseline on the baseline copy if missing
+   (strength combos only, iterate); show the premium. The report itself comes
+   later (item E); placeholder.
+
+**3D view modes** (a switch in the viewer):
+
+1. What changed: members colored by reason (collapse-driven red, propagated
+   purple, strength blue, unchanged grey), line width by weight increase.
+2. Ratio: green → yellow → red by worst ratio across all scenarios, with a
+   toggle for original vs final design.
+3. Scenario heat map: for the selected scenario, every member colored by its
+   ratio under that scenario's combo, with the removed column and amplified
+   region shown. ETABS only reports each member's governing ratio, so
+   per-scenario ratios come from the cheapest source (database tables first;
+   otherwise a cached batch of one design per scenario), as a bridge command.
+4. Added weight: greyscale by added steel per member ((final − original weight
+   per length) × length), light grey = none, black = most, with a colour bar in
+   real units and a per-story bar chart.
+5. Before / after sizes toggle.
+
+**Interaction:** clicking a member shows original → final section, ratio,
+governing scenario and reason (collapse / propagated / strength / finalize
+step-up).
+
+**Results panel:** baseline vs final tonnage bar with the premium in large text;
+the split (collapse-driven / propagated / strength) as a stacked bar; the
+finalize summary; open notes (SC07, simplifications: m = 1, amplification 2.0,
+conservative deck load at shared edges, similarity copied to all group
+locations, gravity strength only).
+
+**Filters:** story slider, scenario list, symmetry group. Legend always visible.
+
+**Rules:** no changes to the engine logic in `ap/core`, `ap/claude_client` or the
+bridge beyond adding the commands this item needs; new commands go in the
+command list. The demo project's existing results stay intact.
 
 Before the plan (done 2026-09-26): Claude review with the condition table,
 C5 approved, 30 scenarios applied, run and designed on AP2 (status above).
@@ -167,7 +244,8 @@ needs the user's approval; pass the working copy with `--model "progressive coll
 | design selection | `dotnet run --project tools/Quikcolaps.Bridge -- design-select --model "baseline strength" --combos DStlS1,DStlS2 [--commit]` |
 | design iteration | `dotnet run --project tools/Quikcolaps.Bridge -- iterate --model "baseline strength" --cases SW,SDL,LL --max-rounds 3 --out ap/web/data/baseline_rounds.json [--commit --accept-design-sections]`; AP2: `--model "progressive collapse - AP2" --cases SW,SDL,LL,1.2D+0.5L,AP_SC01,…,AP_SC30 --max-rounds 3 --weight-tol 0.005 --out ap/web/data/ap2_rounds.json` |
 | tonnage | `dotnet run --project tools/Quikcolaps.Cli -- weigh --model "baseline strength" --label baseline_strength` (→ `takeoffs/baseline_strength.csv`; summary in `ap/web/data/baseline_tonnage.json`) |
-| finalize | `ap/`: `python scripts/finalize.py --model "progressive collapse - AP2" [--max-rounds 5]` (run all AP cases → design → members over 1.0 back on auto-select → run + design → ETABS's pick, or one size up, on them and their symmetry images → assign-sections → repeat; → `web/data/finalize.json`, weigh, `collapse_tonnage.json`) |
+| finalize | `ap/`: `python scripts/finalize.py --model "progressive collapse - AP2" [--max-rounds 5] [--data <project data folder>] [--label collapse_final]` (run all AP cases → design → members over 1.0 back on auto-select → run + design → ETABS's pick, or one size up, on them and their symmetry images → assign-sections → repeat; → `web/data/finalize.json`, weigh, `collapse_tonnage.json`) |
+| delete unused FIN_* lists | `dotnet run --project tools/Quikcolaps.Bridge -- autoselect --cleanup --model "progressive collapse - AP2" [--commit]` (finalize runs it before every check) |
 | auto-select again | `dotnet run --project tools/Quikcolaps.Bridge -- autoselect --model "progressive collapse - AP2" --frames 9,422 [--commit]` |
 | step up failing members | `ap/`: `python -m core.stepup --frames 9,29 [--current web/data/building_final.json] [--propagation web/data/propagation.json]` (next heavier W14 on each and its symmetry images; refreshes every `from` from the export) |
 | re-export | `dotnet run --project tools/Quikcolaps.Bridge -- export --model "progressive collapse - AP2" --out ap/web/data/building_current.json` (read-only) |

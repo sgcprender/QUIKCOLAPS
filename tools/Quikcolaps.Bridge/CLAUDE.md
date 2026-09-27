@@ -16,6 +16,7 @@ dotnet run --project tools/Quikcolaps.Bridge -- axial   --case "1.2D+0.5L" --out
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json            # dry run
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json --commit
 dotnet run --project tools/Quikcolaps.Bridge -- autoselect --frames 9,422 [--commit]            # back on (a copy of) their auto-select list
+dotnet run --project tools/Quikcolaps.Bridge -- autoselect --cleanup [--commit]                 # delete FIN_* lists no frame uses
 dotnet run --project tools/Quikcolaps.Bridge -- open    --file "<path>.EDB"                 # switch model (never saves)
 dotnet run --project tools/Quikcolaps.Bridge -- design-select --combos DStlS1,DStlS2 [--commit]
 dotnet run --project tools/Quikcolaps.Bridge -- iterate --cases SW,SDL,LL --max-rounds 3 --out rounds.json [--commit]
@@ -238,6 +239,8 @@ seen on the working copy, ETABS 23, 2026-09-26.
   overall ratio and pass/fail (which include deflection and construction
   stage) go in the status text. The conventional check this covers is gravity
   strength only (DStlS1, DStlS2).
+- `PropFrame.Delete` (measured 2026-09-27, AP2 unlocked): deleting the two unused
+  FIN_* lists answered 0; `GetNameList` no longer lists them.
 - Section lists on a locked model (measured 2026-09-26, AP2 locked with
   results): `PropFrame.SetAutoSelectSteel` (new list) and `FrameObj.SetSection`
   (assigning it) both answer 1 and change nothing; the lock and the results
