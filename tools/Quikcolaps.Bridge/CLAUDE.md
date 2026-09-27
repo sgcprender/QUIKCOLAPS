@@ -15,6 +15,7 @@ dotnet run --project tools/Quikcolaps.Bridge -- sections                        
 dotnet run --project tools/Quikcolaps.Bridge -- axial   --case "1.2D+0.5L" --out ap/web/data/intact_axial.json
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json            # dry run
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json --commit
+dotnet run --project tools/Quikcolaps.Bridge -- autoselect --frames 9,422 [--commit]            # back on (a copy of) their auto-select list
 dotnet run --project tools/Quikcolaps.Bridge -- open    --file "<path>.EDB"                 # switch model (never saves)
 dotnet run --project tools/Quikcolaps.Bridge -- design-select --combos DStlS1,DStlS2 [--commit]
 dotnet run --project tools/Quikcolaps.Bridge -- iterate --cases SW,SDL,LL --max-rounds 3 --out rounds.json [--commit]
@@ -74,6 +75,7 @@ still available (420, sections match).
 | `axial` | one run case | `intact_axial.json`: every column's max \|P\| at the last step, with label and story, plus the lowest-columns sum against the base reaction FZ | none |
 | `assign-sections` | `propagation.json` (`assignments`: frame, section, optional `from`) | — | with `--commit`: unlocks, then fixed analysis sections (auto-select list removed), each read back; refuses the whole file if a frame, section or `from` doesn't match |
 
+| `autoselect` | frames | — | with `--commit`: unlocks, defines `FIN_<list>_<section>` (the frame's original steel auto-select list starting at its current section) and assigns it, read back |
 | `open` | a model file | — | opens it in the running ETABS; the previous model is closed unsaved (bridge never saves) |
 | `design-select` | combos | — | with `--commit`: steel and composite strength selection = exactly these, read back |
 | `iterate` | cases, design selection | `rounds.json`, `<rounds>_roundN.csv` (takeoff per round) | with `--commit --accept-design-sections`: unlock, lean run → composite → steel design, repeated until no auto-select frame would change (or, with `--weight-tol`, the weight changes less than that between rounds and nothing is over 1.0) or `--max-rounds`; flags restored |
@@ -236,6 +238,12 @@ seen on the working copy, ETABS 23, 2026-09-26.
   overall ratio and pass/fail (which include deflection and construction
   stage) go in the status text. The conventional check this covers is gravity
   strength only (DStlS1, DStlS2).
+- Section lists on a locked model (measured 2026-09-26, AP2 locked with
+  results): `PropFrame.SetAutoSelectSteel` (new list) and `FrameObj.SetSection`
+  (assigning it) both answer 1 and change nothing; the lock and the results
+  stay. So a frame can't go back on auto-select without an unlock, and the
+  design that picks its section needs a run first. `PropFrame.GetAutoSelectSteel`
+  answers 0 for a steel auto-select list (AS-W14: 35 sections, start Median).
 - `File.OpenFile` (measured 2026-09-26, AP2 ↔ `baseline strength.EDB`): no
   question box either way; the model that was open is closed **without saving**.
   AP2 reopened locked with its analysis results (axial read identical) but **no

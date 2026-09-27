@@ -17,6 +17,7 @@ namespace Quikcolaps.Bridge;
 ///   forces   --case NAME --frames F1,F2 --out forces.json            for the staged-case validation
 ///   axial    --case "1.2D+0.5L" --out intact_axial.json               every column's axial force (read-only)
 ///   assign-sections --file propagation.json [--commit]                fixed analysis sections from a file
+///   autoselect --frames F1,F2 [--commit]                              fixed frames back on (a copy of) their auto-select list
 ///   open     --file PATH                                               open another model file (never saves)
 ///   design-select --combos DStlS1,DStlS2 [--commit]                   steel + composite strength selection
 ///   iterate  --cases SW,SDL,LL [--max-rounds 3] [--weight-tol 0.005] --out rounds.json [--commit --accept-design-sections]
@@ -54,6 +55,7 @@ internal static class Program
                 "iterate" => Iterate.Run(sap, inst.ProcessId, inst.ModelPath, Arg("--cases", ""), int.TryParse(Arg("--max-rounds", "3"), out var mr) ? mr : 3,
                     double.TryParse(Arg("--weight-tol", ""), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var wt) ? wt : null,
                     Arg("--out", "rounds.json"), args.Contains("--commit"), args.Contains(SectionGuard.AcceptFlag)),
+                "autoselect" => AutoSelect.Run(sap, Arg("--frames", ""), args.Contains("--commit")),
                 "assign-sections" => AssignSections.Run(sap, Arg("--file", "ap/web/data/propagation.json"), args.Contains("--commit")),
                 _ => Usage()
             };
@@ -67,7 +69,7 @@ internal static class Program
 
     private static int Usage()
     {
-        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|open|design-select|iterate|sections [--model NAME] ... (see Program.cs)");
+        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|autoselect|open|design-select|iterate|sections [--model NAME] ... (see Program.cs)");
         return 2;
     }
 }

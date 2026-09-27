@@ -14,13 +14,13 @@
   "rows": 1080,
   "flagged_rows": 0,
   "added_lb_per_ft_over_original": 51685.0,
-  "check_steps": 2
+  "check_steps": 3
  },
  "assignments": [
   {
    "frame": "1",
    "section": "W14X176",
-   "from": "W14X159"
+   "from": "W14X176"
   },
   {
    "frame": "2",
@@ -35,7 +35,7 @@
   {
    "frame": "4",
    "section": "W14X176",
-   "from": "W14X159"
+   "from": "W14X176"
   },
   {
    "frame": "5",
@@ -59,8 +59,8 @@
   },
   {
    "frame": "9",
-   "section": "W14X132",
-   "from": "W14X120"
+   "section": "W14X145",
+   "from": "W14X132"
   },
   {
    "frame": "10",
@@ -74,8 +74,8 @@
   },
   {
    "frame": "12",
-   "section": "W14X132",
-   "from": "W14X120"
+   "section": "W14X145",
+   "from": "W14X132"
   },
   {
    "frame": "13",
@@ -119,8 +119,8 @@
   },
   {
    "frame": "21",
-   "section": "W14X132",
-   "from": "W14X120"
+   "section": "W14X145",
+   "from": "W14X132"
   },
   {
    "frame": "22",
@@ -134,8 +134,8 @@
   },
   {
    "frame": "24",
-   "section": "W14X132",
-   "from": "W14X120"
+   "section": "W14X145",
+   "from": "W14X132"
   },
   {
    "frame": "25",
@@ -160,7 +160,7 @@
   {
    "frame": "29",
    "section": "W14X176",
-   "from": "W14X159"
+   "from": "W14X176"
   },
   {
    "frame": "30",
@@ -175,7 +175,7 @@
   {
    "frame": "32",
    "section": "W14X176",
-   "from": "W14X159"
+   "from": "W14X176"
   },
   {
    "frame": "33",
@@ -1909,7 +1909,7 @@
   },
   {
    "frame": "401",
-   "section": "W24X68",
+   "section": "W24X84",
    "from": "W24X68"
   },
   {
@@ -1919,7 +1919,7 @@
   },
   {
    "frame": "403",
-   "section": "W24X68",
+   "section": "W24X84",
    "from": "W24X68"
   },
   {
@@ -1984,7 +1984,7 @@
   },
   {
    "frame": "422",
-   "section": "W24X76",
+   "section": "W24X84",
    "from": "W24X76"
   },
   {
@@ -1994,7 +1994,7 @@
   },
   {
    "frame": "424",
-   "section": "W24X68",
+   "section": "W24X84",
    "from": "W24X68"
   },
   {
@@ -31336,6 +31336,78 @@
    "from": "W14X159",
    "to": "W14X176",
    "reason": "check: 29 over 1.0 (ratio 1.026), stepped W14X159 -> W14X176, copied by rotate_180",
+   "flags": []
+  },
+  {
+   "member": "9",
+   "counterpart": "9",
+   "symmetry": "identity",
+   "from": "W14X132",
+   "to": "W14X145",
+   "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145",
+   "flags": []
+  },
+  {
+   "member": "9",
+   "counterpart": "21",
+   "symmetry": "mirror_x",
+   "from": "W14X132",
+   "to": "W14X145",
+   "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_x",
+   "flags": []
+  },
+  {
+   "member": "9",
+   "counterpart": "12",
+   "symmetry": "mirror_y",
+   "from": "W14X132",
+   "to": "W14X145",
+   "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by mirror_y",
+   "flags": []
+  },
+  {
+   "member": "9",
+   "counterpart": "24",
+   "symmetry": "rotate_180",
+   "from": "W14X132",
+   "to": "W14X145",
+   "reason": "finalize round 1: 9 ratio 1.039, auto-select, W14X132 -> W14X145, copied by rotate_180",
+   "flags": []
+  },
+  {
+   "member": "422",
+   "counterpart": "422",
+   "symmetry": "identity",
+   "from": "W24X76",
+   "to": "W24X84",
+   "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84",
+   "flags": []
+  },
+  {
+   "member": "422",
+   "counterpart": "401",
+   "symmetry": "mirror_x",
+   "from": "W24X68",
+   "to": "W24X84",
+   "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_x",
+   "flags": []
+  },
+  {
+   "member": "422",
+   "counterpart": "424",
+   "symmetry": "mirror_y",
+   "from": "W24X68",
+   "to": "W24X84",
+   "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by mirror_y",
+   "flags": []
+  },
+  {
+   "member": "422",
+   "counterpart": "403",
+   "symmetry": "rotate_180",
+   "from": "W24X68",
+   "to": "W24X84",
+   "reason": "finalize round 1: 422 ratio 1.009, auto-select, W24X76 -> W24X84, copied by rotate_180",
    "flags": []
   }
  ]

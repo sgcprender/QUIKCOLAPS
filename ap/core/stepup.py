@@ -1,5 +1,7 @@
 """Step failing fixed members up one section, with their symmetry counterparts.
 
+`apply_sections` (a section on a member and its symmetry images) is shared with core/finalize.py.
+
 After the propagated sections are fixed, a final run can leave a few members over 1.0 (their
 sizes came from an earlier round's forces). This steps each named frame to the next heavier
 section of its series and gives the same section to its images under the building's framing
@@ -23,49 +25,52 @@ from .conditions import _plan_ops, symmetry
 from .model import load_building
 from .propagate import Frames, weight
 
-# AISC W14 shapes, light to heavy (lb/ft).
-W14 = [22, 26, 30, 34, 38, 43, 48, 53, 61, 68, 74, 82, 90, 99, 109, 120, 132, 145, 159, 176, 193, 211,
-       233, 257, 283, 311, 342, 370, 398, 426, 455, 500, 550, 605, 665, 730]
+# AISC shapes by series, light to heavy (lb/ft).
+SERIES = {
+    "W14": [22, 26, 30, 34, 38, 43, 48, 53, 61, 68, 74, 82, 90, 99, 109, 120, 132, 145, 159, 176, 193, 211,
+            233, 257, 283, 311, 342, 370, 398, 426, 455, 500, 550, 605, 665, 730],
+    "W24": [55, 62, 68, 76, 84, 94, 103, 104, 117, 131, 146, 162, 176, 192, 207, 229, 250, 279, 306, 335, 370],
+}
+W14 = SERIES["W14"]
 
 
 def next_heavier(section: str) -> str | None:
+    """Next section of the same series (W14, W24), or None."""
     w = weight(section)
-    if w is None or not section.upper().startswith("W14X"):
+    series = (section or "").upper().split("X")[0]
+    if w is None or series not in SERIES:
         return None
-    heavier = [x for x in W14 if x > w]
-    return f"W14X{heavier[0]}" if heavier else None
+    heavier = [x for x in SERIES[series] if x > w]
+    return f"{series}X{heavier[0]}" if heavier else None
 
 
-def step_up(b: dict, propagation: dict, frames: list[str], current: dict[str, str],
-            ratios: dict[str, float] | None = None) -> tuple[dict, list[str]]:
-    """Returns (updated propagation, messages). current: frame -> section in the model now."""
+def apply_sections(b: dict, propagation: dict, targets: dict[str, tuple[str, str]],
+                   current: dict[str, str]) -> tuple[dict, list[dict], list[str]]:
+    """Gives each target frame its section and the same section to its images under the
+    framing symmetries, never lighter than what a frame has (assigned or in the model).
+
+    targets: frame -> (section, reason). current: frame -> section in the model now; every
+    assignment's `from` is refreshed from it (assign-sections checks `from`).
+    Returns (updated propagation, rows, messages).
+    """
     fr = Frames(b)
     ops = _plan_ops(b)
     op_names = list(symmetry(b))
-    # `from` must be the section in the model now (assign-sections checks it): refresh every row
     asg = {a["frame"]: {**a, "from": current.get(a["frame"], a["from"])} for a in propagation["assignments"]}
     msgs, rows = [], []
-    for f in frames:
-        now = current[f]
-        up = next_heavier(now)
-        if up is None:
-            msgs.append(f"{f}: no heavier W14 after {now}; not changed")
-            continue
-        targets = [(f, "identity")] + [(fr.image(f, ops[n]), n) for n in op_names]
-        for t, n in targets:
+    for f, (up, reason) in targets.items():
+        for t, n in [(f, "identity")] + [(fr.image(f, ops[k]), k) for k in op_names]:
             if t is None:
                 msgs.append(f"{f}: no frame at its {n} image")
                 continue
             have = asg[t]["section"] if t in asg else current[t]
             if (weight(have) or 0) >= (weight(up) or 0):
                 rows.append({"member": f, "counterpart": t, "symmetry": n, "from": have, "to": have,
-                             "reason": f"check: {f} stepped {now} -> {up}; {t} already {have}", "flags": []})
+                             "reason": f"{reason}; {t} already {have}", "flags": []})
                 continue
             asg[t] = {"frame": t, "section": up, "from": current[t]}
-            r = f" (ratio {ratios[f]:.3f})" if ratios and f in ratios else ""
             rows.append({"member": f, "counterpart": t, "symmetry": n, "from": have, "to": up,
-                         "reason": f"check: {f} over 1.0{r}, stepped {now} -> {up}" + ("" if t == f else f", copied by {n}"),
-                         "flags": []})
+                         "reason": reason + ("" if t == f else f", copied by {n}"), "flags": []})
     out = dict(propagation)
     out["assignments"] = sorted(asg.values(), key=lambda a: (len(a["frame"]), a["frame"]))
     out["check_rows"] = propagation.get("check_rows", []) + rows
@@ -73,7 +78,23 @@ def step_up(b: dict, propagation: dict, frames: list[str], current: dict[str, st
     s["frames_assigned"] = len(out["assignments"])
     s["check_steps"] = s.get("check_steps", 0) + 1
     out["summary"] = s
-    return out, msgs
+    return out, rows, msgs
+
+
+def step_up(b: dict, propagation: dict, frames: list[str], current: dict[str, str],
+            ratios: dict[str, float] | None = None) -> tuple[dict, list[str]]:
+    """Next heavier section on each frame and its images. Returns (updated propagation, messages)."""
+    targets, msgs = {}, []
+    for f in frames:
+        now = current[f]
+        up = next_heavier(now)
+        if up is None:
+            msgs.append(f"{f}: no heavier section after {now} in {sorted(SERIES)}; not changed")
+            continue
+        r = f" (ratio {ratios[f]:.3f})" if ratios and f in ratios else ""
+        targets[f] = (up, f"check: {f} over 1.0{r}, stepped {now} -> {up}")
+    out, _, more = apply_sections(b, propagation, targets, current)
+    return out, msgs + more
 
 
 def main() -> None:

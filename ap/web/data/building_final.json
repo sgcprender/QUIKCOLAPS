@@ -180,6 +180,9 @@
     "W14X74": {
       "mass_kg_per_m": 110.35513977998129
     },
+    "W14X145": {
+      "mass_kg_per_m": 216.1543334222569
+    },
     "W14X43": {
       "mass_kg_per_m": 63.78324592787908
     },
@@ -200,9 +203,6 @@
     },
     "W14X211": {
       "mass_kg_per_m": 313.85406726416693
-    },
-    "W14X145": {
-      "mass_kg_per_m": 216.1543334222569
     },
     "W14X99": {
       "mass_kg_per_m": 147.3089251191493
@@ -1336,8 +1336,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X132",
-      "splice_at_bottom": false,
+      "section": "W14X145",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -1696,8 +1696,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X132",
-      "splice_at_bottom": false,
+      "section": "W14X145",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -2776,8 +2776,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X132",
-      "splice_at_bottom": false,
+      "section": "W14X145",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -3136,8 +3136,8 @@
       "story": "Story10",
       "bottom_z": 32.9184,
       "top_z": 36.576,
-      "section": "W14X132",
-      "splice_at_bottom": false,
+      "section": "W14X145",
+      "splice_at_bottom": true,
       "lands_on_beam": false
     },
     {
@@ -5234,7 +5234,7 @@
         0,
         7.3152
       ],
-      "section": "W24X68"
+      "section": "W24X84"
     },
     {
       "id": "402",
@@ -5262,7 +5262,7 @@
         0,
         21.9456
       ],
-      "section": "W24X68"
+      "section": "W24X84"
     },
     {
       "id": "404",
@@ -5528,7 +5528,7 @@
         51.206399999999995,
         7.3152
       ],
-      "section": "W24X76"
+      "section": "W24X84"
     },
     {
       "id": "423",
@@ -5556,7 +5556,7 @@
         51.206399999999995,
         21.9456
       ],
-      "section": "W24X68"
+      "section": "W24X84"
     },
     {
       "id": "425",

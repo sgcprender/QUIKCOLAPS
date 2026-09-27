@@ -398,3 +398,97 @@ def test_stepup_member_and_mirror(b):
     a = {x["frame"]: (x["from"], x["section"]) for x in out["assignments"]}
     assert a == {"C_A2_S2": ("W14X90", "W14X99"), "C_D2_S2": ("W14X90", "W14X120")}
     assert msgs == []
+
+
+# ---------- finalize loop (core/finalize.py) with a fake ETABS ----------
+
+class _FakeEtabs:
+    """ratio = demand / (lb/ft of the section); auto-select picks the lightest passing W14,
+    or the heaviest if none passes. pick_override forces what auto-select answers."""
+
+    def __init__(self, b, sections, demand, auto_limit=None, pick_override=None, composite=None):
+        self.b, self.sec, self.demand = b, dict(sections), demand
+        self.auto, self.auto_limit, self.pick_override = set(), auto_limit, pick_override or {}
+        self.composite = composite or {}
+        self.calls = []
+
+    def _pick(self, f):
+        from core.stepup import W14
+        if f in self.pick_override:
+            return self.pick_override[f]
+        ok = [w for w in W14 if (self.auto_limit is None or w <= self.auto_limit) and self.demand[f] / w <= 1.0]
+        return f"W14X{ok[0] if ok else min(W14[-1], self.auto_limit or W14[-1])}"
+
+    def check(self):
+        from core.propagate import weight
+        self.calls.append("check")
+        out = {}
+        for f, d in self.demand.items():
+            s = self._pick(f) if f in self.auto else self.sec[f]
+            out[f] = {"section": s, "max_ratio": d / weight(s), "kind": "Column", "governing_combo": "AP_SC01_CMB"}
+        for f, r in self.composite.items():
+            out[f] = {"section": "W24X55", "max_ratio": r, "kind": "CompositeBeam", "governing_combo": ""}
+        return {"members": out}
+
+    def autoselect(self, frames):
+        self.calls.append(("autoselect", tuple(frames)))
+        self.auto = set(frames)
+
+    def current_sections(self):
+        return dict(self.sec)
+
+    def assign(self, prop):
+        self.calls.append("assign")
+        for a in prop["assignments"]:
+            assert a["from"] == self.sec[a["frame"]], "from must be the model's section"
+            self.sec[a["frame"]] = a["section"]
+        self.auto = set()
+
+    def building(self):
+        return self.b
+
+
+def _cols(b):
+    return {c["id"]: c["section"] for c in b["columns"]} | {m["id"]: m["section"] for m in b["beams"]}
+
+
+def test_finalize_takes_etabs_pick_and_mirrors(b):
+    from core.finalize import finalize
+    # C_A2_S2 is W14X90 with demand 100: ratio 100/90 = 1.111; lightest passing W14 is X109 (0.917)
+    ets = _FakeEtabs(b, _cols(b), {"C_A2_S2": 100.0, "C_D2_S2": 50.0}, composite={"CB1": 1.02})
+    log, prop = finalize(ets, {"assignments": []}, max_rounds=5)
+    assert log["status"] == "passed" and len(log["rounds"]) == 1
+    mv = log["rounds"][0]["moves"][0]
+    assert (mv["frame"], mv["from"], mv["to"], mv["reason"], mv["ratio_before"]) == \
+        ("C_A2_S2", "W14X90", "W14X109", "auto-select", 1.111)
+    # the mirror about y = 10.5 gets the same section (W14X90 -> W14X109)
+    assert ets.sec["C_A2_S2"] == ets.sec["C_D2_S2"] == "W14X109"
+    # check, autoselect, check (pick), assign, check
+    assert ets.calls == ["check", ("autoselect", ("C_A2_S2",)), "check", "assign", "check"]
+    assert log["composite_over_reported"] == {"CB1": 1.02}
+
+
+def test_finalize_falls_back_to_step_up(b):
+    from core.finalize import finalize, pick
+    # auto-select answers a section that is not heavier: one size up (W14X90 -> W14X99)
+    assert pick("W14X90", "W14X82", 0.98) == ("W14X99", "step-up (auto-select picked W14X82, not heavier than W14X90)")
+    # the list tops out below the demand: 120 / 109 = 1.10 still fails -> one size up from the pick
+    assert pick("W14X90", "W14X109", 1.10)[0] == "W14X120"
+    # loop: the list only reaches W14X99, demand 110 needs W14X120: two fallback rounds
+    ets = _FakeEtabs(b, _cols(b), {"C_A2_S2": 110.0}, auto_limit=99)
+    log, _ = finalize(ets, {"assignments": []}, max_rounds=5)
+    # round 1: pick W14X99 fails (110/99 = 1.11) -> W14X109 (1.009, still over); round 2 -> W14X120 (0.917)
+    assert [m["to"] for r in log["rounds"] for m in r["moves"]] == ["W14X109", "W14X120"]
+    assert log["status"] == "passed"
+
+
+def test_finalize_stops_after_max_rounds(b):
+    from core.finalize import finalize
+    # auto-select always answers the current section: every round steps one size, demand 200 needs X211
+    ets = _FakeEtabs(b, _cols(b), {"C_A2_S2": 200.0}, pick_override={})
+    ets.pick_override = type("Current", (dict,), {"__contains__": lambda s, k: True,
+                                                   "__getitem__": lambda s, k: ets.sec[k]})()
+    log, _ = finalize(ets, {"assignments": []}, max_rounds=2)
+    # W14X90 -> 99 -> 109: 200/109 = 1.83 still over after 2 rounds
+    assert log["status"] == "not converged" and len(log["rounds"]) == 2
+    assert ets.sec["C_A2_S2"] == "W14X109" and log["steel_over"] == {"C_A2_S2": round(200 / 109, 3)}

@@ -2,126 +2,85 @@
  "model": "progressive collapse - AP2",
  "date": "2026-09-26",
  "units": "short tons (2000 lb)",
- "state": "658 fixed sections (propagation.json incl. two step-up rounds on frames 9, 29, 46, 61 and their symmetry images); all 30 AP cases run; design once (composite, then steel)",
+ "state": "finalize: passed after 1 round(s); fixed sections from propagation.json",
  "tonnage": {
-  "total": 1157.02,
-  "columns": 373.95,
-  "steel_beams": 505.87,
+  "total": 1158.01,
+  "columns": 374.26,
+  "steel_beams": 506.54,
   "composite_beams": 277.2
  },
  "baseline_total": 790.18,
  "premium": {
-  "short_tons": 366.84,
-  "percent": 46.4
+  "short_tons": 367.83,
+  "percent": 46.5
  },
  "split_over_original_sections": {
   "original": 776.74,
-  "collapse_driven": 176.55,
-  "propagated": 204.41,
+  "collapse_driven": 176.92,
+  "propagated": 205.03,
   "strength_and_other": -0.67
  },
  "split_of_premium_over_baseline": {
-  "collapse_driven": 176.55,
-  "propagated": 204.41,
+  "collapse_driven": 176.92,
+  "propagated": 205.03,
   "strength": -14.11,
-  "note": "strength = unassigned frames' change over the original less the baseline's own strength redesign over the original (13.44)"
+  "note": "strength = unassigned frames' change over the original less the baseline's own strength redesign over the original"
  },
  "check": {
-  "all_at_or_below_1": false,
-  "steel_max": 1.039,
+  "all_at_or_below_1": true,
+  "steel_max": 0.992,
   "composite_max": 0.587,
-  "over_1": [
-   {
-    "frame": "9",
-    "location": [
-     "C9",
-     "Story10"
-    ],
-    "section": "W14X132",
-    "ratio": 1.039,
-    "governing_combo": "AP_SC15_CMB(C)"
-   },
-   {
-    "frame": "422",
-    "location": null,
-    "section": "W24X76",
-    "ratio": 1.009,
-    "governing_combo": "AP_SC21_CMB(C)"
-   }
-  ],
-  "step_up_rounds": [
-   {
-    "frames": [
-     "9",
-     "29",
-     "46",
-     "61"
-    ],
-    "with_images": 16,
-    "tons": 1156.33,
-    "steel_max": 1.094,
-    "over": 2
-   },
-   {
-    "frames": [
-     "9",
-     "29"
-    ],
-    "with_images": 8,
-    "tons": 1157.02,
-    "steel_max": 1.039,
-    "over": 2
-   }
-  ],
-  "note": "max 2 step-up rounds reached; frames 9 and 29 still over 1.0"
+  "steel_over": {},
+  "composite_over_reported": {},
+  "finalize_log": "web/data/finalize.json"
  },
  "reactions_vs_fresh_export": [
   {
    "scenario": "SC01",
    "status": 4,
-   "expected_kn": 8023.6,
-   "from_reactions_kn": 7986.5,
+   "expected_kn": 8025.6,
+   "from_reactions_kn": 7988.4,
    "diff_percent": -0.46,
    "ok": true
   },
   {
    "scenario": "SC02",
    "status": 4,
-   "expected_kn": 6410.1,
-   "from_reactions_kn": 6376.6,
+   "expected_kn": 6412.1,
+   "from_reactions_kn": 6378.5,
    "diff_percent": -0.52,
    "ok": true
   },
   {
    "scenario": "SC03",
    "status": 4,
-   "expected_kn": 4803.3,
-   "from_reactions_kn": 4775.3,
-   "diff_percent": -0.58,
+   "expected_kn": 4805.3,
+   "from_reactions_kn": 4777.1,
+   "diff_percent": -0.59,
    "ok": true
   },
   {
    "scenario": "SC04",
    "status": 4,
-   "expected_kn": 4000.6,
-   "from_reactions_kn": 3976.3,
+   "expected_kn": 4002.6,
+   "from_reactions_kn": 3978.2,
    "diff_percent": -0.61,
    "ok": true
   },
   {
    "scenario": "SC05",
    "status": 4,
-   "expected_kn": 2397.4,
-   "from_reactions_kn": 2382.1,
+   "expected_kn": 2399.4,
+   "from_reactions_kn": 2384.0,
    "diff_percent": -0.64,
    "ok": true
   },
   {
    "scenario": "SC06",
    "status": 4,
-   "expected_kn": 1600.3,
-   "from_reactions_kn": 1585.5,
-   "diff_percent": -0.92,
+   "expected_kn": 1602.3,
+   "from_reactions_kn": 1587.4,
+   "diff_percent": -0.93,
    "ok": true
   },
   {
@@ -161,7 +120,7 @@
    "status": 4,
    "expected_kn": 9480.5,
    "from_reactions_kn": 9444.9,
-   "diff_percent": -0.37,
+   "diff_percent": -0.38,
    "ok": true
   },
   {
@@ -207,48 +166,48 @@
   {
    "scenario": "SC17",
    "status": 4,
-   "expected_kn": 14860.7,
-   "from_reactions_kn": 14800.8,
+   "expected_kn": 14861.7,
+   "from_reactions_kn": 14801.7,
    "diff_percent": -0.4,
    "ok": true
   },
   {
    "scenario": "SC18",
    "status": 4,
-   "expected_kn": 10389.1,
-   "from_reactions_kn": 10344.0,
+   "expected_kn": 10390.1,
+   "from_reactions_kn": 10345.0,
    "diff_percent": -0.43,
    "ok": true
   },
   {
    "scenario": "SC19",
    "status": 4,
-   "expected_kn": 8901.5,
-   "from_reactions_kn": 8859.5,
+   "expected_kn": 8902.5,
+   "from_reactions_kn": 8860.4,
    "diff_percent": -0.47,
    "ok": true
   },
   {
    "scenario": "SC20",
    "status": 4,
-   "expected_kn": 7414.6,
-   "from_reactions_kn": 7378.8,
+   "expected_kn": 7415.6,
+   "from_reactions_kn": 7379.7,
    "diff_percent": -0.48,
    "ok": true
   },
   {
    "scenario": "SC21",
    "status": 4,
-   "expected_kn": 4446.0,
-   "from_reactions_kn": 4423.8,
+   "expected_kn": 4447.0,
+   "from_reactions_kn": 4424.7,
    "diff_percent": -0.5,
    "ok": true
   },
   {
    "scenario": "SC22",
    "status": 4,
-   "expected_kn": 2967.9,
-   "from_reactions_kn": 2949.6,
+   "expected_kn": 2968.9,
+   "from_reactions_kn": 2950.5,
    "diff_percent": -0.62,
    "ok": true
   },
@@ -263,48 +222,48 @@
   {
    "scenario": "SC24",
    "status": 4,
-   "expected_kn": 15839.5,
-   "from_reactions_kn": 15787.1,
+   "expected_kn": 15841.5,
+   "from_reactions_kn": 15789.0,
    "diff_percent": -0.33,
    "ok": true
   },
   {
    "scenario": "SC25",
    "status": 4,
-   "expected_kn": 12660.1,
-   "from_reactions_kn": 12616.8,
+   "expected_kn": 12662.1,
+   "from_reactions_kn": 12618.7,
    "diff_percent": -0.34,
    "ok": true
   },
   {
    "scenario": "SC26",
    "status": 4,
-   "expected_kn": 9489.7,
-   "from_reactions_kn": 9457.0,
-   "diff_percent": -0.34,
+   "expected_kn": 9491.7,
+   "from_reactions_kn": 9458.9,
+   "diff_percent": -0.35,
    "ok": true
   },
   {
    "scenario": "SC27",
    "status": 4,
-   "expected_kn": 7905.2,
-   "from_reactions_kn": 7876.6,
+   "expected_kn": 7907.2,
+   "from_reactions_kn": 7878.5,
    "diff_percent": -0.36,
    "ok": true
   },
   {
    "scenario": "SC28",
    "status": 4,
-   "expected_kn": 6320.7,
-   "from_reactions_kn": 6297.0,
-   "diff_percent": -0.37,
+   "expected_kn": 6322.7,
+   "from_reactions_kn": 6298.9,
+   "diff_percent": -0.38,
    "ok": true
   },
   {
    "scenario": "SC29",
    "status": 4,
-   "expected_kn": 4739.7,
-   "from_reactions_kn": 4722.1,
+   "expected_kn": 4741.7,
+   "from_reactions_kn": 4724.0,
    "diff_percent": -0.37,
    "ok": true
   },

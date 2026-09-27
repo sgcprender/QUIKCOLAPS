@@ -15,6 +15,8 @@ Deterministic engineering rules. No ETABS, no network, no LLM calls here.
   writes `assignments` for `bridge assign-sections` and detailed rows
 - `stepup.py`: steps named members (and their symmetry images) to the next heavier W14
   in `propagation.json`'s assignments, for members over 1.0 after the final run
+- `finalize.py`: the finalize loop (ETABS behind an `ops` object; `scripts/finalize.py`
+  gives the bridge-backed one, tests a fake): members over 1.0 get ETABS's pick or one size up
 - `loads.py`: increment load spec for one scenario
 - `scenarios.py`: candidates → scenarios
 - `cli.py`: building JSON → web/data/scenarios.json
