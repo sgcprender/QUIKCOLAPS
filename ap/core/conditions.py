@@ -20,6 +20,12 @@ Definitions (all at the level at the top of the column segment):
   edges through the column, the nearest column in the same story.
 - beams at top: beams with an end at the top joint (framing in) and beams whose
   span passes through it; direction in degrees from +x, offset = beam z - column top z.
+- outline, per level (the floor outline at the row's top level, so setbacks count):
+  on_outline says whether the column is on it, corner_type is "convex" or "re_entrant"
+  where the column is an outline vertex (None otherwise), position is corner_type,
+  "edge" or "inside" (a first-floor perimeter column inside a setback outline). Rows
+  cover the first-floor perimeter columns and every column on its own level's outline.
+  re_entrant_corners lists them all (UFC 3-2.9.2.2: remove at re-entrant corners).
 - symmetry: plan reflections/rotations that map the framing (column and beam
   positions) onto itself; symmetry_group is a location's orbit under them. For
   each one, the floor areas with no image and the sections that differ are
@@ -34,7 +40,7 @@ import math
 from pathlib import Path
 
 from .candidates import perimeter_locations, reference_outline
-from .geometry import area, bbox_dims, dist, edges, point_on_boundary, point_on_segment
+from .geometry import area, bbox_dims, dist, edges, point_on_boundary, point_on_segment, vertex_convexity
 from .model import above_grade_stories, columns_at, load_building, story_by_name
 
 TOL = 1e-3  # m; ETABS exports in feet round-trip to about 1e-4 m
@@ -223,7 +229,18 @@ def condition_table(b: dict, axial: dict) -> dict:
     sym = symmetry(b)
     g_geo = symmetry_groups(b, perim, list(sym))
     g_sec = section_subgroups(b, g_geo)
-    edge_dirs = [((a, c), (_angle(a, c), _angle(c, a))) for a, c in edges(outline)]
+    all_locs = {}
+    for c in b["columns"]:
+        all_locs.setdefault(c["location_id"], (c["x"], c["y"]))
+
+    def level_outline(level: str):
+        return b.get("outlines", {}).get(level) or outline
+
+    def corner_type(p, lo):
+        for v, convex in zip(lo, vertex_convexity(lo)):
+            if dist(p, v) <= TOL:
+                return "convex" if convex else "re_entrant"
+        return None
 
     # tributary area per (location, story) for all columns, so neighbours and
     # tributary_above can use it
@@ -240,17 +257,25 @@ def condition_table(b: dict, axial: dict) -> dict:
     def trib_above(loc: str, story: str) -> float:
         return sum(trib.get((loc, n), 0.0) for n in order[order.index(story):])
 
-    rows = []
-    for loc in sorted(perim, key=lambda k: (perim[k][0], perim[k][1])):
-        p = perim[loc]
+    rows, re_entrant = [], []
+    for loc in sorted(all_locs, key=lambda k: (all_locs[k][0], all_locs[k][1])):
+        p = all_locs[loc]
         segs = columns_at(b, loc)
         present = {c["story"] for c in segs}
         by_story = {c["story"]: c for c in segs}
-        sides = _side(p, outline)
         for s in stories:
             col = by_story.get(s["name"])
             if col is None:
                 continue
+            lo = level_outline(s["top_level"])
+            on_outline = point_on_boundary(p, lo, TOL)
+            if loc not in perim and not on_outline:
+                continue
+            ctype = corner_type(p, lo)
+            sides = _side(p, lo)
+            if ctype == "re_entrant":
+                re_entrant.append({"location_id": loc, "story": s["name"], "level": s["top_level"]})
+            edge_dirs = [((a, c), (_angle(a, c), _angle(c, a))) for a, c in edges(lo)]
             k = order.index(s["name"])
             below = by_story.get(order[k - 1]) if k > 0 else None
             above = by_story.get(order[k + 1]) if k + 1 < len(order) else None
@@ -281,7 +306,8 @@ def condition_table(b: dict, axial: dict) -> dict:
             rows.append({
                 "location_id": loc, "story": s["name"], "frame": col["id"],
                 "x": round(p[0], 3), "y": round(p[1], 3), "sides": sides,
-                "position": "corner" if len(sides) > 1 else "edge",
+                "position": ctype or ("edge" if on_outline else "inside"),
+                "corner_type": ctype, "on_outline": on_outline, "perimeter_first_floor": loc in perim,
                 "top_level": s["top_level"],
                 "section": col["section"],
                 "section_below": below["section"] if below else None,
@@ -311,6 +337,7 @@ def condition_table(b: dict, axial: dict) -> dict:
             "groups": _invert(g_geo),
             "groups_with_sections": _invert(g_sec),
         },
+        "re_entrant_corners": re_entrant,
         "rows": rows,
     }
 

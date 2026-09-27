@@ -282,7 +282,7 @@ def test_condition_row_splice_and_continuity(b):
     assert [rows[s]["splice_below"] for s in ("Story1", "Story2", "Story3", "Story4")] == [False, False, True, False]
     assert all(r["continuous_to_roof"] for r in rows.values())
     # corner: 8 x 7 bay / 4 = 14 m2
-    assert rows["Story1"]["tributary_m2"] == pytest.approx(14.0) and rows["Story1"]["position"] == "corner"
+    assert rows["Story1"]["tributary_m2"] == pytest.approx(14.0) and rows["Story1"]["position"] == "convex"
 
 
 def test_symmetry_groups_demo(b):
@@ -492,3 +492,28 @@ def test_finalize_stops_after_max_rounds(b):
     # W14X90 -> 99 -> 109: 200/109 = 1.83 still over after 2 rounds
     assert log["status"] == "not converged" and len(log["rounds"]) == 2
     assert ets.sec["C_A2_S2"] == "W14X109" and log["steel_over"] == {"C_A2_S2": round(200 / 109, 3)}
+
+
+def test_condition_table_re_entrant_corner_at_setback(b):
+    import copy
+    from core.conditions import condition_table
+    from core.model import outline_from_bays
+    bb = copy.deepcopy(b)
+    # setback at L3 and ROOF: drop the bay x 32-36, y 0-7 (lower-left corner A5)
+    bb["bays"] = [a for a in bb["bays"] if a["id"] not in ("A_L3_A5", "A_ROOF_A5")]
+    for lv in ("L3", "ROOF"):
+        bb["outlines"][lv] = outline_from_bays([a for a in bb["bays"] if a["level"] == lv])
+    t = condition_table(bb, _axial(bb))
+    # the L3 outline is (0,0) (32,0) (32,7) (36,7) (36,21) (0,21): B5 at (32, 7) is the
+    # re-entrant vertex; it is an interior column at the first floor, so it only shows up
+    # through the level outline, for Story3 (top L3) and Story4 (top ROOF)
+    assert {(r["location_id"], r["story"]) for r in t["re_entrant_corners"]} == {("B5", "Story3"), ("B5", "Story4")}
+    b5 = {r["story"]: r for r in t["rows"] if r["location_id"] == "B5"}
+    assert set(b5) == {"Story3", "Story4"} and b5["Story3"]["corner_type"] == "re_entrant"
+    assert b5["Story3"]["perimeter_first_floor"] is False
+    # A6 (36, 0) is cut off at L3: still a first-floor perimeter row, now inside the outline
+    a6 = next(r for r in t["rows"] if r["location_id"] == "A6" and r["story"] == "Story3")
+    assert a6["on_outline"] is False and a6["position"] == "inside"
+    # A5 (32, 0) becomes a convex corner of the notched outline
+    a5 = next(r for r in t["rows"] if r["location_id"] == "A5" and r["story"] == "Story3")
+    assert a5["corner_type"] == "convex"

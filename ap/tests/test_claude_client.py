@@ -109,3 +109,12 @@ def test_evidence_checked_against_table():
     checked, issues = check_evidence(t, axial, review)
     assert [e["status"] for e in checked] == ["ok", "mismatch", "ok", "unchecked"]
     assert len(issues) == 1 and "22.0" in issues[0]
+
+
+def test_payload_carries_outline_corners():
+    # the review must see corner types per level and every level's outline (setbacks)
+    from core.conditions import condition_table
+    axial = {"case": "fake", "columns": {c["id"]: {"p_kn": 100.0} for c in b["columns"]}}
+    msg = build_user_message(b, cands, mode="conditions", conditions=condition_table(b, axial))
+    assert '"corner_type"' in msg and '"re_entrant_corners"' in msg and '"outlines_by_level"' in msg
+    assert '"outlines_by_level"' in build_user_message(b, cands, mode="raw")

@@ -132,6 +132,11 @@ def system_prompt() -> str:
         "geometry changes (abrupt bay-size decrease, re-entrant corners), lightly loaded adjacent "
         "columns, bays with different tributary sizes, members framing in at different "
         "orientations or elevations. Say which condition you see and where.\n"
+        "- Check re-entrant corners at every level, not only the first floor: the rule candidates "
+        "look at the first-floor outline only, so a re-entrant corner created by a setback or "
+        "notch higher up is yours to add (condition re_entrant_corner). Use the condition "
+        "table's re_entrant_corners list and each row's corner_type / on_outline where a table "
+        "is given; otherwise the floor outlines per level in the geometry (outlines_by_level).\n"
         "- Cite the values you used in `evidence`: location, story, field and value exactly as "
         "given in the data (condition-table field names where a table is given). Code checks "
         "every cited value against the data.\n"
@@ -199,6 +204,7 @@ def raw_geometry(b: dict) -> dict:
         "levels": b["levels"],
         "stories": [{k: s[k] for k in ("name", "bottom_level", "top_level", "bottom_z", "top_z")} for s in stories],
         "outline_first_floor": b["outlines"].get(stories[0]["top_level"]) if stories else None,
+        "outlines_by_level": _outlines_by_level(b),
         "columns": cols,
         "framing": {
             "beam_format": "[xi, yi, xj, yj, section, z offset from level]",
@@ -208,9 +214,25 @@ def raw_geometry(b: dict) -> dict:
     }
 
 
+def _outlines_by_level(b: dict) -> list[dict]:
+    """Floor outline per level, levels with the same outline grouped (setbacks show as a change)."""
+    groups: list[dict] = []
+    for lv in sorted(b["levels"], key=lambda l: l["z"]):
+        o = b.get("outlines", {}).get(lv["name"])
+        if not o:
+            continue
+        pts = [[_r(x), _r(y)] for x, y in o]
+        if groups and groups[-1]["outline"] == pts:
+            groups[-1]["levels"].append(lv["name"])
+        else:
+            groups.append({"levels": [lv["name"]], "outline": pts})
+    return groups
+
+
 def compact_conditions(t: dict) -> dict:
     """The condition table as a header + rows, to keep the prompt small."""
-    head = ["location_id", "story", "frame", "sides", "section", "section_below", "section_above",
+    head = ["location_id", "story", "frame", "sides", "position", "corner_type", "on_outline",
+            "perimeter_first_floor", "section", "section_below", "section_above",
             "splice_below", "continuous_to_roof", "tributary_m2", "tributary_above_m2", "p_kn",
             "p_per_tributary_above_kpa", "adjacent_bays", "neighbours", "beams_at_top", "symmetry_group",
             "symmetry_group_with_sections"]
@@ -238,6 +260,7 @@ def compact_conditions(t: dict) -> dict:
             "beams_at_top": "[beam id, section, direction_deg, length_m, z_offset_m, kind]",
         },
         "symmetry": t["symmetry"],
+        "re_entrant_corners": t.get("re_entrant_corners", []),
         "columns": head,
         "rows": rows,
     }

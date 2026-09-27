@@ -28,5 +28,6 @@ Rules for changes here:
 - Tie-breaks must be deterministic (same input → same scenarios, same order).
 - Load math: increment = (amplification_factor − 1) × base combination on the
   region. Keep `region_amplified_total_kn == amplification_factor × region_base_total_kn`.
-- Known limitations (good next tasks): outline taken from the first above-grade
-  level only; bay-size change only checked along the outline; no internal removals.
+- Known limitations (good next tasks): rule candidates use the outline of the first
+  above-grade level only (the condition table and the Claude review check every level's
+  outline for re-entrant corners, so setbacks reach Claude); bay-size change only checked along the outline; no internal removals.
