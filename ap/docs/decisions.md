@@ -26,6 +26,12 @@ Each scenario is a staged construction case built from the template CS1: start
 from the loaded initial case, remove the column(s), load the region group. Must
 be validated against a hand-deleted model first (bridge `forces` +
 `scripts/compare_forces.py`). Result: _not yet run_.
+2026-09-26: the hand-deleted comparison is deferred; all 23 scenarios are kept
+(plan A). Until it is run, each staged case is checked only by the base-reaction
+check in `bridge results`: reaction(case) − reaction(initial case) must equal the
+scenario's `increment_total_kn` within 1% (config `reaction_check_tolerance`).
+The check confirms the loads reach the model; it does not confirm that staged
+removal redistributes forces like a deleted column.
 
 ## D6. Increment on the region (superseded in part by D13)
 Base combination everywhere + increment (amp − 1) × base on the region. In

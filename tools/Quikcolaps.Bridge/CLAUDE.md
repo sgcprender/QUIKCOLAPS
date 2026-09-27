@@ -146,12 +146,32 @@ seen on the working copy, ETABS 23, 2026-09-26.
 - `CaseStaticNonlinearStaged.SetResultsSaved` (documented): `(Name,
   StagedSaveOption, StagedMinSteps = 1, StagedMinStepsTD = 1)`; matches, same
   as `CollapseCase`.
-- `Results.Setup.SetOptionNLStatic` / `SetOptionMultiStepStatic` (**not
-  documented**): the ETABS 23 help lists `int Value` with no meaning. The
-  related `SetOptionModalHist` documents 1 = Envelopes, 2 = Step-by-Step,
-  3 = Last Step. The bridge passes 3 to both and ignores the return code.
-  To measure during the D5 check, after the first staged case has run; ask
-  the user before changing the output options.
+- `Results.Setup.SetOptionNLStatic` / `SetOptionMultiStepStatic` (not
+  documented; **measured** on `AP_SC03` and `1.2D+0.5L`): 1 = envelope (two
+  rows, StepType Max / Min), 2 = step by step (one row per saved step; blank
+  StepType for `AP_SC03`), 3 = last step (one row, StepType "Single Value").
+  Both setters answer 0. The model's own setting was 1; the bridge's 3 is
+  right. A staged case built from CS1 saves only its final state, so all three
+  give the same FZ and frame forces there.
+- `SapModel.SetModelIsLocked(false)` (measured): **answers 1 but does unlock**
+  (`GetModelIsLocked` reads False afterwards). Check the read-back, not the
+  return code. Unlocking deletes the analysis results.
+- `View.RefreshView` and `DesignSteel.StartDesign` (measured): on this machine
+  ETABS raises a modal "Error initializing shader … 0x80070057" box and the API
+  call waits behind it. `quikcolaps dialogs --pid <pid>` lists it;
+  `--close` presses OK and the call then completes. Display only; the writes
+  had been read back before it appeared.
+- `DesignSteel.GetSummaryResults_3` (measured): covers **steel frame design
+  only** (840 of 1,260 frames here). The 420 infill beams have design procedure
+  3 = composite beam (`FrameObj.GetDesignProcedure`: 0 program, 1 steel frame,
+  2 concrete, 3 composite beam, 4 joist, 7 none, 13 composite column) and get
+  no ratio from it. `PMMCombo` comes back **with a suffix**, e.g.
+  `AP_SC03_CMB(C)`, so matching it to a combo name needs the suffix removed
+  (`Results.Run` matches exactly today, so `by_scenario` stays empty).
+- Auto-select lists (measured): all columns `AS-W14` (35 sections), all
+  girders `AS-W24` (21 sections), start Median; infill beams fixed W24X55.
+  `FrameObj.GetSection` gives the current analysis section and the list name;
+  `StartDesign` picks design sections but leaves the analysis sections alone.
 - `LoadCases.StaticLinear.GetLoads` / `Results.BaseReact` on a linear case
   (measured): one row per case, FX = FY = 0 for gravity patterns.
 - `StaticNonlinear.GetLoads` on `1.2D+0.5L` (measured, via `CaseLoads.Initial`):
