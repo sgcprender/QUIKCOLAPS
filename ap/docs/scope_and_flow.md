@@ -21,6 +21,26 @@
 
 ## Application flow
 
+The app runs in this order (recorded 2026-09-26):
+
+**export → intact gravity run (1.2D+0.5L) → read axial loads → candidates +
+condition table → Claude review → approval → unlock → apply staged cases → run →
+design**
+
+| Stage | Command | Writes to the model |
+|---|---|---|
+| export | `bridge export` | no |
+| intact gravity run | ETABS analysis of the template's initial case `1.2D+0.5L` (already run on a model whose staged cases have been analysed: it is their initial case) | analysis only |
+| read axial loads | `bridge forces --case "1.2D+0.5L" --frames <all columns>` → `web/data/intact_axial.json` | no (read-only; no analysis) |
+| candidates + condition table | `core.cli` (rule candidates), `core.conditions` → `web/data/conditions.json` | no |
+| Claude review | `claude_client.run_review --mode conditions` → `web/data/review_conditions.json` (validated; cited values checked against the table) | no |
+| approval | viewer / user → approved candidates → `core.cli --candidates` → `scenarios.json` | no |
+| unlock | `SetModelIsLocked(false)` on the working copy (deletes results) | yes, with approval |
+| apply staged cases | `bridge apply --commit` | yes, with approval |
+| run, design | `bridge results --run --design` (composite first, then steel) | yes, with approval |
+
+The steps below give the detail.
+
 Owner in brackets. `bridge` = the C# tool `tools/Quikcolaps.Bridge` (built on the
 existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 
@@ -99,7 +119,8 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 | 3 (stacks), 7 | tools/Quikcolaps.Bridge | written, not yet run |
 | 2, 4 | web | working on the synthetic fixture |
 | 3 (rules, ETABS-region merge) | core | working, tested on the fixture |
-| 3 (Claude review) | claude_client | written, tested with fake responses only |
+| 3 (intact axial, condition table) | bridge forces, core.conditions | run on AP2 (read-only): Story1 column sum 141,439.9 kN against 141,440.4 kN from the measured base reactions (1.2 SW + 1.2 SDL + 0.5 LL); 200 perimeter rows, 5 symmetry groups (framing symmetric about both axes; a 0.15 × 0.15 m deck area at C29 on every floor, ids 50…455, has no mirror image) |
+| 3 (Claude review) | claude_client | run on AP2 with the API key (claude-opus-5-5, structured output), 2026-09-26: (a) raw geometry, $0.22, the minimum set only; (b) candidates + condition table, $0.47, accepts the 3 rule locations and proposes C5 (lightly loaded adjacent corner). All cited values match the table. **Awaiting approval; scenario set unchanged (23)** |
 | 8–12 | web, core | not started |
 | 13 | report | tables only; tonnage from the existing Cli tool |
 
@@ -111,8 +132,8 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 2. **Redesign loop with similarity.** Propose section changes for failing
    members and similar members (`results.redesign`), apply with approval,
    re-run with `--accept-design-sections` as a deliberate iteration.
-3. **Claude review with the API key.** Run `claude_client` on the real model's
-   candidates (so far tested with fake responses only).
+3. ~~**Claude review with the API key.**~~ Run 2026-09-26 (see status); the
+   decision on the proposed additions is the user's.
 4. **Viewer results view.** Show reaction checks, ratios and failing members
    per scenario from `results.json`.
 5. **Local server.** Serve the viewer and data locally for the team

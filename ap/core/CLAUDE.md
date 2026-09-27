@@ -6,6 +6,9 @@ Deterministic engineering rules. No ETABS, no network, no LLM calls here.
 - `geometry.py`: 2D plan helpers (point on segment/boundary, convexity, area)
 - `stories.py`: which stories to analyze per location (UFC 3-2.9.2.2)
 - `candidates.py`: rule-based removal locations and difficult-geometry flags
+- `conditions.py`: condition table for the judgment conditions of 3-2.9.2.2 (tributary
+  areas, intact axial forces, neighbours, framing at the top joint, splices, symmetry
+  groups); facts only, no thresholds
 - `regions.py`: 30% simultaneous removal, amplified region, region from approved bays
 - `loads.py`: increment load spec for one scenario
 - `scenarios.py`: candidates → scenarios

@@ -241,3 +241,67 @@ def test_candidates_etabs_fixture(cfg):
     eb = load_building(ROOT / "fixtures" / "etabs_building.json")
     got = {c["location_id"]: [r["code"] for r in c["reasons"]] for c in generate_candidates(eb, cfg)}
     assert got == {"C1": ["corner"], "C13": ["mid_long_side"], "C30": ["mid_short_side"]}
+
+
+# ---------- condition table (facts for the 3-2.9.2.2 judgment conditions) ----------
+
+def _axial(b, p=100.0):
+    # fake intact axial: every column 100 kN except A4 in Story1 at 250 kN
+    cols = {c["id"]: {"p_kn": p} for c in b["columns"]}
+    cols["C_A4_S1"] = {"p_kn": 250.0}
+    return {"case": "fake", "columns": cols}
+
+
+def test_condition_row_tributary_neighbours_and_beams(b):
+    from core.conditions import condition_table
+    t = condition_table(b, _axial(b))
+    r = next(r for r in t["rows"] if r["location_id"] == "A5" and r["story"] == "Story1")
+    # A5 at (32, 0) touches bays 24-32 x 0-7 (56 m2) and 32-36 x 0-7 (28 m2), all
+    # four corners of each have columns: 56/4 + 28/4 = 14 + 7 = 21 m2
+    assert r["tributary_m2"] == pytest.approx(21.0)
+    # the same at L1, L2, L3 and ROOF: 4 x 21 = 84 m2
+    assert r["tributary_above_m2"] == pytest.approx(84.0)
+    assert sorted((a["dx_m"], a["dy_m"]) for a in r["adjacent_bays"]) == [(4.0, 7.0), (8.0, 7.0)]
+    n = {x["location_id"]: x for x in r["neighbours"]}
+    # +x A6 at 36 - 32 = 4 m, -x A4 at 32 - 24 = 8 m, +y B5 at 7 m (interior)
+    assert {k: v["distance_m"] for k, v in n.items()} == {"A6": 4.0, "A4": 8.0, "B5": 7.0}
+    assert n["B5"]["perimeter"] is False and n["A6"]["perimeter"] is True
+    # A4 carries 250 kN against A5's 100 kN: ratio 2.5
+    assert n["A4"]["p_ratio_to_this"] == pytest.approx(2.5)
+    # three girders frame in at the top joint, at 0, 90 and 180 degrees, no offset
+    assert r["beam_count"] == 3 and r["beam_directions_deg"] == [0.0, 90.0, 180.0]
+    assert r["beam_z_offsets_m"] == [0.0]
+    assert r["position"] == "edge" and r["sides"] == ["south"]
+
+
+def test_condition_row_splice_and_continuity(b):
+    from core.conditions import condition_table
+    t = condition_table(b, _axial(b))
+    rows = {r["story"]: r for r in t["rows"] if r["location_id"] == "A1"}
+    # W14X90 in Story1-2, W14X61 from Story3: the splice is below Story3 only
+    assert [rows[s]["splice_below"] for s in ("Story1", "Story2", "Story3", "Story4")] == [False, False, True, False]
+    assert all(r["continuous_to_roof"] for r in rows.values())
+    # corner: 8 x 7 bay / 4 = 14 m2
+    assert rows["Story1"]["tributary_m2"] == pytest.approx(14.0) and rows["Story1"]["position"] == "corner"
+
+
+def test_symmetry_groups_demo(b):
+    from core.conditions import condition_table
+    t = condition_table(b, _axial(b))
+    # x grids 0, 8, 16, 24, 32, 36 are not symmetric; y grids 0, 7, 14, 21 are:
+    # only the mirror about y = 10.5 maps the framing onto itself
+    assert list(t["symmetry"]["framing_ops"]) == ["mirror_y"]
+    g = {r["location_id"]: r["symmetry_group"] for r in t["rows"]}
+    assert g["A1"] == g["D1"] and g["A6"] == g["D6"] and g["B1"] == g["C1"]
+    assert g["A1"] != g["A6"]
+
+
+def test_symmetry_lists_unmatched_bay(b):
+    from core.conditions import condition_table
+    bb = copy.deepcopy(b)
+    # a small area outside one corner breaks the mirror for the bays only
+    bb["bays"].append({"id": "STRAY", "level": "L1", "z": 4.0,
+                       "polygon": [[36.0, -0.15], [36.15, -0.15], [36.15, 0.0], [36.0, 0.0]],
+                       "loads": bb["bays"][0]["loads"]})
+    t = condition_table(bb, _axial(bb))
+    assert t["symmetry"]["framing_ops"]["mirror_y"]["bays_without_image"] == ["STRAY"]

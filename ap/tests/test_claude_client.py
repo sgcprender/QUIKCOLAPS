@@ -62,3 +62,50 @@ def test_bad_region_discarded_and_good_region_filtered_by_level():
                 stories=[{"story": "Story3", "reasons": []}])
     scen = build_scenarios(b, [cand], cfg)
     assert scen[0]["region"]["bays"] == ["A_L3_A2", "A_ROOF_A2"]
+
+
+def test_raw_message_has_no_candidates_or_forces():
+    msg = build_user_message(b, cands, mode="raw")
+    assert '"candidates"' not in msg and "condition_table" not in msg and "p_kn" not in msg
+    assert '"framing"' in msg
+
+
+def test_conditions_message_carries_table():
+    from core.conditions import condition_table
+    axial = {"case": "fake", "columns": {c["id"]: {"p_kn": 100.0} for c in b["columns"]}}
+    msg = build_user_message(b, cands, mode="conditions", conditions=condition_table(b, axial))
+    assert '"condition_table"' in msg and '"candidates"' in msg
+
+
+def test_output_schema_is_strict():
+    # structured output needs additionalProperties false on every object
+    from claude_client.review import output_schema
+
+    def walk(s):
+        if s.get("type") == "object":
+            assert s.get("additionalProperties") is False, s
+            for v in s["properties"].values():
+                walk(v)
+        if s.get("type") == "array":
+            walk(s["items"])
+
+    walk(output_schema())
+
+
+def test_evidence_checked_against_table():
+    from claude_client.validate import check_evidence
+    from core.conditions import condition_table
+    axial = {"case": "fake", "columns": {c["id"]: {"p_kn": 100.0, "location_id": c["location_id"],
+                                                   "story": c["story"]} for c in b["columns"]}}
+    t = condition_table(b, axial)
+    review = {"decisions": [{"location_id": "A5", "decision": "add", "evidence": [
+        # A5 Story1: 56/4 + 28/4 = 21 m2 (see test_core); 22.0 is off by 4.8% -> mismatch
+        {"location_id": "A5", "story": "Story1", "field": "tributary_m2", "value": 21.0},
+        {"location_id": "A5", "story": "Story1", "field": "tributary_m2", "value": 22.0},
+        # interior column B2 is not in the table, but its axial force is checked
+        {"location_id": "B2", "story": "Story1", "field": "p_kn", "value": 100.4},
+        {"location_id": "A5", "story": "Story1", "field": "something_else", "value": 1},
+    ]}]}
+    checked, issues = check_evidence(t, axial, review)
+    assert [e["status"] for e in checked] == ["ok", "mismatch", "ok", "unchecked"]
+    assert len(issues) == 1 and "22.0" in issues[0]

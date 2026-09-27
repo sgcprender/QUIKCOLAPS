@@ -1,0 +1,688 @@
+{
+ "meta": {
+  "model": "claude-opus-5-5",
+  "mode": "raw",
+  "stop_reason": "end_turn",
+  "usage": {
+   "input_tokens": 26651,
+   "output_tokens": 5661,
+   "cache_read_input_tokens": 0,
+   "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.2198,
+  "seconds": 57.3
+ },
+ "review": {
+  "decisions": [
+   {
+    "location_id": "C1",
+    "decision": "add",
+    "reason": "Corner column, part of the minimum set. The plan is a regular rectangle of 7 x 3 bays at 7.315 m. C1, C4, C29 and C32 have identical coordinates mirrored about both plan axes and identical section schedules, so C1 represents all four corners. No other column lies within 30% of the 7.315 m bay dimension (2.19 m), so no simultaneous removal is needed.",
+    "clause": "3-2.9.2.2",
+    "condition": "corner",
+    "stories_of_concern": [
+     "Story1",
+     "Story10"
+    ],
+    "evidence": [
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "x",
+      "value": 0.0
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "y",
+      "value": 0.0
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     },
+     {
+      "location_id": "C32",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     },
+     {
+      "location_id": "C29",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     },
+     {
+      "location_id": "C4",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   {
+    "location_id": "C13",
+    "decision": "add",
+    "reason": "Near the middle of the long side (y = 0 face, 51.2 m long), part of the minimum set. The face has an even number of columns (8), so the plan midpoint (x = 25.6 m) falls between C13 (x = 21.946) and C17 (x = 29.261). These two are mirror images with identical section schedules. C13 represents C17, C16 and C20 by symmetry. No other column lies within 2.19 m.",
+    "clause": "3-2.9.2.2",
+    "condition": "mid_long_side",
+    "stories_of_concern": [
+     "Story1",
+     "Story10"
+    ],
+    "evidence": [
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "x",
+      "value": 21.946
+     },
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "y",
+      "value": 0.0
+     },
+     {
+      "location_id": "C17",
+      "story": "Story1",
+      "field": "x",
+      "value": 29.261
+     },
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X74"
+     },
+     {
+      "location_id": "C17",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X74"
+     },
+     {
+      "location_id": "C16",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X74"
+     },
+     {
+      "location_id": "C20",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X74"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   {
+    "location_id": "C2",
+    "decision": "add",
+    "reason": "Near the middle of the short side (x = 0 face, 21.9 m long), part of the minimum set. The face has 4 columns, so the midpoint (y = 10.97 m) falls between C2 (y = 7.315) and C3 (y = 14.63), which are mirror images with identical sections. C2 represents C3, C30 and C31 by symmetry. On this face the perimeter beams (W24X55) carry the infill beam reactions, so this removal also tests the girder direction, unlike the long-side removal.",
+    "clause": "3-2.9.2.2",
+    "condition": "mid_short_side",
+    "stories_of_concern": [
+     "Story1",
+     "Story10"
+    ],
+    "evidence": [
+     {
+      "location_id": "C2",
+      "story": "Story1",
+      "field": "x",
+      "value": 0.0
+     },
+     {
+      "location_id": "C2",
+      "story": "Story1",
+      "field": "y",
+      "value": 7.315
+     },
+     {
+      "location_id": "C3",
+      "story": "Story1",
+      "field": "y",
+      "value": 14.63
+     },
+     {
+      "location_id": "C2",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X90"
+     },
+     {
+      "location_id": "C3",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X90"
+     },
+     {
+      "location_id": "C30",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X90"
+     },
+     {
+      "location_id": "C31",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X90"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   }
+  ],
+  "not_added": [
+   {
+    "location_ids": [
+     "C4",
+     "C29",
+     "C32"
+    ],
+    "reason": "These corners are equivalent to C1 by double symmetry: mirrored coordinates and identical section schedules (Story1 W14X53 through Story10 W14X30). C29 is only nominally different because of the 0.152 m sliver bay at its corner. That bay looks like a modelling artefact (see observations), not a real change in tributary area."
+   },
+   {
+    "location_ids": [
+     "C17",
+     "C16",
+     "C20"
+    ],
+    "reason": "Equivalent to C13 by symmetry about x = 25.6 m and y = 10.97 m. Section schedules are identical (Story1 W14X74)."
+   },
+   {
+    "location_ids": [
+     "C3",
+     "C30",
+     "C31"
+    ],
+    "reason": "Equivalent to C2 by symmetry. Section schedules are identical (Story1 W14X90)."
+   },
+   {
+    "location_ids": [
+     "C5",
+     "C8",
+     "C25",
+     "C28",
+     "C9",
+     "C12",
+     "C21",
+     "C24"
+    ],
+    "reason": "Checked against the judgment conditions and none apply. The outline is a plain rectangle (no re-entrant corners). Every bay is 7.315 x 7.315 m (no abrupt decrease in bay size, equal tributary sizes), and loads are the same in every bay. All beams have z offset 0.0 and frame orthogonally (no different orientations or elevations). The lighter corner columns next to C5/C8/C25/C28 are the normal corner condition and are already covered by removing C1. These locations would give results similar to the chosen ones (2-2.2.2)."
+   }
+  ],
+  "model_observations": [
+   "The last bay in every layout is a sliver of about 0.153 x 0.152 m at x 51.206-51.359, y -0.152-0.0. It lies outside the first-floor outline (0-51.2064, 0-21.9456) and outside the beam grid, yet carries full SDL, live and slab self-weight. Bay ids are 455, 410, 365, 320, 275, 230, 185, 140, 95 and 50 (Story1 to Story10). It looks like a drafting or meshing artefact at corner C29. The load is negligible, but it breaks the symmetry C1 relies on. Please delete it or confirm it is intended.",
+   "The Story10 (roof) bays carry live_kpa 4.788 with roof_live_kpa 0 and snow_kpa 0, the same as the typical floors. Please confirm the roof load assignment: floor live versus roof live or snow, and roof SDL. The load factor term (0.5 L or 0.2 S) depends on it.",
+   "No explicit splice data is given; column section changes are the only proxy. C1-type columns change at Story3, Story6, Story8, Story9 and Story10. C2-type columns change at Story4, Story5, Story6, Story8, Story9 and Story10. C13-type columns change at Story2, Story4, Story6, Story7, Story8, Story9 and Story10. Many of these may be size changes without a splice. The engineer should confirm actual splice levels before code selects the 'above splice' stories, otherwise nearly every story qualifies.",
+   "Framing is one-way. Infill beams at y = 2.438 and 4.877 span in x onto W24X55 beams on the x column lines, while the column-line beams in x are heavier (W24X62). This suggests x-direction moment frames with gravity girders in y. Please confirm the connection types (moment vs shear tab) in the AP model, since beam continuity over the removed column (Fig. 3-8) depends on them.",
+   "Column coordinates are rounded (51.206 and 21.946) relative to the outline (51.2064 and 21.9456). This is harmless, but check that nodes merge correctly with the outline and slab edges."
+  ],
+  "summary": "The building is a regular rectangular 10-story steel frame, 7 x 3 bays at 7.315 m, with a uniform grid, uniform loads, and all beams at level elevation. The minimum 3-2.9.2.2 set is added, each location representing its symmetry group: corner C1 (for C4, C29, C32), mid-long-side C13 (for C17, C16, C20) and mid-short-side C2 (for C3, C30, C31). No re-entrant corners, bay-size changes, unequal tributaries, lightly loaded adjacent columns or off-level or skewed framing were found, so no additional locations are added. No columns fall within the 30% (2.19 m) zone, so no simultaneous removals are needed. Code will select the stories. Engineer attention is needed on:\n- the spurious 0.15 m sliver bay at C29,\n- the roof live and snow load assignment,\n- confirming actual splice levels,\n- the connection types used for beam continuity."
+ },
+ "merged_candidates": [
+  {
+   "location_id": "C1",
+   "x": 0,
+   "y": 0,
+   "reasons": [
+    {
+     "code": "corner",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story3",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "claude": {
+    "reason": "Corner column, part of the minimum set. The plan is a regular rectangle of 7 x 3 bays at 7.315 m. C1, C4, C29 and C32 have identical coordinates mirrored about both plan axes and identical section schedules, so C1 represents all four corners. No other column lies within 30% of the 7.315 m bay dimension (2.19 m), so no simultaneous removal is needed.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   "status": "proposed"
+  },
+  {
+   "location_id": "C13",
+   "x": 21.9456,
+   "y": 0,
+   "reasons": [
+    {
+     "code": "mid_long_side",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story2",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story4",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story7",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "claude": {
+    "reason": "Near the middle of the long side (y = 0 face, 51.2 m long), part of the minimum set. The face has an even number of columns (8), so the plan midpoint (x = 25.6 m) falls between C13 (x = 21.946) and C17 (x = 29.261). These two are mirror images with identical section schedules. C13 represents C17, C16 and C20 by symmetry. No other column lies within 2.19 m.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   "status": "proposed"
+  },
+  {
+   "location_id": "C2",
+   "x": 0,
+   "y": 7.3152,
+   "reasons": [
+    {
+     "code": "judgment",
+     "clause": "3-2.9.2.2",
+     "note": "Near the middle of the short side (x = 0 face, 21.9 m long), part of the minimum set. The face has 4 columns, so the midpoint (y = 10.97 m) falls between C2 (y = 7.315) and C3 (y = 14.63), which are mirror images with identical sections. C2 represents C3, C30 and C31 by symmetry. On this face the perimeter beams (W24X55) carry the infill beam reactions, so this removal also tests the girder direction, unlike the long-side removal."
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story4",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height",
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "claude",
+   "mandatory": false,
+   "status": "proposed",
+   "claude": {
+    "reason": "Near the middle of the short side (x = 0 face, 21.9 m long), part of the minimum set. The face has 4 columns, so the midpoint (y = 10.97 m) falls between C2 (y = 7.315) and C3 (y = 14.63), which are mirror images with identical sections. C2 represents C3, C30 and C31 by symmetry. On this face the perimeter beams (W24X55) carry the infill beam reactions, so this removal also tests the girder direction, unlike the long-side removal.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   }
+  },
+  {
+   "location_id": "C30",
+   "x": 51.206399999999995,
+   "y": 7.3152,
+   "reasons": [
+    {
+     "code": "mid_short_side",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story4",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height",
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "status": "proposed"
+  }
+ ],
+ "issues": [],
+ "evidence": [
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "x",
+   "value": 0.0,
+   "table_value": 0,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "y",
+   "value": 0.0,
+   "table_value": 0,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C32",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C29",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C4",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "x",
+   "value": 21.946,
+   "table_value": 21.946,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "y",
+   "value": 0.0,
+   "table_value": 0,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C17",
+   "story": "Story1",
+   "field": "x",
+   "value": 29.261,
+   "table_value": 29.261,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X74",
+   "table_value": "W14X74",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C17",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X74",
+   "table_value": "W14X74",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C16",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X74",
+   "table_value": "W14X74",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C20",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X74",
+   "table_value": "W14X74",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C2",
+   "story": "Story1",
+   "field": "x",
+   "value": 0.0,
+   "table_value": 0,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C2",
+   "story": "Story1",
+   "field": "y",
+   "value": 7.315,
+   "table_value": 7.315,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C3",
+   "story": "Story1",
+   "field": "y",
+   "value": 14.63,
+   "table_value": 14.63,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C2",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X90",
+   "table_value": "W14X90",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C3",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X90",
+   "table_value": "W14X90",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C30",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X90",
+   "table_value": "W14X90",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C2",
+   "location_id": "C31",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X90",
+   "table_value": "W14X90",
+   "status": "ok"
+  }
+ ]
+}

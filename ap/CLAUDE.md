@@ -28,8 +28,8 @@ Read before changing engineering logic:
 
 | Module | Owns | Reads | Writes |
 |---|---|---|---|
-| `core/` | candidates, stories, 30% rule, regions, increment totals | building, stacks, approvals | scenarios, web/data/building |
-| `claude_client/` | Claude calls + validation | building, candidates | reviewed candidates |
+| `core/` | candidates, stories, 30% rule, regions, increment totals, condition table | building, stacks, approvals, intact_axial | scenarios, web/data/building, conditions |
+| `claude_client/` | Claude calls + validation | building, candidates, conditions | review_<mode>.json |
 | `web/` | viewer, approvals, results display | web/data/*.json | approved_candidates.json |
 | `report/` | submittal report | scenarios, results | report.md |
 | `scripts/` | fixture generator, bridge wrapper, force comparison | | |
@@ -41,6 +41,8 @@ Read before changing engineering logic:
 - Viewer: `python -m http.server 8000`, open `http://localhost:8000/web/`
 - Bridge: `python scripts/bridge.py export|stacks|apply|results [...]` (Windows + ETABS)
 - Report: `python -m report.build_report web/data/scenarios.json --out report.md`
+- Condition table: `python -m core.conditions web/data/building.json --axial web/data/intact_axial.json`
+- Claude review: `python -m claude_client.run_review --mode raw|conditions` (costs money; ask first)
 
 ## Lessons learned
 

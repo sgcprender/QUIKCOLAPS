@@ -1,0 +1,719 @@
+{
+ "meta": {
+  "model": "claude-opus-5-5",
+  "mode": "conditions",
+  "stop_reason": "end_turn",
+  "usage": {
+   "input_tokens": 87567,
+   "output_tokens": 5924,
+   "cache_read_input_tokens": 0,
+   "cache_creation_input_tokens": 0
+  },
+  "cost_usd": 0.4687,
+  "seconds": 57.9
+ },
+ "review": {
+  "decisions": [
+   {
+    "location_id": "C1",
+    "decision": "accept",
+    "reason": "Corner column, part of the minimum set, marked mandatory. It represents symmetry group G1 (C1, C4, C29, C32), which has the same sections at every story. The nearest columns are 7.315 m away, beyond 30% of the 7.315 m bay, so no column is removed with it.",
+    "clause": "3-2.9.2.2",
+    "condition": "corner",
+    "stories_of_concern": [
+     "Story1",
+     "Story10"
+    ],
+    "evidence": [
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 1543.3
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "tributary_m2",
+      "value": 13.38
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "symmetry_group_with_sections",
+      "value": "G1"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   {
+    "location_id": "C13",
+    "decision": "accept",
+    "reason": "Near the middle of the long (south) side, marked mandatory. The long-side midpoint (x = 25.6 m) falls between C13 and C17, which are both in group G5 with the same sections, so C13 represents C13, C16, C17 and C20.",
+    "clause": "3-2.9.2.2",
+    "condition": "mid_long_side",
+    "stories_of_concern": [
+     "Story1"
+    ],
+    "evidence": [
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 2960.8
+     },
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "tributary_m2",
+      "value": 26.76
+     },
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "symmetry_group_with_sections",
+      "value": "G5"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   {
+    "location_id": "C30",
+    "decision": "accept",
+    "reason": "Near the middle of the short (east) side, marked mandatory. The short-side midpoint (y = 10.97 m) falls between C30 and C31, both in group G2, so C30 represents C2, C3, C30 and C31. This location also covers the case of an edge column next to the lightly loaded corner column C29 on the short side.",
+    "clause": "3-2.9.2.2",
+    "condition": "mid_short_side",
+    "stories_of_concern": [
+     "Story1"
+    ],
+    "evidence": [
+     {
+      "location_id": "C30",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 3703.4
+     },
+     {
+      "location_id": "C30",
+      "story": "Story1",
+      "field": "tributary_m2",
+      "value": 26.76
+     },
+     {
+      "location_id": "C29",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 1545.6
+     },
+     {
+      "location_id": "C30",
+      "story": "Story1",
+      "field": "symmetry_group_with_sections",
+      "value": "G2"
+     }
+    ],
+    "confidence": "high",
+    "needs_engineer_review": false
+   },
+   {
+    "location_id": "C5",
+    "decision": "add",
+    "reason": "Lightly loaded adjacent column. C5 is the long-side edge column next to corner C1. C1 carries only about 0.54 of C5's axial load (p_ratio_to_this 0.536 at Story1) and is the lightest section in the building. When C5 is removed, C1 must pick up redistributed load through the W24X62 edge beam, and there is less continuity at the building end. For the mid-long-side removal (C13) both neighbours carry about the same load as C13 (ratio about 1.0), so that case does not cover this one. C5 represents group G3 (C5, C8, C25, C28), which has the same sections throughout. C5 is chosen over C25 because C25's corner neighbour C29 carries the spurious sliver bay.",
+    "clause": "3-2.9.2.2",
+    "condition": "lightly_loaded_adjacent",
+    "stories_of_concern": [
+     "Story1",
+     "Story10"
+    ],
+    "evidence": [
+     {
+      "location_id": "C5",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 2881.4
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 1543.3
+     },
+     {
+      "location_id": "C1",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X53"
+     },
+     {
+      "location_id": "C5",
+      "story": "Story1",
+      "field": "section",
+      "value": "W14X68"
+     },
+     {
+      "location_id": "C13",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 2960.8
+     },
+     {
+      "location_id": "C9",
+      "story": "Story1",
+      "field": "p_kn",
+      "value": 2980.4
+     },
+     {
+      "location_id": "C1",
+      "story": "Story10",
+      "field": "section",
+      "value": "W14X30"
+     },
+     {
+      "location_id": "C5",
+      "story": "Story1",
+      "field": "symmetry_group_with_sections",
+      "value": "G3"
+     }
+    ],
+    "confidence": "medium",
+    "needs_engineer_review": true
+   }
+  ],
+  "not_added": [
+   {
+    "location_ids": [
+     "C9",
+     "C12",
+     "C21",
+     "C24"
+    ],
+    "reason": "Group G4. Neighbour load ratios are close to 1: at Story1, C5 is 0.967 and C13 is 0.993 of C9's load. Tributary areas are equal (26.76 m2) and framing is the same as G5. No judgment condition applies, and C13 (G5) represents this behaviour."
+   },
+   {
+    "location_ids": [
+     "C16",
+     "C17",
+     "C20"
+    ],
+    "reason": "Equivalent by symmetry to C13 (group G5, same sections)."
+   },
+   {
+    "location_ids": [
+     "C4",
+     "C29",
+     "C32"
+    ],
+    "reason": "Equivalent by symmetry to C1 (group G1, same sections). C29's only difference is a 0.02 m2 spurious sliver bay, which is negligible."
+   },
+   {
+    "location_ids": [
+     "C2",
+     "C3",
+     "C31"
+    ],
+    "reason": "Equivalent by symmetry to C30 (group G2, same sections)."
+   },
+   {
+    "location_ids": [
+     "C8",
+     "C25",
+     "C28"
+    ],
+    "reason": "Equivalent by symmetry to the added C5 (group G3, same sections)."
+   },
+   {
+    "location_ids": [
+     "C1",
+     "C2",
+     "C3",
+     "C4",
+     "C5",
+     "C8",
+     "C9",
+     "C12",
+     "C13",
+     "C16",
+     "C17",
+     "C20",
+     "C21",
+     "C24",
+     "C25",
+     "C28",
+     "C29",
+     "C30",
+     "C31",
+     "C32"
+    ],
+    "reason": "Geometry checks. The plan is a plain rectangle (7 x 3 bays), so there are no re-entrant corners. All bays are 7.315 x 7.315 m with area 53.51 m2, so there is no abrupt bay-size decrease and no difference in tributary bay size. Every beam at every top joint is orthogonal (0/90/180/270 degrees) with z offset 0.0, so no members frame in at a different orientation or elevation."
+   }
+  ],
+  "model_observations": [
+   "Spurious sliver bay: 0.152 x 0.152 m, area 0.02 m2, polygon from (51.206,-0.152) to (51.359,0), at every level (ids 455, 410, 365, 320, 275, 230, 185, 140, 95, 50). It lies outside the building outline at corner C29 with no supporting beams. It breaks all symmetry operations and makes C29's tributary 13.4 m2 against 13.38 m2 for C1. It is probably a drafting or meshing artefact and should be deleted.",
+   "The roof (Story10) is loaded like a typical floor: live_kpa 4.79 and sdl_kpa 4.79, with roof_live_kpa 0 and snow_kpa 0. Check the intended roof loading (roof live or snow, roofing SDL, any mechanical loads).",
+   "Story9 and Story10 framing differs from the typical floor. There are W24X68 girders on the C2/C3/C30/C31 lines at Story9, and several column-line beams are upsized to W24X62 at Story9 and Story10. This is consistent with the symmetry check, but confirm it is intentional.",
+   "The one-way infill direction (x-spanning infill beams onto y-direction girders) makes the short-side edge columns (G2) about 30% heavier per unit tributary area than the long-side columns. That behaviour is expected, but section choices should follow it."
+  ],
+  "summary": "Accepted all three mandatory candidates: C1 (corner, group G1), C13 (mid long side, G5) and C30 (mid short side, G2). Added C5 (G3: the long-side column next to the corner) for the lightly-loaded-adjacent-column condition, because corner C1 carries about 0.54 of C5's load and has the smallest section. This needs engineer confirmation. No other judgment conditions apply: the plan is a uniform rectangular 7.315 m grid, all beams are orthogonal and at level, and bay loads are uniform. G4 behaves like G5 and was not added. Main modelling issues: a spurious 0.02 m2 sliver bay at C29 on every level, and roof loads that look like floor loads."
+ },
+ "merged_candidates": [
+  {
+   "location_id": "C1",
+   "x": 0,
+   "y": 0,
+   "reasons": [
+    {
+     "code": "corner",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story3",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "status": "proposed",
+   "claude": {
+    "reason": "Corner column, part of the minimum set, marked mandatory. It represents symmetry group G1 (C1, C4, C29, C32), which has the same sections at every story. The nearest columns are 7.315 m away, beyond 30% of the 7.315 m bay, so no column is removed with it.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   }
+  },
+  {
+   "location_id": "C13",
+   "x": 21.9456,
+   "y": 0,
+   "reasons": [
+    {
+     "code": "mid_long_side",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story2",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story4",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story7",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "status": "proposed",
+   "claude": {
+    "reason": "Near the middle of the long (south) side, marked mandatory. The long-side midpoint (x = 25.6 m) falls between C13 and C17, which are both in group G5 with the same sections, so C13 represents C13, C16, C17 and C20.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   }
+  },
+  {
+   "location_id": "C30",
+   "x": 51.206399999999995,
+   "y": 7.3152,
+   "reasons": [
+    {
+     "code": "mid_short_side",
+     "clause": "3-2.9.2.2",
+     "note": ""
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story4",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height",
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story9",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "rule",
+   "mandatory": true,
+   "status": "proposed",
+   "claude": {
+    "reason": "Near the middle of the short (east) side, marked mandatory. The short-side midpoint (y = 10.97 m) falls between C30 and C31, both in group G2, so C30 represents C2, C3, C30 and C31. This location also covers the case of an edge column next to the lightly loaded corner column C29 on the short side.",
+    "clause": "3-2.9.2.2",
+    "confidence": "high",
+    "needs_engineer_review": false
+   }
+  },
+  {
+   "location_id": "C5",
+   "x": 7.3152,
+   "y": 0,
+   "reasons": [
+    {
+     "code": "judgment",
+     "clause": "3-2.9.2.2",
+     "note": "Lightly loaded adjacent column. C5 is the long-side edge column next to corner C1. C1 carries only about 0.54 of C5's axial load (p_ratio_to_this 0.536 at Story1) and is the lightest section in the building. When C5 is removed, C1 must pick up redistributed load through the W24X62 edge beam, and there is less continuity at the building end. For the mid-long-side removal (C13) both neighbours carry about the same load as C13 (ratio about 1.0), so that case does not cover this one. C5 represents group G3 (C5, C8, C25, C28), which has the same sections throughout. C5 is chosen over C25 because C25's corner neighbour C29 carries the spurious sliver bay."
+    }
+   ],
+   "stories": [
+    {
+     "story": "Story1",
+     "reasons": [
+      "first_story_above_grade"
+     ]
+    },
+    {
+     "story": "Story3",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story5",
+     "reasons": [
+      "mid_height"
+     ]
+    },
+    {
+     "story": "Story6",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story7",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story8",
+     "reasons": [
+      "above_splice_or_size_change"
+     ]
+    },
+    {
+     "story": "Story10",
+     "reasons": [
+      "story_below_roof",
+      "above_splice_or_size_change"
+     ]
+    }
+   ],
+   "source": "claude",
+   "mandatory": false,
+   "status": "proposed",
+   "claude": {
+    "reason": "Lightly loaded adjacent column. C5 is the long-side edge column next to corner C1. C1 carries only about 0.54 of C5's axial load (p_ratio_to_this 0.536 at Story1) and is the lightest section in the building. When C5 is removed, C1 must pick up redistributed load through the W24X62 edge beam, and there is less continuity at the building end. For the mid-long-side removal (C13) both neighbours carry about the same load as C13 (ratio about 1.0), so that case does not cover this one. C5 represents group G3 (C5, C8, C25, C28), which has the same sections throughout. C5 is chosen over C25 because C25's corner neighbour C29 carries the spurious sliver bay.",
+    "clause": "3-2.9.2.2",
+    "confidence": "medium",
+    "needs_engineer_review": true
+   }
+  }
+ ],
+ "issues": [],
+ "evidence": [
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 1543.3,
+   "table_value": 1543.3,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "tributary_m2",
+   "value": 13.38,
+   "table_value": 13.38,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C1",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "symmetry_group_with_sections",
+   "value": "G1",
+   "table_value": "G1",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 2960.8,
+   "table_value": 2960.8,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "tributary_m2",
+   "value": 26.76,
+   "table_value": 26.76,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C13",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "symmetry_group_with_sections",
+   "value": "G5",
+   "table_value": "G5",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C30",
+   "location_id": "C30",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 3703.4,
+   "table_value": 3703.4,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C30",
+   "location_id": "C30",
+   "story": "Story1",
+   "field": "tributary_m2",
+   "value": 26.76,
+   "table_value": 26.76,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C30",
+   "location_id": "C29",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 1545.6,
+   "table_value": 1545.6,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C30",
+   "location_id": "C30",
+   "story": "Story1",
+   "field": "symmetry_group_with_sections",
+   "value": "G2",
+   "table_value": "G2",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C5",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 2881.4,
+   "table_value": 2881.4,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 1543.3,
+   "table_value": 1543.3,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C1",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X53",
+   "table_value": "W14X53",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C5",
+   "story": "Story1",
+   "field": "section",
+   "value": "W14X68",
+   "table_value": "W14X68",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C13",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 2960.8,
+   "table_value": 2960.8,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C9",
+   "story": "Story1",
+   "field": "p_kn",
+   "value": 2980.4,
+   "table_value": 2980.4,
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C1",
+   "story": "Story10",
+   "field": "section",
+   "value": "W14X30",
+   "table_value": "W14X30",
+   "status": "ok"
+  },
+  {
+   "decision_location": "C5",
+   "location_id": "C5",
+   "story": "Story1",
+   "field": "symmetry_group_with_sections",
+   "value": "G3",
+   "table_value": "G3",
+   "status": "ok"
+  }
+ ]
+}
