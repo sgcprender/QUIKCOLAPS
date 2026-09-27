@@ -485,6 +485,18 @@ function startPolling() {
   clearInterval(S.poll);
   S.poll = setInterval(pollNow, 1500);
   pollNow();
+  clearInterval(S.etabsPoll);
+  S.etabsPoll = setInterval(checkEtabs, 5000);
+}
+
+// ETABS may be started or closed while a project is open: follow it, so the Run buttons unlock.
+async function checkEtabs() {
+  if (!S.project) return;
+  let running;
+  try { running = (await api("/api/etabs")).running; } catch { return; }
+  if (running === S.etabs || !S.project) return;
+  S.etabs = running;
+  renderAll();
 }
 async function pollNow() {
   let j;

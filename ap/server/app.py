@@ -1,7 +1,6 @@
 """FastAPI routes for the demo app. One step runs at a time (jobs.JOBS); the browser polls the log."""
 from __future__ import annotations
 
-import subprocess
 import threading
 from datetime import datetime
 from pathlib import Path
@@ -43,10 +42,28 @@ def _p(pid: str) -> Project:
 
 
 def _etabs_running() -> bool:
+    """Is an ETABS.exe process running? Asks Windows directly (about 30 ms): `tasklist` took 22-32 s
+    on this machine (measured 2026-09-27), past its timeout, so the app reported ETABS as not running."""
     try:
-        out = subprocess.run(["tasklist", "/FI", "IMAGENAME eq ETABS.exe", "/NH"], capture_output=True, text=True, timeout=10).stdout
-        return "ETABS.exe" in out
-    except Exception:  # noqa: BLE001
+        import ctypes
+        import ctypes.wintypes as W
+        psapi, k32 = ctypes.WinDLL("psapi"), ctypes.WinDLL("kernel32")
+        pids, needed = (W.DWORD * 8192)(), W.DWORD()
+        if not psapi.EnumProcesses(pids, ctypes.sizeof(pids), ctypes.byref(needed)):
+            return False
+        buf = ctypes.create_unicode_buffer(1024)
+        for pid in pids[: needed.value // ctypes.sizeof(W.DWORD)]:
+            h = k32.OpenProcess(0x1000, False, pid)   # PROCESS_QUERY_LIMITED_INFORMATION
+            if not h:
+                continue
+            try:
+                n = W.DWORD(len(buf))
+                if k32.QueryFullProcessImageNameW(h, 0, buf, ctypes.byref(n)) and buf.value.lower().endswith("\\etabs.exe"):
+                    return True
+            finally:
+                k32.CloseHandle(h)
+        return False
+    except Exception:  # noqa: BLE001 - not Windows, or the API is unavailable
         return False
 
 
