@@ -131,7 +131,7 @@ here, and stop with a short report. Plan written 2026-09-26.
 
 | Item | What | Status |
 |---|---|---|
-| A | **Bridge commands** (a local server will call these; each exits non-zero with a clear message on failure): `apply --commit` unlocks the model itself with read-back; `axial --case "1.2D+0.5L" --out <file>`; `assign-sections --file ap/web/data/propagation.json` sets analysis sections as fixed sections (no auto-select), dry run by default, `--commit` to write, with read-back. | not started |
+| A | **Bridge commands** (a local server will call these; each exits non-zero with a clear message on failure): `apply --commit` unlocks the model itself with read-back; `axial --case "1.2D+0.5L" --out <file>`; `assign-sections --file ap/web/data/propagation.json` sets analysis sections as fixed sections (no auto-select), dry run by default, `--commit` to write, with read-back. | **done** 2026-09-26. `ModelLock` shared by `apply` and `assign-sections`. Tested read-only on locked AP2: `axial` matches `intact_axial.json` on all 320 columns (lowest columns 141,439.9 kN against base reaction 141,440.4 kN); dry runs report the lock and write nothing; `assign-sections` refuses a file with a wrong `from`, an undefined section or a missing frame (exit 1). Not yet exercised: the unlock itself (first use: start of D) and `assign-sections --commit` (auto-select clearing to be read back in D). |
 | B | **Similarity propagation** (`ap/core`, no ETABS): `python -m core.propagate` writes `ap/web/data/propagation.json`. Equivalent locations: all columns in the same symmetry group from `conditions.json` (G1–G5). For each member whose design section is heavier than its analysis section, record its position relative to the removed column of its governing scenario (bay offsets x/y, story offset, member type and direction). Apply that at every equivalent location, mirrored as needed, to find the counterpart; check it matches (type, direction, original section), else flag and don't copy. Biggest required section wins; never lighter than a member's own design section. Rows: member, counterpart, from → to, source scenario, reason, flags. Hand-checked tests. | not started |
 | C | **Strength-only baseline**: copy the original `progressive collapse.edb` on disk to `baseline strength.edb` (don't open or modify the original). Select only DStlS1 and DStlS2 for steel and composite design; iterate design (composite first, then steel) → accept design sections → run SW, SDL, LL → design, until no sections change (max 3 rounds). Save the tonnage (weigh) to `ap/web/data/baseline_tonnage.json`. Close it and return to AP2. | not started |
 | D | **Collapse redesign in AP2**: iterate accept design sections → run all 30 → design, until no sections change (max 3 rounds). Run propagation, stop and show the list. After approval: assign-sections, run all 30, design once, confirm all ≤ 1.0, save tonnage, compare with the baseline. | not started |
@@ -151,13 +151,14 @@ needs the user's approval; pass the working copy with `--model "progressive coll
 | Step | Command |
 |---|---|
 | export | `dotnet run --project tools/Quikcolaps.Bridge -- export --model "progressive collapse - AP2" --out ap/web/data/building.json` |
-| intact axial | `dotnet run --project tools/Quikcolaps.Bridge -- forces --model "progressive collapse - AP2" --case "1.2D+0.5L" --frames <all column ids> --out <file>` (read-only; A adds `axial`) |
+| intact axial | `dotnet run --project tools/Quikcolaps.Bridge -- axial --model "progressive collapse - AP2" --case "1.2D+0.5L" --out ap/web/data/intact_axial.json` (read-only) |
 | rule candidates, scenarios | `ap/`: `python -m core.cli web/data/building.json --out web/data/scenarios.json [--candidates web/data/approved_candidates.json] [--stacks web/data/stacks.json]` |
 | condition table | `ap/`: `python -m core.conditions web/data/building.json --axial web/data/intact_axial.json --out web/data/conditions.json` |
 | Claude review | `ap/`: `python -m claude_client.run_review --mode raw\|conditions [--out web/data/review_<mode>.json]` (costs money) |
 | compare reviews | `ap/`: `python -m claude_client.run_review --compare web/data/review_raw.json web/data/review_conditions.json` |
 | stacks | `dotnet run --project tools/Quikcolaps.Bridge -- stacks --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out ap/web/data/stacks.json` |
-| apply | `dotnet run --project tools/Quikcolaps.Bridge -- apply --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json [--template CS1] [--commit]` |
+| apply | `dotnet run --project tools/Quikcolaps.Bridge -- apply --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json [--template CS1] [--commit]` (`--commit` unlocks a locked model first) |
+| assign sections | `dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --model "progressive collapse - AP2" --file ap/web/data/propagation.json [--commit]` |
 | section check | `dotnet run --project tools/Quikcolaps.Bridge -- sections --model "progressive collapse - AP2"` (exit 4 when design ≠ analysis) |
 | run | `dotnet run --project tools/Quikcolaps.Bridge -- results --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out <file> --run [--accept-design-sections]` (lean flags set before, restored after: scratch `flags set/restore` today) |
 | design | `dotnet run --project tools/Quikcolaps.Bridge -- results --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out ap/web/data/results.json --design` (composite first, then steel) |
@@ -166,8 +167,9 @@ needs the user's approval; pass the working copy with `--model "progressive coll
 | viewer | `ap/`: `python -m http.server 8000`, open `http://localhost:8000/web/` |
 | report | `ap/`: `python -m report.build_report web/data/scenarios.json --out report.md` |
 
-Not yet bridge commands (scratch programs, measured on AP2): unlock
-(`SetModelIsLocked(false)` + read-back), lean run flags (`Analyze.SetRunCaseFlag`,
+Python wrapper: `ap/`: `python scripts/bridge.py export|stacks|apply|results|forces|axial|assign-sections [...]`.
+
+Not yet bridge commands (scratch programs, measured on AP2): lean run flags (`Analyze.SetRunCaseFlag`,
 saved and restored), design-section reset (`DesignSteel.SetDesignSection(f, "",
 true)`: design section → analysis section; analysis section and auto-select
 list unchanged, measured on frame 78 and 399 more).

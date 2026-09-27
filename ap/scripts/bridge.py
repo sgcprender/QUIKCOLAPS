@@ -6,6 +6,8 @@ driven from Python. Windows only; ETABS must be running with the model open.
     python scripts/bridge.py apply            # dry run
     python scripts/bridge.py apply --commit
     python scripts/bridge.py results --run --design
+    python scripts/bridge.py axial
+    python scripts/bridge.py assign-sections            # dry run; --commit to write
 
 Extra arguments are passed through (e.g. --model "my model" --template CS1).
 File locations default to ap/web/data/ so the viewer picks them up.
@@ -27,6 +29,8 @@ DEFAULTS = {
     "apply": ["--scenarios", str(DATA / "scenarios.json")],
     "results": ["--scenarios", str(DATA / "scenarios.json"), "--out", str(DATA / "results.json")],
     "forces": [],
+    "axial": ["--case", "1.2D+0.5L", "--out", str(DATA / "intact_axial.json")],
+    "assign-sections": ["--file", str(DATA / "propagation.json")],
 }
 
 

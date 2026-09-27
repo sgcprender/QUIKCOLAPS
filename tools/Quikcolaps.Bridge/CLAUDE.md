@@ -12,6 +12,9 @@ dotnet run --project tools/Quikcolaps.Bridge -- apply   --scenarios ap/web/data/
 dotnet run --project tools/Quikcolaps.Bridge -- results --scenarios ap/web/data/scenarios.json --out ap/web/data/results.json --run --design
 dotnet run --project tools/Quikcolaps.Bridge -- forces  --case AP_SC01 --frames 101,102,103 --out forces_staged.json
 dotnet run --project tools/Quikcolaps.Bridge -- sections                                  # analysis vs design sections
+dotnet run --project tools/Quikcolaps.Bridge -- axial   --case "1.2D+0.5L" --out ap/web/data/intact_axial.json
+dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json            # dry run
+dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json --commit
 ```
 Common flags: `--model` (default `progressive collapse`), `--template` (default `CS1`),
 `--plan-tolerance` (model length units, default 1.0). `--model` matches the
@@ -61,10 +64,21 @@ still available (420, sections match).
 |---|---|---|---|
 | `export` | open model, template's initial case | `building.json` (ap/docs/schema/building.schema.json), kN/m, with `combination` (D17) | none (units restored) |
 | `stacks` | `scenarios.json` | `stacks.json` | none |
-| `apply` | `scenarios.json`, template case | — | with `--commit`: cases, load groups, combos, steel selection |
+| `apply` | `scenarios.json`, template case | — | with `--commit`: unlocks a locked model first (read-back; deletes results), then cases, load groups, combos, steel selection |
 | `results` | `scenarios.json`, template case | `results.json` (ap/docs/schema/results.schema.json) | `--run` analyses, `--design` designs |
 | `forces` | one case | `forces.json` | none |
 | `sections` | auto-select frames | — | none; exit 4 if any design section differs from the analysis section |
+| `axial` | one run case | `intact_axial.json`: every column's max \|P\| at the last step, with label and story, plus the lowest-columns sum against the base reaction FZ | none |
+| `assign-sections` | `propagation.json` (`assignments`: frame, section, optional `from`) | — | with `--commit`: unlocks, then fixed analysis sections (auto-select list removed), each read back; refuses the whole file if a frame, section or `from` doesn't match |
+
+Every command exits non-zero with a message on failure: 1 error, 2 usage,
+3 unknown ETABS message box, 4 sections differ (`results --run`, `sections`).
+Unlocking is shared (`ModelLock`): nothing when unlocked, a message on a dry
+run, unlock + read-back with `--commit`. Tested 2026-09-26 on locked AP2 with
+dry runs only (lock and results kept); the unlock itself first runs at the
+start of plan item D. `assign-sections --commit` is untested: whether
+`FrameObj.SetSection` clears the auto-select list is not documented, and the
+read-back will say.
 
 `results --run` checks sections first and stops with exit 4 (nothing run) if
 an auto-select frame's design section differs from its analysis section: the

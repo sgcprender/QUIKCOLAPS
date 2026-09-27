@@ -157,7 +157,7 @@ internal static class Results
     }
 
     /// <summary>Total vertical base reaction at the last step of a case, kN (call inside Si.With).</summary>
-    private static double LastFz(cSapModel sap, string caseName)
+    internal static double LastFz(cSapModel sap, string caseName)
     {
         var setup = sap.Results.Setup;
         setup.DeselectAllCasesAndCombosForOutput();

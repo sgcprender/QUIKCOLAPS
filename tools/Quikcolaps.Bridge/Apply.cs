@@ -17,7 +17,8 @@ namespace Quikcolaps.Bridge;
 /// building, remove exactly one frame, and load exactly one group with the same patterns at
 /// (amplification − 1) = 1.0. `results` checks the base reactions against that.
 ///
-/// Without --commit nothing is written. Every write is read back; differences are reported.
+/// Without --commit nothing is written. With --commit a locked model is unlocked first (read back;
+/// deletes the analysis results). Every write is read back; differences are reported.
 /// </summary>
 internal static class Apply
 {
@@ -25,6 +26,7 @@ internal static class Apply
 
     public static int Run(cSapModel sap, string scenariosPath, string templateName, bool commit)
     {
+        ModelLock.EnsureUnlocked(sap, commit, "apply");
         var template = CaseTemplate.Read(sap, templateName);
         Console.WriteLine($"template  {template.Name}: initial '{template.InitialCase}', removes {template.RemovedFrame}, loads group '{template.LoadedGroup}'");
         foreach (var o in template.Stages.SelectMany(s => s.Operations).Where(o => o.Operation == LoadObjects))

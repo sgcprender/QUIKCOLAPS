@@ -7,13 +7,16 @@ namespace Quikcolaps.Bridge;
 /// JSON bridge between ETABS and the Python side (ap/). Reuses Quikcolaps.Etabs for attaching,
 /// column stacks and combinations; adds export, stacks, apply and results.
 ///
-/// Read-only unless a command is given --commit. The model is never saved.
+/// Read-only unless a command is given --commit (apply and assign-sections unlock a locked model
+/// first, with read-back) or results --run/--design. The bridge never saves the model itself.
 ///
 ///   export   --out building.json                     geometry, stories, floor areas, loads (kN, m)
 ///   stacks   --scenarios scenarios.json --out stacks.json   influence area per removed column
 ///   apply    --scenarios scenarios.json [--template CS1] [--commit]   cases, load groups, combos
 ///   results  --scenarios scenarios.json --out results.json [--run] [--design]
 ///   forces   --case NAME --frames F1,F2 --out forces.json            for the staged-case validation
+///   axial    --case "1.2D+0.5L" --out intact_axial.json               every column's axial force (read-only)
+///   assign-sections --file propagation.json [--commit]                fixed analysis sections from a file
 ///   sections                                                          auto-select frames: analysis vs design section
 ///
 /// results --run stops (exit 4) when an auto-select frame's design section differs from its analysis
@@ -42,6 +45,8 @@ internal static class Program
                     args.Contains("--run"), args.Contains("--design"), args.Contains(SectionGuard.AcceptFlag)),
                 "sections" => SectionGuard.Allows(sap, false) ? 0 : SectionGuard.ExitSectionsDiffer,
                 "forces" => Results.Forces(sap, Arg("--case", ""), Arg("--frames", ""), Arg("--out", "forces.json")),
+                "axial" => Axial.Run(sap, inst.ModelPath, Arg("--case", ""), Arg("--out", "intact_axial.json")),
+                "assign-sections" => AssignSections.Run(sap, Arg("--file", "ap/web/data/propagation.json"), args.Contains("--commit")),
                 _ => Usage()
             };
         }
@@ -54,7 +59,7 @@ internal static class Program
 
     private static int Usage()
     {
-        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|sections [--model NAME] ... (see Program.cs)");
+        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|sections [--model NAME] ... (see Program.cs)");
         return 2;
     }
 }
