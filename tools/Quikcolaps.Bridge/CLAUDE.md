@@ -179,7 +179,14 @@ seen on the working copy, ETABS 23, 2026-09-26.
   give the same FZ and frame forces there.
 - `SapModel.SetModelIsLocked(false)` (measured): **answers 1 but does unlock**
   (`GetModelIsLocked` reads False afterwards). Check the read-back, not the
-  return code. Unlocking deletes the analysis results.
+  return code. Unlocking deletes the analysis results. On AP2 (2026-09-26,
+  after a design pass) it answered 0, and **the steel design sections
+  survived the unlock**: `sections` still listed 400 of 840 auto-select frames
+  with a design section different from the analysis section, so
+  `results --run` stopped (exit 4). Unlocking is not a reset of the design
+  sections. `DesignSteel.SetDesignSection(Name, PropName, LastAnalysis,
+  ItemType)` is documented, but the help does not say what `LastAnalysis` does:
+  measure it before relying on it as the reset.
 - `View.RefreshView` and `DesignSteel.StartDesign` (measured): on this machine
   ETABS raises a modal "Error initializing shader … 0x80070057" box and the API
   call waits behind it. Display only; the writes had been read back before
