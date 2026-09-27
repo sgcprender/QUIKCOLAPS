@@ -18,11 +18,11 @@
 
 <!-- Landing -->
 <section id="landing" class="page">
-  <header class="brand">
-    <h1>QUIKCOLAPS</h1>
-    <p>Progressive collapse, Alternate Path (UFC 4-023-03), on your ETABS model.</p>
-  </header>
-  <div class="landing-grid">
+  <div class="landing">
+    <header class="brand">
+      <h1>QUIKCOLAPS</h1>
+      <p>Progressive collapse, Alternate Path (UFC 4-023-03), on your ETABS model.</p>
+    </header>
     <div class="card new-project">
       <h2>Start new project</h2>
       <p class="muted">Pick an ETABS model. It is never changed: the app works on two copies next to it,
@@ -37,9 +37,10 @@
       </div>
       <p id="create-msg" class="msg"></p>
     </div>
-    <div>
-      <h2 class="list-title">Projects</h2>
+    <h2 class="list-title">Projects</h2>
+    <div class="projects">
       <div id="project-list" class="project-list"></div>
+      <aside id="preview" class="preview card"></aside>
     </div>
   </div>
 </section>
@@ -70,10 +71,26 @@
         <label class="toggle" id="ratio-toggle-wrap">
           <input type="checkbox" id="ratio-original"> original design
         </label>
+        <label class="toggle" id="weight-toggle-wrap">
+          <select id="weight-basis">
+            <option value="perft">size increase (lb/ft)</option>
+            <option value="total">added weight (lb)</option>
+          </select>
+        </label>
         <label class="toggle" id="sizes-toggle-wrap">
           <input type="checkbox" id="sizes-before"> before
         </label>
-        <label>Scenario <select id="scenario"></select></label>
+        <label class="loc-toggle hidden" id="loc-toggle-wrap">
+          <input type="checkbox" id="show-loc"> locations
+        </label>
+        <label>Scenario
+          <span class="stepper">
+            <button id="sc-prev" class="secondary" title="Previous scenario">‹</button>
+            <select id="scenario"></select>
+            <button id="sc-next" class="secondary" title="Next scenario">›</button>
+            <button id="sc-play" class="secondary" title="Step through all scenarios">▶</button>
+          </span>
+        </label>
         <label>Group <select id="group"><option value="">all</option></select></label>
         <label class="stories">Stories
           <input type="range" id="story-min" min="0" max="9" value="0">
@@ -85,6 +102,7 @@
       <div id="legend" class="legend"></div>
       <div id="info" class="info hidden"></div>
       <div id="viewer-empty" class="viewer-empty hidden">Run step 1 to load the building.</div>
+      <div id="viewer-note" class="viewer-note hidden"></div>
     </div>
 
     <aside class="side">

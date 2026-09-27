@@ -29,36 +29,72 @@ const STEP_HELP = {
 let S = { project: null, step: null, files: {}, viewer: null, vdata: null, job: null, logLen: 0, poll: null, etabs: false };
 
 // ---------- landing ----------
+let PROJECTS = [];
+const PREVIEWS = {};
+const day = (s) => (s ? s.replace("T", " ").slice(0, 16) : "–");
+
 async function showLanding() {
+  stopPlay();
   $("#project").classList.add("hidden");
   $("#landing").classList.remove("hidden");
   S.project = null;
-  const list = await api("/api/projects");
-  $("#project-list").innerHTML = list.length ? list.map(card).join("") : `<p class="muted">No projects yet.</p>`;
+  PROJECTS = await api("/api/projects");
+  $("#project-list").innerHTML = PROJECTS.length ? PROJECTS.map(row).join("") : `<p class="muted">No projects yet.</p>`;
+  $("#preview").classList.toggle("hidden", !PROJECTS.length);
   document.querySelectorAll("[data-open]").forEach((b) => (b.onclick = () => openProject(b.dataset.open)));
   document.querySelectorAll("[data-remove]").forEach((b) => (b.onclick = async () => {
     if (!confirm("Remove this project from the list? Its folder and models stay on disk.")) return;
     await api(`/api/projects/${b.dataset.remove}`, { method: "DELETE" });
     showLanding();
   }));
+  document.querySelectorAll(".prow").forEach((r) => (r.onmouseenter = () => preview(r.dataset.id)));
+  if (PROJECTS.length) preview(PROJECTS[0].id);
 }
 
-function card(p) {
-  const prem = p.premium ? `<div class="premium">${sign(p.premium.short_tons)} t <span class="muted" style="font-size:15px">(${sign(p.premium.percent, 1)}%)</span></div><div class="muted">premium over the strength design</div>` : "";
-  const d = (s) => (s ? s.replace("T", " ").slice(0, 16) : "–");
-  return `<div class="card pcard">
+function row(p) {
+  const last = p.last_completed >= 0 ? `step ${p.last_completed} ${esc(p.last_completed_name)}` : "not started";
+  return `<div class="prow" data-id="${p.id}">
     <h3>${esc(p.name)}${p.demo ? '<span class="tag">demo</span>' : ""}</h3>
-    ${prem}
-    <div class="kv">
-      <span>model</span><span class="mono">${esc(p.ap_model.split(/[\\/]/).pop())}</span>
-      <span>created</span><span>${d(p.created)}</span>
-      <span>updated</span><span>${d(p.updated)}</span>
+    <div class="sub"><span class="mono">${esc(p.ap_model.split(/[\\/]/).pop())}</span> · ${last}</div>
+    <div class="prem">${p.premium ? `${sign(p.premium.percent, 1)}%<small>${sign(p.premium.short_tons, 1)} t premium</small>` : `<small>no premium yet</small>`}</div>
+    <div class="acts"><button data-open="${p.id}">Open</button><button class="danger" data-remove="${p.id}" title="Remove from list (files stay)">Remove</button></div>
+  </div>`;
+}
+
+async function preview(id) {
+  const p = PROJECTS.find((x) => x.id === id);
+  if (!p) return;
+  document.querySelectorAll(".prow").forEach((r) => r.classList.toggle("active", r.dataset.id === id));
+  const info = `<h3>${esc(p.name)}</h3><div class="muted mono" style="word-break:break-all">${esc(p.ap_model)}</div>`;
+  const kv = `<div class="kv">
+      <span>created</span><span>${day(p.created)}</span>
+      <span>updated</span><span>${day(p.updated)}</span>
       <span>last step</span><span>${p.last_completed >= 0 ? `${p.last_completed} ${esc(p.last_completed_name)} (${esc(p.last_status)})` : "not started"}</span>
       ${p.finalize ? `<span>finalize</span><span>${esc(p.finalize)}</span>` : ""}
-      ${p.tonnage ? `<span>tonnage</span><span>${fmt(p.tonnage, 2)} vs ${fmt(p.baseline, 2)} short tons</span>` : ""}
-    </div>
-    <div class="actions"><button data-open="${p.id}">Open</button><button class="danger" data-remove="${p.id}">Remove from list</button></div>
-  </div>`;
+      ${p.tonnage ? `<span>tonnage</span><span>${fmt(p.tonnage, 1)}${p.baseline ? ` vs ${fmt(p.baseline, 1)}` : ""} short tons</span>` : ""}
+      ${p.premium ? `<span>premium</span><span><b>${sign(p.premium.short_tons, 1)} t (${sign(p.premium.percent, 1)}%)</b></span>` : ""}
+    </div>`;
+  if (!(id in PREVIEWS)) {
+    $("#preview").innerHTML = info + `<div class="ph">loading…</div>` + kv;
+    try { PREVIEWS[id] = previewSvg(await api(`/api/projects/${id}/viewer`)); } catch { PREVIEWS[id] = ""; }
+    if (!document.querySelector(`.prow.active[data-id="${id}"]`)) return;   // the mouse moved on
+  }
+  $("#preview").innerHTML = info + (PREVIEWS[id] || `<div class="ph">No building yet (step 1)</div>`) + kv;
+}
+
+// Axonometric wireframe of the members, coloured by reason once there is a final design.
+function previewSvg(v) {
+  const ms = v.members || [];
+  if (!ms.length) return "";
+  const c30 = Math.cos(Math.PI / 6), s30 = 0.5;
+  const P = ([x, y, z]) => [(x - y) * c30, -(z * 1.0) - (x + y) * s30 * 0.6];
+  let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
+  const segs = ms.map((m) => { const a = P(m.a), b = P(m.b); for (const [x, y] of [a, b]) { x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y); } return [a, b, m]; });
+  const col = { collapse: "var(--collapse)", propagated: "var(--propagated)", finalize: "var(--finalize)", strength: "var(--strength)" };
+  const pad = 0.04 * Math.max(x1 - x0, y1 - y0);
+  segs.sort((p, q) => (q[2].reason === "unchanged") - (p[2].reason === "unchanged"));   // changed members on top
+  const lines = segs.map(([a, b, m]) => `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" stroke="${col[m.reason] || "#9aa3a6"}" stroke-width="${col[m.reason] ? 0.5 : 0.22}" stroke-opacity="${col[m.reason] ? 1 : 0.8}"/>`).join("");
+  return `<svg viewBox="${(x0 - pad).toFixed(1)} ${(y0 - pad).toFixed(1)} ${(x1 - x0 + 2 * pad).toFixed(1)} ${(y1 - y0 + 2 * pad).toFixed(1)}" preserveAspectRatio="xMidYMid meet" style="aspect-ratio:4/3">${lines}</svg>`;
 }
 
 $("#pick").onclick = async () => {
@@ -82,7 +118,7 @@ async function openProject(id, step) {
   $("#landing").classList.add("hidden");
   $("#project").classList.remove("hidden");
   if (!S.viewer) initViewer();
-  S.files = {}; S.vdata = null;
+  S.files = {}; S.vdata = null; S.locStep = null;
   await refresh(id);
   const p = S.project;
   S.step = step ?? (p.steps.find((s) => s.status === "awaiting" || s.status === "failed" || s.status === "running")?.n ?? Math.min(p.last_completed + 1, 7));
@@ -119,7 +155,30 @@ async function loadViewer() {
 
 function initViewer() {
   S.viewer = new Viewer($("#viewer"), $("#legend"), $("#info"));
-  for (const id of ["#mode", "#ratio-original", "#sizes-before", "#scenario", "#group", "#story-min", "#story-max"]) $(id).oninput = applyViewerControls;
+  for (const id of ["#ratio-original", "#sizes-before", "#weight-basis", "#scenario", "#group", "#story-min", "#story-max", "#show-loc"]) $(id).oninput = applyViewerControls;
+  // picking a view is a request to see it: the step's location highlight gives way
+  $("#mode").oninput = () => { $("#show-loc").checked = false; applyViewerControls(); };
+  $("#sc-prev").onclick = () => stepScenario(-1);
+  $("#sc-next").onclick = () => stepScenario(1);
+  $("#sc-play").onclick = () => (S.play ? stopPlay() : startPlay());
+}
+
+// Step through the scenarios; the heat map is the view that shows one scenario.
+function stepScenario(d) {
+  const sel = $("#scenario"), n = sel.options.length;
+  if (!n) return;
+  sel.selectedIndex = (sel.selectedIndex + d + n) % n;
+  if ($("#mode").value !== "heat") { $("#mode").value = "heat"; $("#show-loc").checked = false; }
+  applyViewerControls();
+}
+function startPlay() {
+  stepScenario(0);
+  S.play = setInterval(() => stepScenario(1), 1600);
+  $("#sc-play").textContent = "❚❚"; $("#sc-play").classList.add("on"); $("#sc-play").title = "Stop";
+}
+function stopPlay() {
+  clearInterval(S.play); S.play = null;
+  $("#sc-play").textContent = "▶"; $("#sc-play").classList.remove("on"); $("#sc-play").title = "Step through all scenarios";
 }
 
 function applyViewerControls() {
@@ -130,8 +189,21 @@ function applyViewerControls() {
   $("#story-label").textContent = st.length ? `${st[lo]}–${st[hi]}` : "";
   $("#ratio-toggle-wrap").classList.toggle("hidden", mode !== "ratio");
   $("#sizes-toggle-wrap").classList.toggle("hidden", mode !== "sizes");
+  $("#weight-toggle-wrap").classList.toggle("hidden", mode !== "weight");
+  const showLoc = !!S.locations && $("#show-loc").checked;
   S.viewer.set({ mode, ratioOriginal: $("#ratio-original").checked, sizesBefore: $("#sizes-before").checked,
-    scenario: $("#scenario").value, group: $("#group").value, storyMin: lo, storyMax: hi });
+    weightBasis: $("#weight-basis").value, scenario: $("#scenario").value, group: $("#group").value,
+    storyMin: lo, storyMax: hi, highlight: showLoc ? S.locations : null });
+  viewerNote(mode, showLoc);
+}
+
+function viewerNote(mode, showLoc) {
+  let t = "";
+  if (S.vdata?.members.length && mode === "heat" && !showLoc && !S.viewer.extra?.scenarioRatios)
+    t = `<b>No per-scenario ratios for this project yet.</b> ETABS reports only each member's governing ratio, so the heat map needs
+      one design per scenario: step 6 → "Compute per-scenario ratios" (ETABS, about 5 min). Until then use the Ratio view.`;
+  $("#viewer-note").innerHTML = t;
+  $("#viewer-note").classList.toggle("hidden", !t);
 }
 
 function renderAll() {
@@ -305,18 +377,25 @@ function bindStepActions(n) {
   };
 }
 
+// Steps 1-2 show the UFC locations (and Claude's additions) in 3D, as a toggle in the toolbar that
+// only exists when there is a building and locations to show.
 async function highlightFor(n) {
   if (!S.viewer) return;
-  if (n === 1 || n === 2) {
+  S.locations = null;
+  if ((n === 1 || n === 2) && S.vdata?.members.length) {
     const s = await file("scenarios.json"), r = n === 2 ? await file("review_conditions.json") : null;
     const h = {};
     for (const c of s?.candidates || []) if ((c.source || "rule") === "rule") h[c.location_id] = "#c0392b";
     for (const d of r?.review?.decisions || []) if (d.decision === "add") h[d.location_id] = "#7d4ab0";
-    S.viewer.extra.highlightKey = [["UFC rule location", "#c0392b"], ...(n === 2 ? [["Claude suggestion", "#7d4ab0"]] : [])];
-    S.viewer.set({ highlight: h });
-  } else {
-    S.viewer.set({ highlight: null });
+    if (Object.keys(h).length) {
+      S.locations = h;
+      S.viewer.extra.highlightKey = [["UFC rule location", "#c0392b"], ...(n === 2 ? [["Claude suggestion", "#7d4ab0"]] : [])];
+    }
   }
+  $("#loc-toggle-wrap").classList.toggle("hidden", !S.locations);
+  if (S.locations && S.locStep !== n) $("#show-loc").checked = true;   // on when a location step opens
+  S.locStep = S.locations ? n : null;
+  applyViewerControls();
 }
 
 // ---------- results ----------

@@ -11,21 +11,30 @@ const REASON = {
   strength: ["--strength", "Strength"],
   unchanged: ["--unchanged", "Unchanged"],
 };
-const RATIO_STOPS = [[0, "#2f7d4f"], [0.5, "#8fb34a"], [0.75, "#e0c341"], [0.9, "#e08a2e"], [1.0, "#c0392b"]];
+// idle members pale, working members saturated: pale blue → blue → green → amber → orange → red at 1.0
+const RATIO_STOPS = [[0, "#c6d2e3"], [0.3, "#5b8fd9"], [0.5, "#16a34a"], [0.75, "#eab308"], [0.9, "#f97316"], [1.0, "#dc2626"]];
+const OVER = "#c026d3";   // over 1.0: magenta, outside the scale
+// added steel: light amber → deep red, so the most upsized members are the darkest and thickest
+const ADD_STOPS = [[0, "#fdf0c4"], [0.3, "#f6b73c"], [0.65, "#dc2626"], [1, "#5c0a16"]];
+const LIGHTER = "#93c5fd";
 const FADED = new THREE.Color("#dde0dc");
 
 function ratioColor(r) {
   if (r == null) return new THREE.Color("#c9cdca");
-  if (r > 1.0) return new THREE.Color("#6d0f0f");
-  for (let k = 1; k < RATIO_STOPS.length; k++) {
-    const [r1, c1] = RATIO_STOPS[k];
-    if (r <= r1) {
-      const [r0, c0] = RATIO_STOPS[k - 1];
-      return new THREE.Color(c0).lerp(new THREE.Color(c1), (r - r0) / (r1 - r0));
+  if (r > 1.0) return new THREE.Color(OVER);
+  return ramp(RATIO_STOPS, r);
+}
+function ramp(stops, v) {
+  for (let k = 1; k < stops.length; k++) {
+    const [v1, c1] = stops[k];
+    if (v <= v1) {
+      const [v0, c0] = stops[k - 1];
+      return new THREE.Color(c0).lerp(new THREE.Color(c1), Math.max(0, (v - v0) / (v1 - v0)));
     }
   }
-  return new THREE.Color(RATIO_STOPS.at(-1)[1]);
+  return new THREE.Color(stops.at(-1)[1]);
 }
+const gradient = (stops) => `linear-gradient(90deg,${stops.map(([v, c]) => `${c} ${v * 100}%`).join(",")})`;
 const wOf = (s) => { const m = /X([\d.]+)$/.exec(s || ""); return m ? +m[1] : 0; };
 const fmt = (x, d = 0) => (x == null ? "–" : Number(x).toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d }));
 
@@ -72,6 +81,8 @@ export class Viewer {
     this.maxW = Math.max(1, ...this.members.map((m) => Math.max(wOf(m.original), wOf(m.final))));
     const geo = new THREE.BoxGeometry(1, 1, 1);
     const mat = new THREE.MeshLambertMaterial({ color: 0xffffff });
+    this.lambert = mat;
+    this.flat = new THREE.MeshBasicMaterial({ color: 0xffffff });   // ratio views: unshaded, so the colours stay true
     this.mesh = new THREE.InstancedMesh(geo, mat, Math.max(1, this.members.length));
     this.mesh.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(Math.max(1, this.members.length) * 3), 3);
     this.scene.add(this.mesh);
@@ -111,19 +122,18 @@ export class Viewer {
         const t = m.added_lb_per_ft > 0 ? base + 0.34 * Math.sqrt(m.added_lb_per_ft / this.maxAddedPerFt) : base * 0.8;
         return [new THREE.Color(css(v)), t];
       }
-      case "ratio": return [ratioColor(o.ratioOriginal ? m.ratio_original : m.ratio), base];
+      case "ratio": return this.ratioStyle(m, o.ratioOriginal ? m.ratio_original : m.ratio);
       case "heat": {
+        if (this.removedSet?.has(m.id)) return [new THREE.Color("#111"), 0.06];
         const sr = this.extra.scenarioRatios?.ratios?.[o.scenario];
-        const removed = this.removedSet?.has(m.id);
-        if (removed) return [new THREE.Color(css("--collapse")), 0.05];
-        const r = sr ? sr[m.id] : null;
-        // thicker as the ratio rises, so the members working under this scenario stand out
-        return [r == null ? new THREE.Color("#cfd3cf") : ratioColor(r), r == null ? base * 0.6 : base * (0.55 + 1.1 * Math.min(r, 1.2))];
+        return this.ratioStyle(m, sr ? sr[m.id] : null);
       }
       case "weight": {
-        const f = Math.max(0, m.added_lb || 0) / this.maxAddedLb;
-        const c = new THREE.Color("#d9dcd8").lerp(new THREE.Color("#101214"), Math.sqrt(f));
-        return [c, base];
+        const tot = o.weightBasis === "total";
+        const v = tot ? m.added_lb : m.added_lb_per_ft, mx = tot ? this.maxAddedLb : this.maxAddedPerFt;
+        if (!(v > 0)) return v < 0 ? [new THREE.Color(LIGHTER), base * 0.7] : [new THREE.Color("#d3d7d3"), 0.05];
+        const f = v / mx;   // linear, so small increases stay pale and the big upsizes stand out
+        return [ramp(ADD_STOPS, f), (m.kind === "column" ? 0.08 : 0.06) + 0.46 * f];
       }
       case "sizes": {
         const s = o.sizesBefore ? m.original : m.final;
@@ -136,8 +146,18 @@ export class Viewer {
     return [new THREE.Color("#888"), base];
   }
 
+  // Ratio colour, and thickness growing with the ratio, so the members working hardest stand out;
+  // members without a ratio (composite beams, or none computed) stay thin and pale.
+  ratioStyle(m, r) {
+    if (r == null) return [new THREE.Color("#dfe2df"), 0.045];
+    const col = m.kind === "column";
+    const k = Math.min(r, 1.1) ** 2;   // quadratic: members near 1.0 get most of the thickness
+    return [ratioColor(r), (col ? 0.07 : 0.05) + (col ? 0.46 : 0.38) * k];
+  }
+
   update() {
     if (!this.mesh) return;
+    this.mesh.material = !this.opts.highlight && (this.opts.mode === "ratio" || this.opts.mode === "heat") ? this.flat : this.lambert;
     const sc = (this.extra.scenarios?.scenarios || []).find((s) => s.id === this.opts.scenario);
     this.removedSet = new Set(this.opts.mode === "heat" && sc ? sc.removed_columns : []);
     const M = new THREE.Matrix4(), q = new THREE.Quaternion(), X = new THREE.Vector3(1, 0, 0);
@@ -159,7 +179,7 @@ export class Viewer {
 
   drawOverlay(sc) {
     this.overlay.clear();
-    if (this.opts.mode !== "heat" || !sc || !this.data) return;
+    if (this.opts.mode !== "heat" || this.opts.highlight || !sc || !this.data) return;
     const bays = new Set(sc.region?.bays || []);
     const mat = new THREE.MeshBasicMaterial({ color: new THREE.Color(css("--accent")), transparent: true, opacity: 0.16, side: THREE.DoubleSide, depthWrite: false });
     for (const bay of this.data.bays || []) {
@@ -172,7 +192,7 @@ export class Viewer {
     for (const m of this.members.filter((x) => this.removedSet.has(x.id))) {
       const pts = [new THREE.Vector3(...m.a), new THREE.Vector3(...m.b)];
       const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),
-        new THREE.LineDashedMaterial({ color: new THREE.Color(css("--collapse")), dashSize: 0.3, gapSize: 0.2 }));
+        new THREE.LineDashedMaterial({ color: 0x111111, dashSize: 0.3, gapSize: 0.2 }));
       line.computeLineDistances();
       this.overlay.add(line);
     }
@@ -180,6 +200,8 @@ export class Viewer {
 
   drawLegend() {
     const o = this.opts, L = [];
+    this.legend.classList.toggle("hidden", !this.members?.length);
+    if (!this.members?.length) return;
     if (o.highlight) {
       L.push(`<h4>Locations</h4>`);
       for (const [label, c] of this.extra.highlightKey || []) L.push(`<div class="item"><span class="sw" style="background:${c}"></span>${label}</div>`);
@@ -190,26 +212,39 @@ export class Viewer {
       L.push(`<div class="muted">Thickness grows with the weight increase (lb/ft).</div>`);
     } else if (o.mode === "ratio" || o.mode === "heat") {
       L.push(`<h4>${o.mode === "ratio" ? `Worst ratio, ${o.ratioOriginal ? "original" : "final"} design` : `Ratio under ${o.scenario || "–"}`}</h4>`);
-      L.push(`<div class="bar" style="background:linear-gradient(90deg,${RATIO_STOPS.map(([r, c]) => `${c} ${r * 100}%`).join(",")})"></div>`);
-      L.push(`<div class="ticks"><span>0</span><span>0.5</span><span>0.75</span><span>0.9</span><span>1.0</span></div>`);
-      L.push(`<div class="item"><span class="sw" style="background:#6d0f0f"></span>over 1.0</div>`);
+      L.push(`<div class="bar" style="background:${gradient(RATIO_STOPS)}"></div>`);
+      L.push(`<div class="ticks abs">${RATIO_STOPS.map(([r]) => `<span style="left:${r * 100}%">${r === 1 ? "1.0" : r}</span>`).join("")}</div>`);
+      L.push(`<div class="item"><span class="sw" style="background:${OVER}"></span>over 1.0</div>`);
+      L.push(`<div class="muted">Thicker as the ratio rises. Composite beams pale (steel design only).</div>`);
       if (o.mode === "heat") {
-        if (!this.extra.scenarioRatios) L.push(`<div class="muted">No per-scenario ratios yet: compute them in step 6.</div>`);
-        L.push(`<div class="item"><span class="sw" style="background:var(--collapse)"></span>removed column (dashed)</div>`);
+        const sc = (this.extra.scenarios?.scenarios || []).find((s) => s.id === o.scenario);
+        const sr = this.extra.scenarioRatios?.ratios?.[o.scenario];
+        if (sc) L.push(`<div style="margin-top:4px"><b>${sc.id}</b>: ${sc.location_id} removed at ${sc.story}${sc.removed_columns.length > 1 ? ` (${sc.removed_columns.length} columns)` : ""}</div>`);
+        if (sr) {
+          const vals = Object.values(sr), over = vals.filter((v) => v > 1).length;
+          L.push(`<div class="muted">max ${fmt(Math.max(...vals), 3)}; ${vals.filter((v) => v > 0.9).length} members over 0.9${over ? `, ${over} over 1.0` : ""}</div>`);
+        }
+        L.push(`<div class="item"><span class="sw" style="background:#111"></span>removed column (dashed)</div>`);
         L.push(`<div class="item"><span class="sw" style="background:var(--accent);opacity:.4"></span>amplified bays</div>`);
-        L.push(`<div class="muted">Steel members; composite beams grey.</div>`);
       }
     } else if (o.mode === "weight") {
-      const tons = this.maxAddedLb / 2000;
-      L.push(`<h4>Added steel per member</h4><div class="bar" style="background:linear-gradient(90deg,#d9dcd8,#101214)"></div>`);
-      L.push(`<div class="ticks"><span>0</span><span>${fmt(this.maxAddedLb / 4)} lb</span><span>${fmt(this.maxAddedLb)} lb</span></div>`);
-      L.push(`<div class="muted">(final − original lb/ft) × length; max ${fmt(tons, 2)} short tons</div>`);
+      const tot = o.weightBasis === "total", mx = tot ? this.maxAddedLb : this.maxAddedPerFt, u = tot ? "lb" : "lb/ft";
+      L.push(`<h4>${tot ? "Added steel per member" : "Size increase per member"}</h4><div class="bar" style="background:${gradient(ADD_STOPS)}"></div>`);
+      L.push(`<div class="ticks"><span>0</span><span>${fmt(mx / 2)}</span><span>${fmt(mx)} ${u}</span></div>`);
+      L.push(`<div class="muted">${tot ? "(final − original lb/ft) × length" : "final − original section weight"}; darker and thicker = more upsized; unchanged pale grey, lighter section light blue.</div>`);
+      const key = tot ? "added_lb" : "added_lb_per_ft";
+      const top = this.members.filter((m) => m[key] > 0 && this.visible(m)).sort((a, b) => b[key] - a[key]).slice(0, 5);
+      if (top.length) {
+        L.push(`<h4 style="margin-top:8px">Most upsized</h4><div class="top">`);
+        for (const m of top) L.push(`<span>${m.id}</span><span>${m.story}</span><span class="mono">${m.original} → ${m.final}</span><span>+${fmt(m[key])}</span>`);
+        L.push(`</div>`);
+      }
       const per = {};
       for (const m of this.members) per[m.story] = (per[m.story] || 0) + Math.max(0, m.added_lb || 0) / 2000;
       const stories = (this.data.stories || []).slice().reverse();
-      const mx = Math.max(1e-9, ...Object.values(per));
+      const pmx = Math.max(1e-9, ...Object.values(per));
       L.push(`<h4 style="margin-top:8px">Added per story (short tons)</h4>`);
-      for (const s of stories) L.push(`<div class="item"><span class="mono" style="width:56px">${s}</span><span style="height:8px;width:${(120 * (per[s] || 0)) / mx}px;background:#30363a;border-radius:2px"></span><span class="mono">${fmt(per[s] || 0, 1)}</span></div>`);
+      for (const s of stories) L.push(`<div class="item"><span class="mono" style="width:56px">${s}</span><span style="height:8px;width:${(120 * (per[s] || 0)) / pmx}px;background:#b91c1c;border-radius:2px"></span><span class="mono">${fmt(per[s] || 0, 1)}</span></div>`);
     } else if (o.mode === "sizes") {
       L.push(`<h4>Sizes: ${o.sizesBefore ? "before (original)" : "after (final)"}</h4><div class="muted">Thickness ∝ √(lb/ft).</div>`);
       if (!o.sizesBefore) {
