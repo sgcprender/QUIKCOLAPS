@@ -21,7 +21,7 @@ const ETABS_STEPS = new Set([0, 1, 3, 4, 5, 6, 7]);
 const STEP_HELP = {
   0: "Opens the AP working copy in Engine and checks it is ready: deck floors, the CS1 template, load patterns, auto-select lists, Engine version. Read-only.",
   1: "Exports the building, runs the intact gravity case (1.2D+0.5L), reads every column's axial force and finds the UFC removal locations and stories.",
-  2: "Builds the condition table and asks Claude to review the rule candidates and add what the UFC judgment conditions call for (about $0.50). You approve the scenario set.",
+  2: "Builds the condition table and asks the AI to review the rule candidates and add what the UFC judgment conditions call for (about $0.50). You approve the scenario set.",
   3: "Writes one staged construction case, load group and combination per scenario into the AP copy; every write is read back.",
   4: "Runs all scenarios and designs once (composite, then steel). The load check compares each scenario's base reaction with its increment.",
   5: "Redesign rounds: accept the design sections, run, design, until the weight changes by less than 0.5% (max 3 rounds).",
@@ -324,7 +324,7 @@ function statusText(s) {
 }
 
 async function runStep(n, cached) {
-  if (n === 2 && !cached && !confirm("This calls Claude (about $0.50). Continue?")) return;
+  if (n === 2 && !cached && !confirm("This runs the AI review (about $0.50). Continue?")) return;
   if (!cached && S.project.steps[n].status === "done" && n < 7 && !confirm("Running this step again marks the later steps as not run. Continue?")) return;
   try {
     await post(`/api/projects/${S.project.id}/steps/${n}/run`, { cached });
@@ -364,7 +364,7 @@ async function stepBody(n) {
     const appr = await file("approved_candidates.json");
     const accepted = (loc) => !appr || appr.candidates.some((c) => c.location_id === loc && c.status !== "rejected");
     const dec = (d, add) => `<div class="decision ${add ? "add" : ""}"><h4>${add ? `<input type="checkbox" class="accept" value="${d.location_id}" ${accepted(d.location_id) ? "checked" : ""}>` : ""}${d.location_id} · ${d.decision} · ${d.condition.replace(/_/g, " ")} <span class="muted">${d.confidence}</span></h4>${esc(d.reason)}<div class="evidence">${ev(d)}</div></div>`;
-    return `<p>Claude ${esc(r.meta.model)} · $${fmt(r.meta.cost_usd, 2)} · cited values checked: ${ok}/${r.evidence.length} match the condition table${r.issues.length ? ` · ${r.issues.length} validation issues` : ""}.</p>
+    return `<p>AI review (${esc(r.meta.model)}) · $${fmt(r.meta.cost_usd, 2)} · cited values checked: ${ok}/${r.evidence.length} match the condition table${r.issues.length ? ` · ${r.issues.length} validation issues` : ""}.</p>
       <h3>Suggested additions</h3>${adds.length ? adds.map((d) => dec(d, true)).join("") : `<p class="muted">none</p>`}
       <div class="actions"><button id="approve-scenarios" ${S.job?.status === "running" ? "disabled" : ""}>Approve scenario set</button></div>
       <h3>Rule candidates</h3>${others.map((d) => dec(d, false)).join("")}

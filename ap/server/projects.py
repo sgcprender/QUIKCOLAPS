@@ -19,7 +19,7 @@ INDEX = AP / "projects.json"
 STEPS = [
     (0, "Check model"),
     (1, "Load model"),
-    (2, "Claude review"),
+    (2, "AI review"),
     (3, "Write to Engine"),
     (4, "Run + design"),
     (5, "Redesign rounds"),

@@ -284,7 +284,7 @@ export class Viewer {
       L.push(`<h4>Model</h4>`, item("#58646a", "column"), item("#8d989c", "beam"));
     } else if (o.mode === "locations") {
       L.push(`<h4>UFC removal locations</h4>`, item(RULE, "UFC rule location"));
-      if (Object.values(this.loc).some((l) => l.col === CLAUDE)) L.push(item(CLAUDE, "Claude suggestion"));
+      if (Object.values(this.loc).some((l) => l.col === CLAUDE)) L.push(item(CLAUDE, "AI suggestion"));
       if (Object.values(this.loc).some((l) => l.col === REJECTED)) L.push(item(REJECTED, "rejected"));
       L.push(`<div class="muted">Thick: the removal stories; light: the rest of the column line.</div>`);
       const ids = Object.keys(this.loc);

@@ -199,7 +199,7 @@ class Approve(BaseModel):
 def approve_scenarios(pid: str, body: Approve):
     p = _p(pid)
     if p.step(2)["status"] not in ("awaiting", "done"):
-        raise HTTPException(409, "run the Claude review first")
+        raise HTTPException(409, "run the AI review first")
     p.reset_after(2)
     try:
         job = JOBS.start(pid, "2 approve scenarios", lambda j: steps.approve_scenarios(j, p, body.accepted),
