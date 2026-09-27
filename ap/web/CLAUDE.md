@@ -1,5 +1,14 @@
 # web/
 
+Two front ends: `app/` is the demo app (plan item F), served by `python -m server`
+from `ap/` (FastAPI, `ap/server`); `index.html` below is the original static viewer.
+
+`app/`: `index.html` + `app.css` + `app.js` (landing page, steps, results, log) +
+`viewer.js` (three.js; one InstancedMesh for all members; picking by the nearest member
+axis to the ray, since members are a pixel wide at full view). Member rows come from
+`/api/projects/<id>/viewer` (ap/server/viewer.py); the viewer does no engineering.
+
+
 Static single-page viewer: `index.html` (three.js from a CDN via import map).
 Serve from the repo root (`python -m http.server 8000`) so it can fetch
 `../fixtures/demo_building.json` and `data/scenarios.json`.

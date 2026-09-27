@@ -117,7 +117,8 @@ export class Viewer {
         const removed = this.removedSet?.has(m.id);
         if (removed) return [new THREE.Color(css("--collapse")), 0.05];
         const r = sr ? sr[m.id] : null;
-        return [r == null ? new THREE.Color("#cfd3cf") : ratioColor(r), r == null ? base * 0.7 : base];
+        // thicker as the ratio rises, so the members working under this scenario stand out
+        return [r == null ? new THREE.Color("#cfd3cf") : ratioColor(r), r == null ? base * 0.6 : base * (0.55 + 1.1 * Math.min(r, 1.2))];
       }
       case "weight": {
         const f = Math.max(0, m.added_lb || 0) / this.maxAddedLb;
