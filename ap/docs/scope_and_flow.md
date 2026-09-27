@@ -136,7 +136,7 @@ here, and stop with a short report. Plan written 2026-09-26.
 | C | **Strength-only baseline**: copy the original `progressive collapse.edb` on disk to `baseline strength.edb` (don't open or modify the original). Select only DStlS1 and DStlS2 for steel and composite design; iterate design (composite first, then steel) → accept design sections → run SW, SDL, LL → design, until no sections change (max 3 rounds). Save the tonnage (weigh) to `ap/web/data/baseline_tonnage.json`. Close it and return to AP2. | **done (not converged)** 2026-09-26. Original is `QUIKCOLAPS.EDB` (same sections and frame ids as AP2's original export); copied on disk (hash unchanged) to `baseline strength.EDB`. Bridge `open`, `design-select`, `iterate`. DStlS1 + DStlS2 for steel and composite; 3 rounds of SW, SDL, LL + design: 260 → 172 → 76 frames still changing (last ones step between neighbouring W14 sizes both ways), steel max ratio 0.948. **790.18 short tons** (columns 146.26, steel beams 366.72, composite beams 277.20; original sections 776.74); 228 frames differ from the original sizes (144 heavier, 84 lighter; 204 columns, 24 girders). `ap/web/data/baseline_tonnage.json`, `baseline_rounds.json`, `takeoffs/baseline_strength.csv`. AP2 reopened: locked, analysis results kept, design results not kept. |
 | D | **Collapse redesign in AP2**: iterate accept design sections → run all 30 → design, until no sections change (max 3 rounds). Run propagation, stop and show the list. After approval: assign-sections, run all 30, design once, confirm all ≤ 1.0, save tonnage, compare with the baseline. | **done, passed** 2026-09-26. Redesign 3 rounds (896.12 → 911.70 → 913.57 short tons); 658 fixed sections from `propagation.json` (270 collapse-driven + 388 propagated); two manual step-up rounds (frames 9, 29, 46, 61, then 9, 29, with their symmetry images); then `finalize` (1 round): frame 9 W14X132 → W14X145 and girder 422 W24X76 → W24X84 (ETABS's picks, 0.907 and 0.901), each with its 3 symmetry images. **All steel ≤ 1.0 (max 0.992), composite max 0.587. 1,158.01 short tons, +367.83 (+46.5%) over the 790.18 baseline** (collapse-driven +176.92, propagated +205.03, strength −14.11). Reactions against the fresh export: 29/30 within 1% (−0.33% to −0.9%), SC07 −1.70% (open). `web/data/finalize.json`, `collapse_tonnage.json`. |
 | E | **Report**: `python -m report.build_report` with baseline vs collapse tonnage, member counts (collapse-driven, propagated, strength) and a short Claude narrative. Mention the stray 0.15 × 0.15 m deck area at C29 and the roof loads (100 psf LL and SDL, as typical floors); both stay as they are. | not started |
-| F | **Demo app**: `ap/server` + `ap/web`, landing page with projects, steps 0–7, 3D view modes, results panel. Full spec below ("Item F: demo app"). | **built** 2026-09-27: `ap/server` (FastAPI) + `ap/web/app`; `python -m server` from `ap/`. The AP2 work is registered as the first project (`python -m server.demo`) and opens with all its results and every view mode, including the scenario heat map (`scenario-ratios`, 30 designs cached). Tested in the browser: landing page, project page, step panels, results panel, all five view modes, member info, filters; API: create (copies next to the model, model untouched), cached fallback, locked steps, remove from list. **Not yet run end to end on a new model** (the ETABS steps 0–7 through the app); each step uses commands that were run on AP2 by hand. |
+| F | **Demo app**: `ap/server` + `ap/web/app`, `python -m server` from `ap/`. Full spec below ("Item F: demo app"). | **built** 2026-09-27. The AP2 work opens as the demo project with all results and view modes. A new project ("MVP Test 1") was run through the app to step 5 by the user; steps 6–7 not yet run live. Layout fixed 2026-09-27: the right pane was pushed off-screen (the 3D column could not shrink below the canvas width); the log now sits under the right pane. |
 | G | **Extras**: automated validation (SC03 deleted-column copy vs staged case, record in D5); a Claude redesign summary shown in the app. | not started |
 
 ### Open items
@@ -228,6 +228,16 @@ command list. The demo project's existing results stay intact.
 
 Before the plan (done 2026-09-26): Claude review with the condition table,
 C5 approved, 30 scenarios applied, run and designed on AP2 (status above).
+
+## Next steps
+
+1. **Click-through fixes** (pending): the user's list from clicking through the app.
+2. **Live end-to-end test on a new project**, steps 0–7 through the app. First check
+   that nothing gets overwritten: existing "<name> - AP.edb" / "- baseline.edb" copies
+   are kept, the demo project's folder and `ap/web/data` are untouched, and
+   `takeoffs/<name>_*.csv` labels don't collide with the demo's.
+3. **Item E: report** (`python -m report.build_report`), with the notes on SC07 and
+   the stray deck areas at C29.
 
 ## Commands
 

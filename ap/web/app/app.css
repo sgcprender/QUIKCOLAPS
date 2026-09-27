@@ -58,10 +58,10 @@ input, select { font: inherit; padding: 5px 8px; border: 1px solid var(--rule); 
 .tag { font-size: 11px; padding: 1px 6px; border-radius: 3px; background: var(--paper); color: var(--muted); margin-left: 6px; }
 
 /* project */
-#project { display: grid; grid-template-rows: auto auto 1fr auto; }
+#project { display: grid; grid-template-rows: auto auto minmax(0, 1fr); height: 100vh; overflow: hidden; }
 .topbar { display: flex; align-items: center; gap: 12px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--rule); }
 .topbar h1 { font-size: 17px; }
-.stepbar { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--rule); }
+.stepbar { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; padding: 8px 16px; background: var(--panel); border-bottom: 1px solid var(--rule); }
 .step { display: flex; gap: 8px; align-items: center; padding: 6px 8px; border: 1px solid var(--rule); border-radius: 4px; background: var(--card); cursor: pointer; min-width: 0; }
 .step .n { width: 22px; height: 22px; flex: none; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 600; background: var(--paper); color: var(--muted); }
 .step .t { font-size: 12px; line-height: 1.2; overflow: hidden; text-overflow: ellipsis; }
@@ -73,13 +73,15 @@ input, select { font: inherit; padding: 5px 8px; border: 1px solid var(--rule); 
 .step.selected { border-color: var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
 @keyframes pulse { from { opacity: 1; } to { opacity: .5; } }
 
-.workspace { display: grid; grid-template-columns: 1fr 400px; min-height: 0; }
-.viewer-wrap { position: relative; display: grid; grid-template-rows: auto 1fr; min-height: 0; }
+/* minmax(0, …): the canvas has a pixel width from the renderer and must not widen its column */
+.workspace { display: grid; grid-template-columns: minmax(0, 1fr) 460px; min-height: 0; overflow: hidden; }
+.viewer-wrap { position: relative; display: grid; grid-template-rows: auto minmax(0, 1fr); min-height: 0; min-width: 0; }
 .viewer-tools { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; padding: 6px 12px; background: var(--panel); border-bottom: 1px solid var(--rule); font-size: 12px; }
 .viewer-tools label { display: flex; align-items: center; gap: 6px; }
 .viewer-tools select { padding: 3px 6px; font-size: 12px; max-width: 170px; }
 .viewer-tools .stories input { width: 70px; }
-.viewer { position: relative; min-height: 0; background: var(--viewer-bg); }
+.viewer { position: relative; min-height: 0; min-width: 0; overflow: hidden; background: var(--viewer-bg); }
+.viewer canvas { position: absolute; inset: 0; }
 .viewer canvas { display: block; }
 .viewer-empty { position: absolute; inset: 40px 0 0; display: grid; place-items: center; color: var(--muted); pointer-events: none; }
 .legend { position: absolute; left: 12px; bottom: 12px; background: rgba(255,255,255,.93); border: 1px solid var(--rule); border-radius: 5px; padding: 8px 10px; font-size: 12px; max-width: 320px; }
@@ -93,11 +95,11 @@ input, select { font: inherit; padding: 5px 8px; border: 1px solid var(--rule); 
 .info .kv { display: grid; grid-template-columns: 92px 1fr; gap: 3px 6px; }
 .info .kv span:nth-child(odd) { color: var(--muted); }
 
-.side { display: grid; grid-template-rows: auto 1fr; border-left: 1px solid var(--rule); background: var(--panel); min-height: 0; }
+.side { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; border-left: 1px solid var(--rule); background: var(--panel); min-height: 0; min-width: 0; }
 .tabs { display: flex; border-bottom: 1px solid var(--rule); }
 .tab { flex: 1; background: none; border: none; color: var(--muted); border-radius: 0; padding: 8px; }
 .tab.active { color: var(--ink); box-shadow: inset 0 -2px 0 var(--accent); }
-.tab-body { overflow: auto; padding: 14px; }
+.tab-body { overflow: auto; padding: 14px; min-height: 0; }
 .tab-body h3 { font-size: 15px; margin-bottom: 4px; }
 .tab-body p { margin: 6px 0; }
 .status-line { font-size: 13px; margin: 8px 0; padding: 6px 8px; border-radius: 4px; background: var(--card); border: 1px solid var(--rule); }
@@ -130,5 +132,5 @@ ul.notes { padding-left: 18px; margin: 6px 0; font-size: 12px; }
 .log-head { display: flex; align-items: center; gap: 8px; padding: 4px 12px; font-size: 12px; color: #d6dcd8; }
 .log-head .muted { color: #9aa6a0; }
 .log-head .link { color: #9cc3ea; }
-.log { margin: 0; height: 150px; overflow: auto; padding: 4px 12px 8px; font: 11.5px/1.35 var(--mono); white-space: pre-wrap; }
+.log { margin: 0; height: 170px; overflow-y: auto; overflow-x: hidden; padding: 4px 10px 8px; font: 11px/1.35 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .logbar.collapsed .log { display: none; }

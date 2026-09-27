@@ -2,3 +2,5 @@ bin/
 obj/
 *.user
 .vs/
+# local preview config for the demo app
+.claude/launch.json
