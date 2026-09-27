@@ -14,6 +14,10 @@ namespace Quikcolaps.Bridge;
 ///   apply    --scenarios scenarios.json [--template CS1] [--commit]   cases, load groups, combos
 ///   results  --scenarios scenarios.json --out results.json [--run] [--design]
 ///   forces   --case NAME --frames F1,F2 --out forces.json            for the staged-case validation
+///   sections                                                          auto-select frames: analysis vs design section
+///
+/// results --run stops (exit 4) when an auto-select frame's design section differs from its analysis
+/// section, since the run would adopt the design sections; --accept-design-sections runs anyway.
 /// </summary>
 internal static class Program
 {
@@ -35,7 +39,8 @@ internal static class Program
                 "stacks" => Stacks.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--out", "stacks.json")),
                 "apply" => Apply.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), args.Contains("--commit")),
                 "results" => Results.Run(sap, inst.ProcessId, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), Arg("--out", "results.json"),
-                    args.Contains("--run"), args.Contains("--design")),
+                    args.Contains("--run"), args.Contains("--design"), args.Contains(SectionGuard.AcceptFlag)),
+                "sections" => SectionGuard.Allows(sap, false) ? 0 : SectionGuard.ExitSectionsDiffer,
                 "forces" => Results.Forces(sap, Arg("--case", ""), Arg("--frames", ""), Arg("--out", "forces.json")),
                 _ => Usage()
             };
@@ -49,7 +54,7 @@ internal static class Program
 
     private static int Usage()
     {
-        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces [--model NAME] ... (see Program.cs)");
+        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|sections [--model NAME] ... (see Program.cs)");
         return 2;
     }
 }

@@ -11,6 +11,7 @@ dotnet run --project tools/Quikcolaps.Bridge -- apply   --scenarios ap/web/data/
 dotnet run --project tools/Quikcolaps.Bridge -- apply   --scenarios ap/web/data/scenarios.json --commit
 dotnet run --project tools/Quikcolaps.Bridge -- results --scenarios ap/web/data/scenarios.json --out ap/web/data/results.json --run --design
 dotnet run --project tools/Quikcolaps.Bridge -- forces  --case AP_SC01 --frames 101,102,103 --out forces_staged.json
+dotnet run --project tools/Quikcolaps.Bridge -- sections                                  # analysis vs design sections
 ```
 Common flags: `--model` (default `progressive collapse`), `--template` (default `CS1`),
 `--plan-tolerance` (model length units, default 1.0). `--model` matches the
@@ -46,6 +47,12 @@ total from `building.json` against ETABS base reaction FZ:
 | `apply` | `scenarios.json`, template case | — | with `--commit`: cases, load groups, combos, steel selection |
 | `results` | `scenarios.json`, template case | `results.json` (ap/docs/schema/results.schema.json) | `--run` analyses, `--design` designs |
 | `forces` | one case | `forces.json` | none |
+| `sections` | auto-select frames | — | none; exit 4 if any design section differs from the analysis section |
+
+`results --run` checks sections first and stops with exit 4 (nothing run) if
+an auto-select frame's design section differs from its analysis section: the
+run would adopt the design sections. `--accept-design-sections` runs anyway,
+as a deliberate redesign iteration.
 
 Names: case `AP_SCnn`, load group `AP_SCnn_LOAD`, combo `AP_SCnn_CMB` (the
 existing tool's `<case>_CMB` convention).
@@ -179,7 +186,12 @@ seen on the working copy, ETABS 23, 2026-09-26.
   every auto-select frame whose design section differs** (measured: 31 of 54
   frames around SC03 changed, e.g. column 165 W14X61 → W14X120, and the saved
   working copy kept them). Running analysis after design is a redesign
-  iteration, not a re-check.
+  iteration, not a re-check; `SectionGuard` stops it unless asked for.
+- `DesignSteel.GetDesignSection` / `DesignCompositeBeam.GetDesignSection`
+  (measured, no design results yet): the steel call answers 0 and the
+  analysis section for steel frame design members, 1 for others (composite
+  beam 1051); the composite call answers 1. `GetResultsAvailable` is False
+  for both.
 - Staged "Load Objects" on a group that holds beams (measured on AP_SC03, one
   diagnostic case per pattern, 2026-09-26): the reaction change exceeded the
   region total by SW +187.5, SDL +304.4, LL +125.1 kN (+12.7/+16.5/+16.3%).
