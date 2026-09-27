@@ -158,9 +158,12 @@ seen on the working copy, ETABS 23, 2026-09-26.
   return code. Unlocking deletes the analysis results.
 - `View.RefreshView` and `DesignSteel.StartDesign` (measured): on this machine
   ETABS raises a modal "Error initializing shader … 0x80070057" box and the API
-  call waits behind it. `quikcolaps dialogs --pid <pid>` lists it;
-  `--close` presses OK and the call then completes. Display only; the writes
-  had been read back before it appeared.
+  call waits behind it. Display only; the writes had been read back before
+  it appeared. `apply` no longer calls `RefreshView`. `results` runs
+  `RunAnalysis` and `StartDesign` inside `Watch.During`, which presses OK on
+  boxes whose text starts with "Error initializing shader" (logged to stderr)
+  and exits with code 3 on any other box, leaving it up. By hand:
+  `quikcolaps dialogs --pid <pid>` lists boxes, `--close` answers them.
 - `DesignSteel.GetSummaryResults_3` (measured): covers **steel frame design
   only** (840 of 1,260 frames here). The 420 infill beams have design procedure
   3 = composite beam (`FrameObj.GetDesignProcedure`: 0 program, 1 steel frame,

@@ -19,10 +19,10 @@ internal static class Results
         string? GoverningScenario, bool Passes, string Status);
     private sealed record ForceRow(double PKn, double V2Kn, double M3Knm);
 
-    public static int Run(cSapModel sap, string scenariosPath, string templateName, string outPath, bool run, bool design)
+    public static int Run(cSapModel sap, int pid, string scenariosPath, string templateName, string outPath, bool run, bool design)
     {
-        if (run) Api.Check(sap.Analyze.RunAnalysis(), "Analyze.RunAnalysis");
-        if (design) Api.Check(sap.DesignSteel.StartDesign(), "DesignSteel.StartDesign");
+        if (run) Api.Check(Watch.During(pid, "Analyze.RunAnalysis", () => sap.Analyze.RunAnalysis()), "Analyze.RunAnalysis");
+        if (design) Api.Check(Watch.During(pid, "DesignSteel.StartDesign", () => sap.DesignSteel.StartDesign()), "DesignSteel.StartDesign");
 
         var template = CaseTemplate.Read(sap, templateName);
         var scenarios = Json.ActiveScenarios(Json.Read(scenariosPath)).ToList();

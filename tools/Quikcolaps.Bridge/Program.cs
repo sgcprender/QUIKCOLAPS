@@ -34,7 +34,7 @@ internal static class Program
                 "export" => Export.Run(sap, inst.ModelPath, Arg("--out", "building.json"), Arg("--template", "CS1")),
                 "stacks" => Stacks.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--out", "stacks.json")),
                 "apply" => Apply.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), args.Contains("--commit")),
-                "results" => Results.Run(sap, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), Arg("--out", "results.json"),
+                "results" => Results.Run(sap, inst.ProcessId, Arg("--scenarios", "scenarios.json"), Arg("--template", "CS1"), Arg("--out", "results.json"),
                     args.Contains("--run"), args.Contains("--design")),
                 "forces" => Results.Forces(sap, Arg("--case", ""), Arg("--frames", ""), Arg("--out", "forces.json")),
                 _ => Usage()

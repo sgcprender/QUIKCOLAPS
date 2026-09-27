@@ -54,7 +54,6 @@ internal static class Apply
         }
 
         if (!commit) { Console.WriteLine($"\n{scenarios.Count} scenario(s). Dry run — add --commit to write."); return 0; }
-        sap.View.RefreshView(0, false);
         Console.WriteLine($"\n{scenarios.Count - failed} of {scenarios.Count} written and verified. The model is not saved.");
         return failed == 0 ? 0 : 1;
     }
