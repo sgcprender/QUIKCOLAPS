@@ -43,7 +43,7 @@ def ensure_open(job: Job, p: Project, model: Path, name: str) -> None:
     except StepError as e:
         if "no running instance has a model named like" not in str(e):
             raise
-        job.say(f"opening {model.name} in ETABS (the model open now is closed without saving)")
+        job.say(f"opening {model.name} in Engine (the model open now is closed without saving)")
         job.bridge("open", "--model", "", "--file", str(model))
 
 

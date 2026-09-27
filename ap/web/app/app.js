@@ -1,9 +1,12 @@
-// QUIKCOLAPS demo app: landing page, project steps, results, live log.
+// QuickColApps demo app: landing page, project steps, results, live log.
 import { Viewer, MODES, SCENARIO_MODES } from "./viewer.js";
 
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const fmt = (x, d = 0) => (x == null ? "–" : Number(x).toLocaleString(undefined, { maximumFractionDigits: d, minimumFractionDigits: d }));
+// The app calls the analysis program "Engine". Messages from the bridge still say ETABS: rename them
+// on display, except inside file paths (folders keep their real names).
+const engine = (s) => String(s ?? "").replace(/(?<![\\/])\bETABS\b(?![\\/])/g, "Engine");
 const sign = (x, d = 2) => (x == null ? "–" : (x >= 0 ? "+" : "−") + fmt(Math.abs(x), d));
 
 async function api(path, opts = {}) {
@@ -16,7 +19,7 @@ const post = (path, body = {}) => api(path, { method: "POST", body: JSON.stringi
 
 const ETABS_STEPS = new Set([0, 1, 3, 4, 5, 6, 7]);
 const STEP_HELP = {
-  0: "Opens the AP working copy in ETABS and checks it is ready: deck floors, the CS1 template, load patterns, auto-select lists, ETABS version. Read-only.",
+  0: "Opens the AP working copy in Engine and checks it is ready: deck floors, the CS1 template, load patterns, auto-select lists, Engine version. Read-only.",
   1: "Exports the building, runs the intact gravity case (1.2D+0.5L), reads every column's axial force and finds the UFC removal locations and stories.",
   2: "Builds the condition table and asks Claude to review the rule candidates and add what the UFC judgment conditions call for (about $0.50). You approve the scenario set.",
   3: "Writes one staged construction case, load group and combination per scenario into the AP copy; every write is read back.",
@@ -111,7 +114,7 @@ $("#create").onclick = async () => {
     const p = await post("/api/projects", { model_path: $("#model-path").value, name: $("#project-name").value || null });
     msg.textContent = p.notes.join("\n");
     await openProject(p.id, 0);
-  } catch (e) { msg.className = "msg bad"; msg.textContent = e.message; }
+  } catch (e) { msg.className = "msg bad"; msg.textContent = engine(e.message); }
 };
 
 // ---------- project ----------
@@ -274,11 +277,11 @@ function renderAll() {
   $("#p-name").textContent = p.name;
   $("#p-model").textContent = p.ap_model;
   const e = $("#etabs-status");
-  e.textContent = S.etabs ? "ETABS running" : "ETABS not running: viewing saved results";
+  e.textContent = S.etabs ? "Engine running" : "Engine not running: viewing saved results";
   e.className = "pill " + (S.etabs ? "ok" : "bad");
   $("#stepbar").innerHTML = p.steps.map((s) => {
     const locked = s.n > 0 && p.steps[s.n - 1].status !== "done" && s.status === "todo";
-    return `<div class="step ${s.status} ${locked ? "locked" : ""} ${s.n === S.step ? "selected" : ""}" data-step="${s.n}" title="${esc(s.message || "")}">
+    return `<div class="step ${s.status} ${locked ? "locked" : ""} ${s.n === S.step ? "selected" : ""}" data-step="${s.n}" title="${esc(engine(s.message))}">
       <span class="n">${s.status === "done" ? "✓" : s.status === "failed" ? "!" : s.n}</span><span class="t">${esc(s.name)}</span></div>`;
   }).join("");
   document.querySelectorAll(".step").forEach((el) => (el.onclick = () => { S.step = +el.dataset.step; switchTab("step"); showStepView(S.step); renderAll(); }));
@@ -306,7 +309,7 @@ async function renderStep(token) {
       <button id="run-step" ${locked || running || needsEtabs ? "disabled" : ""}>${s.status === "done" ? "Run again" : "Run"}</button>
       <button id="cached-step" class="secondary" ${locked || running ? "disabled" : ""}>Use cached results</button>
     </div>
-    ${locked ? `<p class="muted">Unlocks when step ${n - 1} is done.</p>` : needsEtabs ? `<p class="muted">Needs ETABS running with the model open.</p>` : ""}`;
+    ${locked ? `<p class="muted">Unlocks when step ${n - 1} is done.</p>` : needsEtabs ? `<p class="muted">Needs Engine running with the model open.</p>` : ""}`;
   const body = await stepBody(n);
   if (token !== S.render) return;
   $("#tab-step").innerHTML = head + body;
@@ -317,7 +320,7 @@ async function renderStep(token) {
 
 function statusText(s) {
   const label = { todo: "Not run yet", running: "Running…", done: "Done", failed: "Failed", awaiting: "Waiting for your approval" }[s.status] || s.status;
-  return `<b>${label}</b>${s.cached ? " (cached)" : ""}${s.message ? ` · ${esc(s.message)}` : ""}`;
+  return `<b>${label}</b>${s.cached ? " (cached)" : ""}${s.message ? ` · ${esc(engine(s.message))}` : ""}`;
 }
 
 async function runStep(n, cached) {
@@ -325,7 +328,7 @@ async function runStep(n, cached) {
   if (!cached && S.project.steps[n].status === "done" && n < 7 && !confirm("Running this step again marks the later steps as not run. Continue?")) return;
   try {
     await post(`/api/projects/${S.project.id}/steps/${n}/run`, { cached });
-  } catch (e) { alert(e.message); }
+  } catch (e) { alert(engine(e.message)); }
   await afterAction();
 }
 
@@ -342,7 +345,7 @@ async function stepBody(n) {
   if (n === 0) {
     const c = await file("check_model.json");
     if (!c) return "";
-    return T(c.items.map((i) => `<tr><td class="s-${i.status}">${i.status}</td><td><b>${esc(i.name)}</b><br>${esc(i.message)}</td></tr>`), ["", "check"]);
+    return T(c.items.map((i) => `<tr><td class="s-${i.status}">${i.status}</td><td><b>${esc(engine(i.name))}</b><br>${esc(engine(i.message))}</td></tr>`), ["", "check"]);
   }
   if (n === 1) {
     const s = await file("scenarios.json"), ax = await file("intact_axial.json");
@@ -407,7 +410,7 @@ async function stepBody(n) {
       T(Object.entries(by).sort().map(([g, v]) => `<tr><td>${g}</td><td>${(cond?.symmetry?.groups?.[g] || []).join(" ")}</td><td class="num">${v.src.size}</td><td class="num">${v.copies.size}</td></tr>`), ["group", "locations", "#collapse-driven", "#copies"]) +
       (pr.flags?.length ? `<h3>Flags</h3><ul class="notes">${pr.flags.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : `<p class="s-ok">No flags: every counterpart matched type, direction and original section.</p>`);
     const st = S.project.steps[6].status;
-    out += `<div class="actions"><button id="approve-prop" ${S.job?.status === "running" || !S.etabs || st === "done" ? "disabled" : ""}>Approve: assign sections and finalize</button><button id="ratios" class="secondary" ${S.job?.status === "running" || !S.etabs ? "disabled" : ""}>Compute per-scenario ratios (≈5 min)</button></div>`;
+    out += `<div class="actions"><button id="approve-prop" ${S.job?.status === "running" || !S.etabs || st === "done" ? "disabled" : ""}>Approve: assign sections and finalize</button><button id="ratios" class="secondary" ${S.job?.status === "running" || !S.etabs ? "disabled" : ""}>Compute per-scenario ratios (Engine, ≈5 min)</button></div>`;
     if (fin) out += finalizeSummary(fin);
     return out;
   }
@@ -430,16 +433,16 @@ function finalizeSummary(fin) {
 function bindStepActions(n) {
   if (n === 2 && $("#approve-scenarios")) $("#approve-scenarios").onclick = async () => {
     const accepted = [...document.querySelectorAll(".accept:checked")].map((x) => x.value);
-    try { await post(`/api/projects/${S.project.id}/approve/scenarios`, { accepted }); } catch (e) { alert(e.message); }
+    try { await post(`/api/projects/${S.project.id}/approve/scenarios`, { accepted }); } catch (e) { alert(engine(e.message)); }
     await afterAction();
   };
   if (n === 6 && $("#approve-prop")) $("#approve-prop").onclick = async () => {
     if (!confirm("Fix these sections in the AP copy and run finalize (several analyses)?")) return;
-    try { await post(`/api/projects/${S.project.id}/approve/propagation`); } catch (e) { alert(e.message); }
+    try { await post(`/api/projects/${S.project.id}/approve/propagation`); } catch (e) { alert(engine(e.message)); }
     await afterAction();
   };
   if (n === 6 && $("#ratios")) $("#ratios").onclick = async () => {
-    try { await post(`/api/projects/${S.project.id}/scenario-ratios`); } catch (e) { alert(e.message); }
+    try { await post(`/api/projects/${S.project.id}/scenario-ratios`); } catch (e) { alert(engine(e.message)); }
     await afterAction();
   };
 }
@@ -489,7 +492,7 @@ function startPolling() {
   S.etabsPoll = setInterval(checkEtabs, 5000);
 }
 
-// ETABS may be started or closed while a project is open: follow it, so the Run buttons unlock.
+// Engine (ETABS) may be started or closed while a project is open: follow it, so the Run buttons unlock.
 async function checkEtabs() {
   if (!S.project || S.etabsBusy) return;   // one check at a time
   let running;
@@ -513,7 +516,7 @@ async function pollNow() {
   }
   S.logLen = j.log_len || 0;
   const other = j.project && S.project && j.project !== S.project.id ? " (another project)" : "";
-  $("#job-status").textContent = j.status === "idle" ? "idle" : `${j.step}${other}: ${j.status}${j.seconds != null ? ` (${j.seconds} s)` : ""}${j.error ? ` — ${j.error}` : ""}`;
+  $("#job-status").textContent = j.status === "idle" ? "idle" : `${j.step}${other}: ${j.status}${j.seconds != null ? ` (${j.seconds} s)` : ""}${j.error ? ` — ${engine(j.error)}` : ""}`;
   if (!S.project || was === j.status) return;
   if (was === "running") {   // a job just ended: its files and the step states changed
     await refresh(); S.files = {};

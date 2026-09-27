@@ -5,7 +5,8 @@
   --ink: #22282c;
   --muted: #5d676c;
   --rule: #cfd4cf;
-  --accent: #3a6ea5;
+  --accent: #c62828;
+  --accent-soft: #f6d5d2;
   --ok: #2f7d4f;
   --warn: #b7791f;
   --bad: #b83a2e;
@@ -19,6 +20,8 @@
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 }
 * { box-sizing: border-box; }
+:root { accent-color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
 html, body { margin: 0; height: 100%; background: var(--paper); color: var(--ink); font: 14px/1.45 var(--font); }
 h1, h2, h3 { margin: 0; font-weight: 600; }
 .hidden { display: none !important; }
@@ -153,6 +156,6 @@ ul.notes { padding-left: 18px; margin: 6px 0; font-size: 12px; }
 .logbar { border-top: 1px solid var(--rule); background: #1f2427; color: #d6dcd8; }
 .log-head { display: flex; align-items: center; gap: 8px; padding: 4px 12px; font-size: 12px; color: #d6dcd8; }
 .log-head .muted { color: #9aa6a0; }
-.log-head .link { color: #9cc3ea; }
+.log-head .link { color: #f2a19a; }
 .log { margin: 0; height: 170px; overflow-y: auto; overflow-x: hidden; padding: 4px 10px 8px; font: 11px/1.35 var(--mono); white-space: pre-wrap; overflow-wrap: anywhere; }
 .logbar.collapsed .log { display: none; }

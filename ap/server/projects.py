@@ -20,7 +20,7 @@ STEPS = [
     (0, "Check model"),
     (1, "Load model"),
     (2, "Claude review"),
-    (3, "Write to ETABS"),
+    (3, "Write to Engine"),
     (4, "Run + design"),
     (5, "Redesign rounds"),
     (6, "Copy to similar & finalize"),
@@ -125,7 +125,7 @@ def create(model: Path, name: str | None = None) -> tuple[Project, list[str]]:
     """New project for a picked model: folder and working copies (never touching the model)."""
     model = Path(model).resolve()
     if model.suffix.lower() != ".edb":
-        raise ValueError(f"{model.name} is not an ETABS model (.edb)")
+        raise ValueError(f"{model.name} is not an Engine model (.edb)")
     if not model.exists():
         raise ValueError(f"{model} not found")
     name = name or model.stem

@@ -1,5 +1,5 @@
 // 3D viewer for the demo app: members as one instanced mesh, coloured and sized per view mode.
-// Z is up (ETABS). Every instance maps back to its member (ETABS frame id) for the info card.
+// Z is up (Engine / ETABS convention). Every instance maps back to its member (frame id) for the info card.
 // Members outside the story / group filter are hidden; a faint wireframe of the whole frame stays for context.
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";

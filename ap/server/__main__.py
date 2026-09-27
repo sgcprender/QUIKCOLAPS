@@ -16,7 +16,7 @@ def main() -> None:
     url = f"http://127.0.0.1:{args.port}/"
     if not args.no_browser:
         threading.Timer(1.5, lambda: webbrowser.open(url)).start()
-    print(f"QUIKCOLAPS app on {url}  (Ctrl+C to stop)")
+    print(f"QuickColApps on {url}  (Ctrl+C to stop)")
     uvicorn.run("server.app:app", host="127.0.0.1", port=args.port, log_level="warning")
 
 

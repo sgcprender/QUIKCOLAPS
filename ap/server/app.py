@@ -17,7 +17,7 @@ from .projects import STEPS, Project
 AP = Path(__file__).resolve().parents[1]
 WEB = AP / "web"
 
-app = FastAPI(title="QUIKCOLAPS")
+app = FastAPI(title="QuickColApps")
 app.mount("/static", StaticFiles(directory=WEB / "app"), name="static")
 
 
@@ -102,7 +102,7 @@ def pick_model():
         root = tk.Tk()
         root.withdraw()
         root.attributes("-topmost", True)
-        result["path"] = filedialog.askopenfilename(title="Pick the ETABS model", filetypes=[("ETABS model", "*.edb *.EDB")])
+        result["path"] = filedialog.askopenfilename(title="Pick the Engine model", filetypes=[("Engine model", "*.edb *.EDB")])
         root.destroy()
 
     t = threading.Thread(target=ask)
