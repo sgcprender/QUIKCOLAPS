@@ -491,9 +491,10 @@ function startPolling() {
 
 // ETABS may be started or closed while a project is open: follow it, so the Run buttons unlock.
 async function checkEtabs() {
-  if (!S.project) return;
+  if (!S.project || S.etabsBusy) return;   // one check at a time
   let running;
-  try { running = (await api("/api/etabs")).running; } catch { return; }
+  S.etabsBusy = true;
+  try { running = (await api("/api/etabs")).running; } catch { return; } finally { S.etabsBusy = false; }
   if (running === S.etabs || !S.project) return;
   S.etabs = running;
   renderAll();
