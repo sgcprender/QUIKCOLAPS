@@ -175,6 +175,20 @@ seen on the working copy, ETABS 23, 2026-09-26.
   girders `AS-W24` (21 sections), start Median; infill beams fixed W24X55.
   `FrameObj.GetSection` gives the current analysis section and the list name;
   `StartDesign` picks design sections but leaves the analysis sections alone.
+  **But the next `RunAnalysis` after a design replaces the analysis section of
+  every auto-select frame whose design section differs** (measured: 31 of 54
+  frames around SC03 changed, e.g. column 165 W14X61 → W14X120, and the saved
+  working copy kept them). Running analysis after design is a redesign
+  iteration, not a re-check.
+- Staged "Load Objects" on a group that holds beams (measured on AP_SC03, one
+  diagnostic case per pattern, 2026-09-26): the reaction change exceeded the
+  region total by SW +187.5, SDL +304.4, LL +125.1 kN (+12.7/+16.5/+16.3%).
+  SDL and LL both overshoot by the load of 53 m², matching one 1.219 m strip
+  (half the 2.438 m infill spacing) of the next bay's deck on each of the 6
+  region-edge beams parallel to the deck supports (588, 536, 484, 432, 380,
+  328): a beam in the group seems to bring the deck load it collects from
+  outside the region with it. Inferred from the numbers; not yet confirmed with
+  an areas-only group. Affects D13.
 - `LoadCases.StaticLinear.GetLoads` / `Results.BaseReact` on a linear case
   (measured): one row per case, FX = FY = 0 for gravity patterns.
 - `StaticNonlinear.GetLoads` on `1.2D+0.5L` (measured, via `CaseLoads.Initial`):
