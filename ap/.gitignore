@@ -6,6 +6,8 @@ __pycache__/
 .pytest_cache/
 report.md
 approved_candidates.json
+# machine-local project index of the demo app (paths on this computer)
+projects.json
 # generated from a real model (regenerate with the bridge); the demo files are kept
 web/data/stacks.json
 web/data/results.json

@@ -8,10 +8,12 @@ dependencies = []
 [project.optional-dependencies]
 claude = ["anthropic", "python-dotenv"]
 
-dev = ["pytest", "anthropic", "python-dotenv"]
+app = ["fastapi", "uvicorn", "anthropic", "python-dotenv"]
+
+dev = ["pytest", "anthropic", "python-dotenv", "fastapi", "uvicorn"]
 
 [tool.setuptools]
-packages = ["core", "claude_client", "report"]
+packages = ["core", "claude_client", "report", "server"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

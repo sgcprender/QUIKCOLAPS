@@ -240,6 +240,7 @@ needs the user's approval; pass the working copy with `--model "progressive coll
 | export | `dotnet run --project tools/Quikcolaps.Bridge -- export --model "progressive collapse - AP2" --out ap/web/data/building.json` |
 | intact axial | `dotnet run --project tools/Quikcolaps.Bridge -- axial --model "progressive collapse - AP2" --case "1.2D+0.5L" --out ap/web/data/intact_axial.json` (read-only) |
 | rule candidates, scenarios | `ap/`: `python -m core.cli web/data/building.json --out web/data/scenarios.json [--candidates web/data/approved_candidates.json] [--stacks web/data/stacks.json]` |
+| demo app | `ap/`: `python -m server [--port 8765] [--no-browser]` (http://127.0.0.1:8765/); `python -m server.demo` registers the AP2 work as the first project |
 | model check (step 0) | `dotnet run --project tools/Quikcolaps.Bridge -- check-model --model "progressive collapse - AP2" [--template CS1] --out <folder>/check_model.json` (read-only; exit 6 when an item fails) |
 | run cases only | `dotnet run --project tools/Quikcolaps.Bridge -- run --model "progressive collapse - AP2" --cases SW,SDL,LL,1.2D+0.5L [--commit]` (lean flags, no design; the intact gravity run of step 1) |
 | per-scenario ratios | `dotnet run --project tools/Quikcolaps.Bridge -- scenario-ratios --model "progressive collapse - AP2" --scenarios ap/web/data/scenarios.json --out ap/web/data/scenario_ratios.json [--commit]` (one steel design per scenario combo, then restored; about 5 min for 30) |

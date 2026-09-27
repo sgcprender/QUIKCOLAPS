@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QUIKCOLAPS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/app.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<!-- Landing -->
+<section id="landing" class="page">
+  <header class="brand">
+    <h1>QUIKCOLAPS</h1>
+    <p>Progressive collapse, Alternate Path (UFC 4-023-03), on your ETABS model.</p>
+  </header>
+  <div class="landing-grid">
+    <div class="card new-project">
+      <h2>Start new project</h2>
+      <p class="muted">Pick an ETABS model. It is never changed: the app works on two copies next to it,
+        "&lt;name&gt; - AP.edb" and "&lt;name&gt; - baseline.edb", and keeps its data in "&lt;name&gt; - quikcolaps".</p>
+      <div class="row">
+        <button id="pick" class="secondary">Browse…</button>
+        <input id="model-path" placeholder="C:\…\model.edb" spellcheck="false">
+      </div>
+      <div class="row">
+        <input id="project-name" placeholder="Project name (default: the model's name)">
+        <button id="create">Create project</button>
+      </div>
+      <p id="create-msg" class="msg"></p>
+    </div>
+    <div>
+      <h2 class="list-title">Projects</h2>
+      <div id="project-list" class="project-list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Project -->
+<section id="project" class="page hidden">
+  <header class="topbar">
+    <button id="back" class="link">← Projects</button>
+    <h1 id="p-name"></h1>
+    <span id="p-model" class="muted mono"></span>
+    <span class="spacer"></span>
+    <span id="etabs-status" class="pill"></span>
+  </header>
+  <nav id="stepbar" class="stepbar"></nav>
+
+  <main class="workspace">
+    <div class="viewer-wrap">
+      <div class="viewer-tools">
+        <label>View
+          <select id="mode">
+            <option value="changed">What changed</option>
+            <option value="ratio">Ratio</option>
+            <option value="heat">Scenario heat map</option>
+            <option value="weight">Added weight</option>
+            <option value="sizes">Sizes</option>
+          </select>
+        </label>
+        <label class="toggle" id="ratio-toggle-wrap">
+          <input type="checkbox" id="ratio-original"> original design
+        </label>
+        <label class="toggle" id="sizes-toggle-wrap">
+          <input type="checkbox" id="sizes-before"> before
+        </label>
+        <label>Scenario <select id="scenario"></select></label>
+        <label>Group <select id="group"><option value="">all</option></select></label>
+        <label class="stories">Stories
+          <input type="range" id="story-min" min="0" max="9" value="0">
+          <input type="range" id="story-max" min="0" max="9" value="9">
+          <span id="story-label" class="mono"></span>
+        </label>
+      </div>
+      <div id="viewer" class="viewer"></div>
+      <div id="legend" class="legend"></div>
+      <div id="info" class="info hidden"></div>
+      <div id="viewer-empty" class="viewer-empty hidden">Run step 1 to load the building.</div>
+    </div>
+
+    <aside class="side">
+      <div class="tabs">
+        <button class="tab active" data-tab="step">Step</button>
+        <button class="tab" data-tab="results">Results</button>
+      </div>
+      <div id="tab-step" class="tab-body"></div>
+      <div id="tab-results" class="tab-body hidden"></div>
+    </aside>
+  </main>
+
+  <footer class="logbar">
+    <div class="log-head">
+      <strong>Log</strong> <span id="job-status" class="muted"></span>
+      <span class="spacer"></span>
+      <button id="log-toggle" class="link">hide</button>
+    </div>
+    <pre id="log" class="log"></pre>
+  </footer>
+</section>
+
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

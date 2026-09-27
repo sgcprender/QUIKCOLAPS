@@ -30,7 +30,8 @@ Read before changing engineering logic:
 |---|---|---|---|
 | `core/` | candidates, stories, 30% rule, regions, increment totals, condition table | building, stacks, approvals, intact_axial | scenarios, web/data/building, conditions |
 | `claude_client/` | Claude calls + validation | building, candidates, conditions | review_<mode>.json |
-| `web/` | viewer, approvals, results display | web/data/*.json | approved_candidates.json |
+| `server/` | demo app (FastAPI): projects, steps, jobs, viewer data | project folders | project folders, projects.json |
+| `web/` | viewer (`index.html`), demo app front end (`app/`) | web/data/*.json, server API | approved_candidates.json |
 | `report/` | submittal report | scenarios, results | report.md |
 | `scripts/` | fixture generator, bridge wrapper, force comparison | | |
 
@@ -38,6 +39,7 @@ Read before changing engineering logic:
 
 - Tests: `pytest` (before every commit)
 - Scenarios: `python -m core.cli <building.json> [--stacks stacks.json] [--candidates approved.json]`
+- Demo app: `python -m server` (opens http://127.0.0.1:8765/); register the AP2 work once with `python -m server.demo`
 - Viewer: `python -m http.server 8000`, open `http://localhost:8000/web/`
 - Bridge: `python scripts/bridge.py export|stacks|apply|results [...]` (Windows + ETABS)
 - Report: `python -m report.build_report web/data/scenarios.json --out report.md`
