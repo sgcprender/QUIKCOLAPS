@@ -32,7 +32,8 @@ internal static class Export
     private sealed record ColumnRow(string Id, string LocationId, double X, double Y, string Story, double BottomZ, double TopZ,
         string Section, bool SpliceAtBottom, bool LandsOnBeam);
     private sealed record BeamRow(string Id, string Level, double Z, double[] I, double[] J, string Section);
-    private sealed record BayRow(string Id, string Level, double Z, double[][] Polygon, Dictionary<string, double> Loads, string Property);
+    private sealed record BayRow(string Id, string Level, double Z, double[][] Polygon, Dictionary<string, double> Loads, string Property,
+        double? DeckSpanDeg);
     private sealed record LineLoadRow(string BeamId, string Pattern, double WKnPerM);
     private sealed record SectionRow(double MassKgPerM);
 
@@ -50,6 +51,7 @@ internal static class Export
         var patternKind = PatternKinds(sap, flags);
         var combination = Combination(sap, templateName, patternKind, flags);
         var slabWeight = new Dictionary<string, double>();
+        var isDeck = new Dictionary<string, bool>();
 
         int n = 0; string[] frames = Array.Empty<string>();
         Api.Check(sap.FrameObj.GetNameList(ref n, ref frames), "FrameObj.GetNameList");
@@ -110,8 +112,9 @@ internal static class Export
             var loads = AreaLoads(sap, a, patternKind, flags);
             if (!slabWeight.TryGetValue(prop, out var sw)) slabWeight[prop] = sw = SlabSelfWeight(sap, prop, flags);
             loads["slab_sw_kpa"] = sw;
+            if (!isDeck.TryGetValue(prop, out var deck)) isDeck[prop] = deck = IsDeck(sap, prop);
             bays.Add(new BayRow(a, story, coords.Average(c => c.Z),
-                coords.Select(c => new[] { c.X, c.Y }).ToArray(), loads, prop));
+                coords.Select(c => new[] { c.X, c.Y }).ToArray(), loads, prop, deck ? DeckSpan(sap, a, flags) : null));
         }
 
         return new
@@ -310,6 +313,29 @@ internal static class Export
         }
         flags.Add($"area property {prop} is neither a slab nor a deck read here; its self-weight is not exported (set slab_sw_kpa by hand)");
         return 0;
+    }
+
+    private static bool IsDeck(cSapModel sap, string prop)
+    {
+        eDeckType deck = default; eShellType shell = default; string mat = "", notes = "", guid = ""; double t = 0; int color = 0;
+        return sap.PropArea.GetDeck(prop, ref deck, ref shell, ref mat, ref t, ref color, ref notes, ref guid) == 0;   // VERIFY
+    }
+
+    /// <summary>
+    /// Plan angle of the deck span, degrees from global X: the area's local 1 axis, which for a
+    /// horizontal area is global X rotated by GetLocalAxes' angle. Measured on this model: every deck
+    /// area answers 90 and the deck spans along Y onto X-direction beams (CLAUDE.md). Advanced local
+    /// axes are not interpreted: flagged, no span.
+    /// </summary>
+    private static double? DeckSpan(cSapModel sap, string area, List<string> flags)
+    {
+        double ang = 0; bool advanced = false;
+        if (sap.AreaObj.GetLocalAxes(area, ref ang, ref advanced) != 0 || advanced)
+        {
+            flags.Add($"area {area}: deck span direction not read (advanced local axes); its load goes by area, not to beams");
+            return null;
+        }
+        return ang;
     }
 
     private static double UnitWeight(cSapModel sap, string material)

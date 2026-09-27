@@ -68,20 +68,31 @@ what gets loaded in ETABS. The rule-based region is kept as `rule_bays` and any
 difference raises `etabs_region_differs_from_rule` for the user to review. A
 difference usually means floors aren't modelled one area per bay.
 
-## D13. Load groups hold region beams as well as floor areas (not shared edges)
+## D13. Load groups hold every region beam; deck load counted through the beams
 The existing tool's group holds floor areas only, so beam self-weight and
-facade line loads in the region would not be amplified. The bridge adds the
-region's beams (from `core`) to the group.
-Revised 2026-09-26 (option A+): a beam on an edge shared with a bay outside the
-region is left out of the group (`region.shared_edge_beams`). Beams inside the
-region, between two region bays, or on the building's outer edge stay in.
-Why: in ETABS a beam in the group brings the deck load it collects from the
-neighbouring bay with it. On SC03 (6 corner bays) the reaction change exceeded
-the region total by 16.5% for SDL and 16.3% for LL, the load on one 1.219 m
-strip (half the infill spacing) of the next bay's deck on each of the six edge
-beams parallel to the deck supports; SW +12.7% likewise. Leaving shared-edge
-beams out means their self-weight is not amplified (on SC03, 1.2 × 76 kN of
-12 beams) and the expected increment excludes it (SC03: 4075.2 → 3983.5 kN).
+facade line loads in the region would not be amplified. The bridge adds every
+beam touching a region bay (from `core`) to the group.
+
+Measured on SC03, 2026-09-26: with deck floors, the staged "Load Objects"
+delivers deck load only through the group's beams. Each beam takes its one-way
+tributary strip on both sides, whether or not the deck area on that side is in
+the group. With all 36 region beams the increment was 4,699.6 kN (+15% over the
+region total); with the 12 shared-edge beams left out, 3,342.1 kN (−16%). Both
+match the strip model within 0.2%. So a group of areas only adds almost no
+deck load (see `docs/note_area_only_groups.md`).
+
+Choice (option 1): keep every region beam in the group, and have `core` compute
+the expected increment the way ETABS applies it: each group beam's strip from
+every bay it supports (the neighbour's strip on a shared edge too) ×
+(1.2 deck + 1.2 SDL + 0.5 LL), plus 1.2 × beam self-weight and facade. The
+deck span comes from ETABS (`bays.deck_span_deg`, the area's local 1 axis);
+without it `core` falls back to area loading (`increment.method`). Shared-edge
+beams are labelled `region.shared_edge_beams`.
+
+This is conservative: the neighbour's strip is amplified as well, so the deck
+next to a shared edge carries 2.0× in the region and the strip beyond it gets
+the same increment; over SC03's region the deck increment is 1.167× the region
+deck load (about 2.17× total instead of 2.0×). SC03 expects 4,710.0 kN.
 
 ## D14. Existing code is not modified
 `src/`, `tools/Quikcolaps.Cli`, `tools/Quikcolaps.Probe` and the root files stay

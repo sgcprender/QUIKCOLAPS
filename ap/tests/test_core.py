@@ -97,12 +97,10 @@ def test_increment_corner_hand_calc(b, cfg):
     # Corner A1, Story1 removal, amp = 2.0 -> increment = 1.0 x base combination on region.
     # Floor bay 8x7=56 m2: 1.2*(1.5+2.6) + 0.5*2.4 = 6.12 kPa -> 342.72 kN, x3 floors = 1028.16
     # Roof bay: 1.2*(1.0+2.6) + max(0.5*1.0, 0.2*1.2) = 4.82 kPa -> 269.92 kN
-    # Beams per level (D13): only the two on the building edge, 8 m W21X44 (65.5 kg/m) at y = 0 and
-    #   7 m W18X35 (52.1 kg/m) at x = 0; the two on edges shared with neighbour bays are left out.
-    #   sw = 8*65.5*0.00981 + 7*52.1*0.00981 = 5.1404 + 3.5777 = 8.7181 kN
-    #   facade on both kept beams (8 m + 7 m): 3.5 kN/m floors, 1.5 kN/m roof
-    #   floors 3 x 1.2*(8.7181 + 52.5) = 220.385, roof 1.2*(8.7181 + 22.5) = 37.462 -> 257.847 kN
-    sw = 8 * 65.5 * 9.81e-3 + 7 * 52.1 * 9.81e-3
+    # Beams per level (D13: every beam touching the region bay): 2x8 m W21X44 (65.5 kg/m) +
+    #   2x7 m W18X35 (52.1 kg/m) self-weight, facade on the 8 m + 7 m perimeter beams:
+    #   3.5 kN/m floors, 1.5 kN/m roof. The demo has no deck span, so bays load by area.
+    sw = 2 * 8 * 65.5 * 9.81e-3 + 2 * 7 * 52.1 * 9.81e-3
     beams = 3 * 1.2 * (sw + 15 * 3.5) + 1.2 * (sw + 15 * 1.5)
     expected = 1028.16 + 269.92 + beams
     reg = amplified_region(b, [column(b, "A1", "Story1")])
@@ -117,14 +115,14 @@ def test_increment_combination_factors_roof_hand_calc(b, cfg):
     # Floor bay 56 m2: 1.2*2.6 + 1.2*1.5 + 0.5*2.4 = 3.12 + 1.8 + 1.2 = 6.12 kPa -> 342.72 kN, x3 = 1028.16
     # Roof bay 56 m2: 1.2*2.6 + 1.2*1.0 + 0.5*2.4 + 0*1.0 (Lr) + 0*1.2 (S) = 5.52 kPa -> 309.12 kN
     #   (config path would give 4.82 kPa: 0.5 Lr / 0.2 S instead of 0.5 L)
-    # Beams: the two building-edge beams per level, self-weight x 1.2 and facade x 1.2, as in the config path.
+    # Beams: all four per level, self-weight x 1.2 and facade x 1.2, as in the config path.
     bb = copy.deepcopy(b)
     bb["combination"] = {"initial_case": "1.2D+0.5L", "patterns": {"SW": 1.2, "SDL": 1.2, "LL": 0.5},
                          "factors": {"self_weight": 1.2, "sdl": 1.2, "live": 0.5, "roof_live": 0.0, "snow": 0.0}}
     for a in bb["bays"]:
         if a["level"] == "ROOF":
             a["loads"]["live_kpa"] = 2.4
-    sw = 8 * 65.5 * 9.81e-3 + 7 * 52.1 * 9.81e-3
+    sw = 2 * 8 * 65.5 * 9.81e-3 + 2 * 7 * 52.1 * 9.81e-3
     beams = 3 * 1.2 * (sw + 15 * 3.5) + 1.2 * (sw + 15 * 1.5)
     expected = 1028.16 + 309.12 + beams
     inc = build_increment(bb, amplified_region(bb, [column(bb, "A1", "Story1")]), cfg)
@@ -133,26 +131,69 @@ def test_increment_combination_factors_roof_hand_calc(b, cfg):
     assert roof["q_kpa"] == pytest.approx(5.52, abs=1e-4)
 
 
-def test_region_beams_leave_out_shared_edges(b):
+def test_region_beams_label_shared_edges(b):
     # D13: corner A1, Story1 -> one 8 x 7 m corner bay per level (L1, L2, L3, ROOF).
-    # Its four edge beams: A1-A2 (y = 0) and A1-B1 (x = 0) lie on the building edge -> kept;
-    # B1-B2 (y = 7) and A2-B2 (x = 8) are shared with the neighbouring bays -> left out.
+    # All four edge beams go in the group; B1-B2 (y = 7) and A2-B2 (x = 8) are also on a
+    # neighbouring bay's edge, so they are labelled shared; A1-A2 and A1-B1 are on the building edge.
     reg = amplified_region(b, [column(b, "A1", "Story1")])
     levels = ["L1", "L2", "L3", "ROOF"]
-    assert sorted(reg["beams"]) == sorted(f"B_{lv}_{n}" for lv in levels for n in ("A1-A2", "A1-B1"))
+    assert sorted(reg["beams"]) == sorted(f"B_{lv}_{n}" for lv in levels for n in ("A1-A2", "B1-B2", "A1-B1", "A2-B2"))
     assert sorted(reg["shared_edge_beams"]) == sorted(f"B_{lv}_{n}" for lv in levels for n in ("B1-B2", "A2-B2"))
 
 
-def test_region_beams_etabs_sc03():
-    # ETABS model, C1 @ Story5: one 24 x 24 ft corner bay per level, Story5..Story10 (6 levels),
-    # 6 beams per bay: 581/609-type edges on the building edge (y = 0, x = 0), 2 infill beams inside
-    # (y = 2.438, 4.877), and 2 edges shared with neighbours (y = 7.315: 588..; x = 7.315: 612..).
-    # Kept 4 x 6 = 24, left out 2 x 6 = 12.
+def test_deck_to_beams_two_bays_hand_calc(cfg):
+    # D13: deck spans along Y (90 deg). Region bay A [0,6]x[0,4], neighbour bay B [0,6]x[4,8].
+    # X-direction beams (6 m) at y = 0, 2, 4 (A) and 6, 8 (B); Y-direction edge beams (4 m) at x = 0, 6.
+    # Factors 1.2 SW, 1.2 SDL, 0.5 LL; amplification 2.0 -> increment = 1.0 x base.
+    # q_A = 1.2*2 (deck) + 1.2*1 (SDL) + 0.5*3 (LL) = 5.1 kPa; q_B = 1.2*2 + 1.2*2 + 0.5*3 = 6.3 kPa.
+    # Strips in A: y=0 1 m, y=2 2 m, y=4 1 m; in B: y=4 1 m, y=6 2 m, y=8 1 m. Y beams take none.
+    # Group (beams touching A): y=0: 5.1*1*6 = 30.6; y=2: 5.1*2*6 = 61.2; y=4: 5.1*1*6 + 6.3*1*6 = 68.4;
+    #   x=0 and x=6 (A's edges): 0. Beams weightless. Increment 160.2 kN (A by area: 5.1*24 = 122.4;
+    #   the difference 37.8 is B's strip on the shared beam y=4).
+    def beam(i, a, c):
+        return {"id": i, "level": "L1", "z": 3.0, "i": a, "j": c, "section": "S"}
+    loads = lambda sdl: {"sdl_kpa": sdl, "live_kpa": 3.0, "roof_live_kpa": 0.0, "snow_kpa": 0.0, "slab_sw_kpa": 2.0}
+    bb = {
+        "levels": [{"name": "Base", "z": 0.0}, {"name": "L1", "z": 3.0}, {"name": "L2", "z": 6.0}],
+        "sections": {"S": {"mass_kg_per_m": 0.0}},
+        "bays": [{"id": "A", "level": "L1", "z": 3.0, "polygon": [[0, 0], [6, 0], [6, 4], [0, 4]], "loads": loads(1.0), "deck_span_deg": 90},
+                 {"id": "B", "level": "L1", "z": 3.0, "polygon": [[0, 4], [6, 4], [6, 8], [0, 8]], "loads": loads(2.0), "deck_span_deg": 90}],
+        "beams": [beam("y0", [0, 0], [6, 0]), beam("y2", [0, 2], [6, 2]), beam("y4", [0, 4], [6, 4]),
+                  beam("y6", [0, 6], [6, 6]), beam("y8", [0, 8], [6, 8]),
+                  beam("xa0", [0, 0], [0, 4]), beam("xa6", [6, 0], [6, 4])],
+        "line_loads": [], "point_loads": [],
+        "combination": {"initial_case": "1.2D+0.5L",
+                        "factors": {"self_weight": 1.2, "sdl": 1.2, "live": 0.5, "roof_live": 0.0, "snow": 0.0}},
+    }
+    region = {"bays": ["A"], "beams": ["y0", "y2", "y4", "xa0", "xa6"]}
+    inc = build_increment(bb, region, cfg)
+    assert inc["method"] == "deck_to_beams" and inc["flags"] == []
+    deck = {f["beam_id"]: f["components"]["deck"] * f["length_m"] for f in inc["frame_loads"]}
+    assert deck == pytest.approx({"y0": 30.6, "y2": 61.2, "y4": 68.4, "xa0": 0.0, "xa6": 0.0})
+    assert inc["increment_total_kn"] == pytest.approx(160.2)
+
+
+def test_increment_etabs_sc03_hand_calc(cfg):
+    # ETABS model (deck spans Y, 90 deg), C1 @ Story5: one 24 x 24 ft (7.3152 m) corner bay per
+    # level, Story5..Story10 (6 levels). All 6 beams per bay are in the group (36); the 2 on edges
+    # shared with neighbours (y = 7.3152: 588.., x = 7.3152: 612..) are labelled (12).
+    # q (every bay) = 1.2*3.10264 (deck) + 1.2*4.78803 (SDL) + 0.5*4.78803 (LL) = 11.86281 kPa
+    # Deck strips per level on the X-direction beams: y=0 1.2192, y=2.4384 2.4384, y=4.8768 2.4384,
+    #   y=7.3152 1.2192 + 1.2192 from the neighbour = 8.5344 m x 7.3152 m = 62.4308 m2
+    #   -> 740.604 kN per level, x 6 = 4443.62 kN. Y-direction beams take none.
+    # Beams: 12 W24X62 (92.1314 kg/m) + 23 W24X55 (82.0070) + 1 W24X68 (101.7495), 7.3152 m each:
+    #   1.2 * 9.81e-3 * 7.3152 * 3093.487 = 266.40 kN.  Total 4710.02 kN (ETABS, measured: 4699.6).
     eb = load_building(ROOT / "fixtures" / "etabs_building.json")
     reg = amplified_region(eb, [column(eb, "C1", "Story5")])
-    assert len(reg["bays"]) == 6 and len(reg["beams"]) == 24 and len(reg["shared_edge_beams"]) == 12
-    assert {"581", "609", "1051", "1052"} <= set(reg["beams"])
+    assert len(reg["bays"]) == 6 and len(reg["beams"]) == 36 and len(reg["shared_edge_beams"]) == 12
     assert {"588", "612", "328", "352"} <= set(reg["shared_edge_beams"])
+    inc = build_increment(eb, reg, cfg)
+    assert inc["method"] == "deck_to_beams" and inc["flags"] == []
+    q = 1.2 * 3.102641 + 1.2 * 4.788026 + 0.5 * 4.788026
+    beams = 1.2 * 9.81e-3 * 7.3152 * (12 * 92.131355 + 23 * 82.007030 + 101.749464)
+    expected = 6 * 7.3152 * 8.5344 * q + beams
+    assert expected == pytest.approx(4710.02, abs=0.05)
+    assert inc["increment_total_kn"] == pytest.approx(expected, rel=1e-5)
 
 
 def test_combination_missing_factor_raises(b, cfg):

@@ -10,10 +10,10 @@ the removed element, at all floors above it (literal rule). Bays that don't
 exist at a level (setbacks) simply drop out. Claude may propose a different
 region for flagged geometry; that goes through user approval, not this module.
 
-Region beams (the load group, D13): beams inside or on the edge of a region
-bay, except beams on an edge shared with a bay outside the region. In ETABS a
-beam in the group brings the deck load it collects from the neighbouring bay
-with it (measured on SC03: +16% over the region total).
+Region beams (the load group, D13): every beam inside or on the edge of a
+region bay. In ETABS deck load reaches the group only through its beams, so a
+beam on an edge shared with a bay outside the region also brings that bay's
+strip; those are listed as shared_edge_beams and loads.py counts the strip.
 """
 from __future__ import annotations
 
@@ -45,23 +45,24 @@ def simultaneous_removals(b: dict, col: dict, fraction: float) -> list[dict]:
 
 
 def region_beams(b: dict, level: str, lvl_bays: list[dict]) -> tuple[list[str], list[str]]:
-    """(kept, shared_edge) beam ids at one level for the region bays lvl_bays (D13).
+    """(beams, shared_edge) ids at one level for the region bays lvl_bays (D13).
 
-    A beam belongs to the region when its midpoint is inside or on the edge of a
-    region bay. It is left out when its midpoint also lies on the edge of a bay
-    outside the region: that edge is shared with a neighbour whose deck load the
-    beam would carry into the group. Beams inside the region, between two region
-    bays, or on the building's outer edge stay in.
+    beams: every beam whose midpoint is inside or on the edge of a region bay; all
+    go in the load group. shared_edge: those of them whose midpoint also lies on
+    the edge of a bay outside the region, i.e. beams that carry a neighbour's
+    deck strip into the group.
     """
     ids = {a["id"] for a in lvl_bays}
     outside = [a for a in bays_at_level(b, level) if a["id"] not in ids]
-    kept, shared = [], []
+    beams, shared = [], []
     for bm in beams_at_level(b, level):
         m = midpoint(bm["i"], bm["j"])
         if not any(point_in_polygon(m, a["polygon"]) for a in lvl_bays):
             continue
-        (shared if any(point_on_boundary(m, a["polygon"]) for a in outside) else kept).append(bm["id"])
-    return kept, shared
+        beams.append(bm["id"])
+        if any(point_on_boundary(m, a["polygon"]) for a in outside):
+            shared.append(bm["id"])
+    return beams, shared
 
 
 def amplified_region(b: dict, removed: list[dict]) -> dict:

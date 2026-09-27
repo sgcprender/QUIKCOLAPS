@@ -51,7 +51,7 @@
               "levels": {"type": "array", "items": {"type": "string"}},
               "bays": {"type": "array", "items": {"type": "string"}},
               "beams": {"type": "array", "items": {"type": "string"}},
-              "shared_edge_beams": {"type": "array", "items": {"type": "string"}, "description": "beams on an edge shared with a bay outside the region: left out of the load group (D13)"},
+              "shared_edge_beams": {"type": "array", "items": {"type": "string"}, "description": "region beams (also in beams) on an edge shared with a bay outside the region: they bring that bay's deck strip into the group, and the increment counts it (D13)"},
               "source": {"enum": ["rule", "approved"]}
             }
           },

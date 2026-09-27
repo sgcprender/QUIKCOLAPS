@@ -97,6 +97,7 @@
           "id": {"type": "string", "description": "ETABS area object name"},
           "level": {"type": "string"}, "z": {"type": "number"},
           "polygon": {"$ref": "#/$defs/polygon"},
+          "deck_span_deg": {"type": ["number", "null"], "description": "deck span direction in plan, degrees from global X (ETABS area local 1 axis); null for slabs and unknown. Deck load goes to the beams it spans onto (D13)"},
           "loads": {
             "type": "object",
             "properties": {

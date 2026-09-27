@@ -192,15 +192,19 @@ seen on the working copy, ETABS 23, 2026-09-26.
   analysis section for steel frame design members, 1 for others (composite
   beam 1051); the composite call answers 1. `GetResultsAvailable` is False
   for both.
-- Staged "Load Objects" on a group that holds beams (measured on AP_SC03, one
-  diagnostic case per pattern, 2026-09-26): the reaction change exceeded the
-  region total by SW +187.5, SDL +304.4, LL +125.1 kN (+12.7/+16.5/+16.3%).
-  SDL and LL both overshoot by the load of 53 m², matching one 1.219 m strip
-  (half the 2.438 m infill spacing) of the next bay's deck on each of the 6
-  region-edge beams parallel to the deck supports (588, 536, 484, 432, 380,
-  328): a beam in the group seems to bring the deck load it collects from
-  outside the region with it. Inferred from the numbers; not yet confirmed with
-  an areas-only group. Affects D13.
+- Staged "Load Objects" on a group, deck floors (measured on AP_SC03,
+  2026-09-26): deck load reaches the group **only through its beams**, each
+  taking its one-way tributary strip on both sides, deck area in the group or
+  not. All 36 region beams: increment 4,699.6 kN (strip model 4,710.0); the 12
+  shared-edge beams left out: 3,342.1 kN (strip model 3,348.7). Per-pattern
+  split with 36 beams: SW +12.7%, SDL +16.5%, LL +16.3% over the region total.
+  `core` now computes the increment this way (D13).
+- Deck span direction (measured): every deck area on this model answers
+  `AreaObj.GetLocalAxes` angle 90, not advanced, and the deck spans along
+  global Y onto the X-direction infill beams, so the span is the area's local
+  1 axis. The help does not document this; `export` writes the angle as
+  `bays.deck_span_deg` for deck properties (`PropArea.GetDeck` answers 0) and
+  flags advanced local axes.
 - `LoadCases.StaticLinear.GetLoads` / `Results.BaseReact` on a linear case
   (measured): one row per case, FX = FY = 0 for gravity patterns.
 - `StaticNonlinear.GetLoads` on `1.2D+0.5L` (measured, via `CaseLoads.Initial`):

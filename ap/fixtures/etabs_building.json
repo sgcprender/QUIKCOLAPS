@@ -1,8 +1,8 @@
 {
   "meta": {
-    "name": "progressive collapse - AP",
+    "name": "progressive collapse - AP2",
     "source": "etabs",
-    "etabs_file": "C:\\Users\\uyadav\\Desktop\\Projects_Self\\aectech\\ETABS\\progressive collapse - AP.EDB",
+    "etabs_file": "C:\\Users\\uyadav\\Desktop\\Projects_Self\\aectech\\ETABS\\progressive collapse - AP2.EDB",
     "units": {
       "length": "m",
       "force": "kN",
@@ -17257,7 +17257,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "17",
@@ -17288,7 +17289,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "18",
@@ -17319,7 +17321,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "21",
@@ -17350,7 +17353,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "22",
@@ -17381,7 +17385,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "23",
@@ -17412,7 +17417,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "26",
@@ -17443,7 +17449,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "27",
@@ -17474,7 +17481,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "28",
@@ -17505,7 +17513,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "31",
@@ -17536,7 +17545,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "32",
@@ -17567,7 +17577,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "33",
@@ -17598,7 +17609,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "36",
@@ -17629,7 +17641,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "37",
@@ -17660,7 +17673,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "38",
@@ -17691,7 +17705,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "41",
@@ -17722,7 +17737,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "42",
@@ -17753,7 +17769,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "43",
@@ -17784,7 +17801,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "46",
@@ -17815,7 +17833,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "47",
@@ -17846,7 +17865,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "48",
@@ -17877,7 +17897,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "50",
@@ -17908,7 +17929,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "61",
@@ -17939,7 +17961,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "62",
@@ -17970,7 +17993,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "63",
@@ -18001,7 +18025,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "66",
@@ -18032,7 +18057,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "67",
@@ -18063,7 +18089,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "68",
@@ -18094,7 +18121,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "71",
@@ -18125,7 +18153,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "72",
@@ -18156,7 +18185,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "73",
@@ -18187,7 +18217,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "76",
@@ -18218,7 +18249,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "77",
@@ -18249,7 +18281,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "78",
@@ -18280,7 +18313,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "81",
@@ -18311,7 +18345,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "82",
@@ -18342,7 +18377,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "83",
@@ -18373,7 +18409,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "86",
@@ -18404,7 +18441,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "87",
@@ -18435,7 +18473,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "88",
@@ -18466,7 +18505,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "91",
@@ -18497,7 +18537,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "92",
@@ -18528,7 +18569,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "93",
@@ -18559,7 +18601,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "95",
@@ -18590,7 +18633,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "106",
@@ -18621,7 +18665,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "107",
@@ -18652,7 +18697,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "108",
@@ -18683,7 +18729,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "111",
@@ -18714,7 +18761,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "112",
@@ -18745,7 +18793,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "113",
@@ -18776,7 +18825,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "116",
@@ -18807,7 +18857,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "117",
@@ -18838,7 +18889,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "118",
@@ -18869,7 +18921,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "121",
@@ -18900,7 +18953,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "122",
@@ -18931,7 +18985,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "123",
@@ -18962,7 +19017,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "126",
@@ -18993,7 +19049,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "127",
@@ -19024,7 +19081,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "128",
@@ -19055,7 +19113,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "131",
@@ -19086,7 +19145,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "132",
@@ -19117,7 +19177,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "133",
@@ -19148,7 +19209,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "136",
@@ -19179,7 +19241,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "137",
@@ -19210,7 +19273,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "138",
@@ -19241,7 +19305,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "140",
@@ -19272,7 +19337,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "151",
@@ -19303,7 +19369,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "152",
@@ -19334,7 +19401,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "153",
@@ -19365,7 +19433,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "156",
@@ -19396,7 +19465,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "157",
@@ -19427,7 +19497,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "158",
@@ -19458,7 +19529,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "161",
@@ -19489,7 +19561,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "162",
@@ -19520,7 +19593,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "163",
@@ -19551,7 +19625,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "166",
@@ -19582,7 +19657,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "167",
@@ -19613,7 +19689,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "168",
@@ -19644,7 +19721,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "171",
@@ -19675,7 +19753,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "172",
@@ -19706,7 +19785,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "173",
@@ -19737,7 +19817,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "176",
@@ -19768,7 +19849,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "177",
@@ -19799,7 +19881,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "178",
@@ -19830,7 +19913,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "181",
@@ -19861,7 +19945,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "182",
@@ -19892,7 +19977,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "183",
@@ -19923,7 +20009,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "185",
@@ -19954,7 +20041,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "196",
@@ -19985,7 +20073,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "197",
@@ -20016,7 +20105,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "198",
@@ -20047,7 +20137,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "201",
@@ -20078,7 +20169,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "202",
@@ -20109,7 +20201,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "203",
@@ -20140,7 +20233,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "206",
@@ -20171,7 +20265,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "207",
@@ -20202,7 +20297,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "208",
@@ -20233,7 +20329,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "211",
@@ -20264,7 +20361,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "212",
@@ -20295,7 +20393,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "213",
@@ -20326,7 +20425,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "216",
@@ -20357,7 +20457,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "217",
@@ -20388,7 +20489,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "218",
@@ -20419,7 +20521,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "221",
@@ -20450,7 +20553,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "222",
@@ -20481,7 +20585,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "223",
@@ -20512,7 +20617,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "226",
@@ -20543,7 +20649,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "227",
@@ -20574,7 +20681,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "228",
@@ -20605,7 +20713,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "230",
@@ -20636,7 +20745,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "241",
@@ -20667,7 +20777,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "242",
@@ -20698,7 +20809,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "243",
@@ -20729,7 +20841,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "246",
@@ -20760,7 +20873,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "247",
@@ -20791,7 +20905,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "248",
@@ -20822,7 +20937,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "251",
@@ -20853,7 +20969,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "252",
@@ -20884,7 +21001,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "253",
@@ -20915,7 +21033,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "256",
@@ -20946,7 +21065,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "257",
@@ -20977,7 +21097,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "258",
@@ -21008,7 +21129,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "261",
@@ -21039,7 +21161,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "262",
@@ -21070,7 +21193,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "263",
@@ -21101,7 +21225,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "266",
@@ -21132,7 +21257,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "267",
@@ -21163,7 +21289,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "268",
@@ -21194,7 +21321,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "271",
@@ -21225,7 +21353,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "272",
@@ -21256,7 +21385,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "273",
@@ -21287,7 +21417,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "275",
@@ -21318,7 +21449,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "286",
@@ -21349,7 +21481,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "287",
@@ -21380,7 +21513,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "288",
@@ -21411,7 +21545,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "291",
@@ -21442,7 +21577,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "292",
@@ -21473,7 +21609,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "293",
@@ -21504,7 +21641,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "296",
@@ -21535,7 +21673,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "297",
@@ -21566,7 +21705,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "298",
@@ -21597,7 +21737,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "301",
@@ -21628,7 +21769,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "302",
@@ -21659,7 +21801,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "303",
@@ -21690,7 +21833,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "306",
@@ -21721,7 +21865,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "307",
@@ -21752,7 +21897,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "308",
@@ -21783,7 +21929,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "311",
@@ -21814,7 +21961,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "312",
@@ -21845,7 +21993,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "313",
@@ -21876,7 +22025,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "316",
@@ -21907,7 +22057,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "317",
@@ -21938,7 +22089,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "318",
@@ -21969,7 +22121,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "320",
@@ -22000,7 +22153,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "331",
@@ -22031,7 +22185,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "332",
@@ -22062,7 +22217,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "333",
@@ -22093,7 +22249,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "336",
@@ -22124,7 +22281,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "337",
@@ -22155,7 +22313,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "338",
@@ -22186,7 +22345,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "341",
@@ -22217,7 +22377,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "342",
@@ -22248,7 +22409,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "343",
@@ -22279,7 +22441,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "346",
@@ -22310,7 +22473,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "347",
@@ -22341,7 +22505,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "348",
@@ -22372,7 +22537,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "351",
@@ -22403,7 +22569,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "352",
@@ -22434,7 +22601,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "353",
@@ -22465,7 +22633,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "356",
@@ -22496,7 +22665,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "357",
@@ -22527,7 +22697,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "358",
@@ -22558,7 +22729,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "361",
@@ -22589,7 +22761,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "362",
@@ -22620,7 +22793,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "363",
@@ -22651,7 +22825,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "365",
@@ -22682,7 +22857,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "376",
@@ -22713,7 +22889,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "377",
@@ -22744,7 +22921,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "378",
@@ -22775,7 +22953,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "381",
@@ -22806,7 +22985,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "382",
@@ -22837,7 +23017,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "383",
@@ -22868,7 +23049,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "386",
@@ -22899,7 +23081,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "387",
@@ -22930,7 +23113,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "388",
@@ -22961,7 +23145,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "391",
@@ -22992,7 +23177,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "392",
@@ -23023,7 +23209,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "393",
@@ -23054,7 +23241,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "396",
@@ -23085,7 +23273,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "397",
@@ -23116,7 +23305,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "398",
@@ -23147,7 +23337,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "401",
@@ -23178,7 +23369,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "402",
@@ -23209,7 +23401,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "403",
@@ -23240,7 +23433,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "406",
@@ -23271,7 +23465,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "407",
@@ -23302,7 +23497,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "408",
@@ -23333,7 +23529,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "410",
@@ -23364,7 +23561,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "421",
@@ -23395,7 +23593,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "422",
@@ -23426,7 +23625,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "423",
@@ -23457,7 +23657,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "426",
@@ -23488,7 +23689,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "427",
@@ -23519,7 +23721,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "428",
@@ -23550,7 +23753,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "431",
@@ -23581,7 +23785,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "432",
@@ -23612,7 +23817,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "433",
@@ -23643,7 +23849,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "436",
@@ -23674,7 +23881,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "437",
@@ -23705,7 +23913,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "438",
@@ -23736,7 +23945,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "441",
@@ -23767,7 +23977,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "442",
@@ -23798,7 +24009,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "443",
@@ -23829,7 +24041,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "446",
@@ -23860,7 +24073,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "447",
@@ -23891,7 +24105,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "448",
@@ -23922,7 +24137,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "451",
@@ -23953,7 +24169,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "452",
@@ -23984,7 +24201,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "453",
@@ -24015,7 +24233,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     },
     {
       "id": "455",
@@ -24046,7 +24265,8 @@
         "snow_kpa": 0,
         "slab_sw_kpa": 3.102641050435317
       },
-      "property": "Deck1"
+      "property": "Deck1",
+      "deck_span_deg": 90
     }
   ],
   "line_loads": [],
