@@ -84,9 +84,9 @@ Every command exits non-zero with a message on failure: 1 error, 2 usage,
 Unlocking is shared (`ModelLock`): nothing when unlocked, a message on a dry
 run, unlock + read-back with `--commit`. Tested 2026-09-26 on locked AP2 with
 dry runs only (lock and results kept); the unlock itself first runs at the
-start of plan item D. `assign-sections --commit` is untested: whether
-`FrameObj.SetSection` clears the auto-select list is not documented, and the
-read-back will say.
+start of plan item D. `assign-sections --commit` measured on AP2 (2026-09-26): 658 of 658 read back
+with the new section and a blank auto-select list, so `FrameObj.SetSection`
+with a plain section **does clear the auto-select list**.
 
 `results --run` checks sections first and stops with exit 4 (nothing run) if
 an auto-select frame's design section differs from its analysis section: the
