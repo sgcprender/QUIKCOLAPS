@@ -305,3 +305,66 @@ def test_symmetry_lists_unmatched_bay(b):
                        "loads": bb["bays"][0]["loads"]})
     t = condition_table(bb, _axial(bb))
     assert t["symmetry"]["framing_ops"]["mirror_y"]["bays_without_image"] == ["STRAY"]
+
+
+# ---------- similarity propagation (core/propagate.py) ----------
+
+def _prop_inputs(b, members):
+    """Fake results for the demo: members {frame: (design section, governing scenario)}.
+    One scenario: A2 (8, 0) removed in Story1. Groups from the condition table (mirror y = 10.5)."""
+    from core.conditions import condition_table
+    axial = {"case": "fake", "columns": {c["id"]: {"p_kn": 100.0} for c in b["columns"]}}
+    cond = condition_table(b, axial)
+    res = {"members": {f: {"section": s, "governing_scenario": sid} for f, (s, sid) in members.items()}}
+    scen = {"scenarios": [{"id": "SC01", "location_id": "A2", "story": "Story1", "removed_columns": ["C_A2_S1"]}]}
+    return res, scen, cond
+
+
+def test_propagate_mirrors_beam_and_column(b):
+    from core.propagate import propagate
+    res, scen, cond = _prop_inputs(b, {
+        "B_L1_A1-A2": ("W21X62", "SC01"),   # edge girder next to the removal, W21X44 -> W21X62
+        "C_A2_S2": ("W14X120", "SC01"),     # column above the removal, W14X90 -> W14X120
+        "B_L1_A2-B2": ("W18X35", "SC01"),   # not heavier: not a source
+    })
+    out = propagate(b, res, scen, cond)
+    # A2's group is {A2, D2}; the mirror about y = 10.5 maps (8, 0) to (8, 21):
+    # the girder (0,0)-(8,0) at L1 -> (0,21)-(8,21) = B_L1_D1-D2, column A2 Story2 -> D2 Story2
+    a = {x["frame"]: (x["from"], x["section"]) for x in out["assignments"]}
+    assert a == {"B_L1_A1-A2": ("W21X44", "W21X62"), "B_L1_D1-D2": ("W21X44", "W21X62"),
+                 "C_A2_S2": ("W14X90", "W14X120"), "C_D2_S2": ("W14X90", "W14X120")}
+    r = next(r for r in out["rows"] if r["member"] == "B_L1_A1-A2" and r["counterpart"] == "B_L1_D1-D2")
+    # girder midpoint (4, 0): x grid 0..8 -> 0.5 bay; removed column at x = 8 -> 1.0 bay: offset -0.5;
+    # y: both on grid A: 0. Counterpart midpoint (4, 21) from D2 (8, 21): -0.5, 0
+    assert r["offset"] == {"bays_x": -0.5, "bays_y": 0.0, "stories": 0}
+    assert r["counterpart_offset"] == {"bays_x": -0.5, "bays_y": 0.0, "stories": 0}
+    assert r["symmetry"] == "mirror_y" and r["flags"] == []
+    # column A2 Story2 is one story above the Story1 removal
+    assert next(r for r in out["rows"] if r["member"] == "C_A2_S2")["offset"]["stories"] == 1
+
+
+def test_propagate_biggest_wins_and_never_lighter(b):
+    from core.propagate import propagate
+    res, scen, cond = _prop_inputs(b, {
+        "C_A2_S2": ("W14X120", "SC01"),
+        # D2 Story2 has its own heavier design (W14X145, from DStlS-type combo: no AP scenario)
+        "C_D2_S2": ("W14X145", None),
+    })
+    out = propagate(b, res, scen, cond)
+    a = {x["frame"]: x["section"] for x in out["assignments"]}
+    # copy W14X120 onto D2 but its own design W14X145 is heavier: 145 > 120, keep 145
+    assert a["C_D2_S2"] == "W14X145" and a["C_A2_S2"] == "W14X120"
+
+
+def test_propagate_flags_mismatched_counterpart(b):
+    import copy
+    from core.propagate import propagate
+    bb = copy.deepcopy(b)
+    next(bm for bm in bb["beams"] if bm["id"] == "B_L1_D1-D2")["section"] = "W18X35"
+    res, scen, cond = _prop_inputs(bb, {"B_L1_A1-A2": ("W21X62", "SC01")})
+    out = propagate(bb, res, scen, cond)
+    # the mirror image was W18X35, not W21X44: flagged, not copied
+    assert {x["frame"] for x in out["assignments"]} == {"B_L1_A1-A2"}
+    r = next(r for r in out["rows"] if r["counterpart"] == "B_L1_D1-D2")
+    assert r["to"] is None and any("original section differs" in f for f in r["flags"])
+    assert out["summary"]["flagged_rows"] == 1

@@ -42,6 +42,7 @@ Read before changing engineering logic:
 - Bridge: `python scripts/bridge.py export|stacks|apply|results [...]` (Windows + ETABS)
 - Report: `python -m report.build_report web/data/scenarios.json --out report.md`
 - Condition table: `python -m core.conditions web/data/building.json --axial web/data/intact_axial.json`
+- Propagation: `python -m core.propagate` → `web/data/propagation.json` (no ETABS)
 - Claude review: `python -m claude_client.run_review --mode raw|conditions` (costs money; ask first)
 
 ## Lessons learned
