@@ -95,9 +95,29 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 | Step | Owner | State |
 |---|---|---|
 | Existing: attach, stacks, cases, combos, design selection, takeoff | src/, tools/Cli | working on the team model |
-| 1, 3 (stacks), 5, 6–7 | tools/Quikcolaps.Bridge | written, not yet compiled or run |
+| 1, 5, 6 | tools/Quikcolaps.Bridge | working on the AP2 working copy: export checked against base reactions, 23 scenarios applied, run, converged and within 1% on reactions; design runs, but AP-combo design ratios are not trusted (see next session) |
+| 3 (stacks), 7 | tools/Quikcolaps.Bridge | written, not yet run |
 | 2, 4 | web | working on the synthetic fixture |
 | 3 (rules, ETABS-region merge) | core | working, tested on the fixture |
 | 3 (Claude review) | claude_client | written, tested with fake responses only |
 | 8–12 | web, core | not started |
 | 13 | report | tables only; tonnage from the existing Cli tool |
+
+## Next session
+
+1. **Design forces for staged combos.** Steel design does not seem to use the
+   staged cases' final forces for `AP_*_CMB`: column 165 carries 3,914 kN
+   under `AP_SC02_CMB` but stays W14X61 at ratio 0.903 (axial part 0.49);
+   switching "Multi-Response Case Design" to Last step changed nothing.
+   Details in `tools/Quikcolaps.Bridge/CLAUDE.md` (open issue). Until fixed,
+   design ratios for AP combos (steel and composite) are not used and
+   `results.json` is not committed.
+2. **Redesign loop with similarity.** Propose section changes for failing
+   members and similar members (`results.redesign`), apply with approval,
+   re-run with `--accept-design-sections` as a deliberate iteration.
+3. **Claude review with the API key.** Run `claude_client` on the real model's
+   candidates (so far tested with fake responses only).
+4. **Viewer results view.** Show reaction checks, ratios and failing members
+   per scenario from `results.json`.
+5. **Local server.** Serve the viewer and data locally for the team
+   (`python -m http.server` today).
