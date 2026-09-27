@@ -9,8 +9,10 @@ get the same size around every equivalent location.
     python -m core.propagate --results web/data/results.json --out web/data/propagation.json
 
 Method (deterministic, no ETABS):
-1. Source members: every frame in results.json whose design section is heavier than its current
-   analysis section and whose governing combination belongs to an AP scenario.
+1. Source members: every frame in results.json whose design section is heavier than its original
+   section and whose governing combination belongs to an AP scenario. (Original: the sections of
+   --original, the first export. After redesign rounds the current analysis sections already
+   carry earlier rounds' increases, so comparing with them would miss those.)
 2. Its position relative to the removed column of that scenario: offsets in grid bays along x
    and y (fractional for a beam: its midpoint), story offset, member type, beam direction (x/y).
 3. For every other location in the removed column's symmetry group, the plan symmetry that maps
@@ -21,7 +23,9 @@ Method (deterministic, no ETABS):
    onto it), never lighter than its own design section or its current analysis section.
 
 Output: `assignments` in the format `bridge assign-sections` reads ({frame, section, from}; from
-= current analysis section), one per frame whose section changes, plus the detailed `rows`
+= current analysis section), one for every source and every copied counterpart, including those
+already at their section: assign-sections fixes them all (no auto-select), so the final design
+is a check of exactly these sizes. Plus the detailed `rows`
 (member, counterpart, from, to, source scenario, reason, flags) and the flags.
 
 Weights: lb/ft from the AISC name (W14X145 -> 145). Anything else is flagged, not guessed.
@@ -118,9 +122,9 @@ def propagate(b: dict, results: dict, scenarios: dict, conditions: dict,
         sid = m.get("governing_scenario")
         if not sid or f not in fr.info:
             continue
-        wd, wa = weight(m["section"]), weight(cur.get(f, ""))
+        wd, wa = weight(m["section"]), weight(fr.info[f]["section"])
         if wd is None or wa is None:
-            flags.append(f"{f}: section name not a W shape ({cur.get(f)} -> {m['section']}); not used")
+            flags.append(f"{f}: section name not a W shape ({fr.info[f]['section']} -> {m['section']}); not used")
             continue
         if wd > wa:
             sources.append((f, sid))
@@ -190,8 +194,7 @@ def propagate(b: dict, results: dict, scenarios: dict, conditions: dict,
         by = [r for w, s, r in reqs if s == to]
         for w, s, r in reqs:
             r["governs"] = s == to and r is by[0]
-        if to != cur.get(frame):
-            assignments.append({"frame": frame, "section": to, "from": cur.get(frame)})
+        assignments.append({"frame": frame, "section": to, "from": cur.get(frame)})
     for r in rows:
         r["final"] = final.get(r["counterpart"]) if r["counterpart"] else None
         r.setdefault("governs", False)
@@ -205,17 +208,19 @@ def propagate(b: dict, results: dict, scenarios: dict, conditions: dict,
             if kind.get(r["counterpart"]) != "collapse":
                 kind[r["counterpart"]] = k
     changed = {a["frame"] for a in assignments}
+    orig_w = lambda f: weight(fr.info[f]["section"]) or 0.0
     return {
         "method": __doc__.split("Method (deterministic, no ETABS):")[1].split("Output:")[0].strip(),
         "symmetry_ops": op_names,
         "summary": {
             "sources": len(sources),
-            "frames_changed": len(assignments),
+            "frames_assigned": len(assignments),
+            "frames_changing_now": sum(1 for a in assignments if a["section"] != a["from"]),
             "collapse_driven": sum(1 for f in changed if kind.get(f) == "collapse"),
             "propagated_only": sum(1 for f in changed if kind.get(f) == "propagated"),
             "rows": len(rows),
             "flagged_rows": sum(1 for r in rows if r["flags"]),
-            "added_weight_lb_per_ft": sum((weight(a["section"]) or 0) - (weight(a["from"]) or 0) for a in assignments),
+            "added_lb_per_ft_over_original": sum((weight(a["section"]) or 0) - orig_w(a["frame"]) for a in assignments),
         },
         "assignments": assignments,
         "rows": rows,
@@ -242,7 +247,7 @@ def main() -> None:
     Path(args.out).write_text(json.dumps(out, indent=1))
     s = out["summary"]
     print(f"{s['sources']} collapse-driven members, {s['rows']} rows ({s['flagged_rows']} flagged) -> "
-          f"{s['frames_changed']} frames to assign ({s['collapse_driven']} collapse-driven, "
+          f"{s['frames_assigned']} frames to assign ({s['frames_changing_now']} change now; {s['collapse_driven']} collapse-driven, "
           f"{s['propagated_only']} propagated) -> {args.out}")
     for f in out["flags"][:20]:
         print(f"  flag: {f}")

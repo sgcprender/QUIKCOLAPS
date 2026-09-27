@@ -368,3 +368,18 @@ def test_propagate_flags_mismatched_counterpart(b):
     r = next(r for r in out["rows"] if r["counterpart"] == "B_L1_D1-D2")
     assert r["to"] is None and any("original section differs" in f for f in r["flags"])
     assert out["summary"]["flagged_rows"] == 1
+
+
+def test_propagate_after_redesign_rounds(b):
+    from core.propagate import propagate
+    res, scen, cond = _prop_inputs(b, {"B_L1_A1-A2": ("W21X62", "SC01")})
+    # after a redesign round the model already carries W21X62 on the source (current = design):
+    # it is still collapse-driven (original W21X44), and it is assigned (fixed) at W21X62 from W21X62
+    current = {"B_L1_A1-A2": "W21X62"}
+    cur = {c["id"]: c["section"] for c in b["columns"]} | {m["id"]: m["section"] for m in b["beams"]} | current
+    out = propagate(b, res, scen, cond, cur)
+    a = {x["frame"]: (x["from"], x["section"]) for x in out["assignments"]}
+    assert a == {"B_L1_A1-A2": ("W21X62", "W21X62"), "B_L1_D1-D2": ("W21X44", "W21X62")}
+    assert out["summary"]["frames_changing_now"] == 1
+    # added over the original: (62 - 44) x 2 frames = 36 lb/ft
+    assert out["summary"]["added_lb_per_ft_over_original"] == pytest.approx(36.0)

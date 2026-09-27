@@ -76,7 +76,7 @@ still available (420, sections match).
 
 | `open` | a model file | — | opens it in the running ETABS; the previous model is closed unsaved (bridge never saves) |
 | `design-select` | combos | — | with `--commit`: steel and composite strength selection = exactly these, read back |
-| `iterate` | cases, design selection | `rounds.json` | with `--commit`: lean run → composite → steel design, repeated until no auto-select frame would change or `--max-rounds`; flags restored |
+| `iterate` | cases, design selection | `rounds.json`, `<rounds>_roundN.csv` (takeoff per round) | with `--commit --accept-design-sections`: unlock, lean run → composite → steel design, repeated until no auto-select frame would change (or, with `--weight-tol`, the weight changes less than that between rounds and nothing is over 1.0) or `--max-rounds`; flags restored |
 
 Every command exits non-zero with a message on failure: 1 error, 2 usage,
 3 unknown ETABS message box, 4 sections differ (`results --run`, `sections`),
@@ -241,6 +241,15 @@ seen on the working copy, ETABS 23, 2026-09-26.
   AP2 reopened locked with its analysis results (axial read identical) but **no
   design results** (`sections` 0 differing; the steel design sections were
   back to the analysis sections). Design again after reopening.
+- `ModelLock` on locked AP2 with results (measured 2026-09-26, `iterate`):
+  `SetModelIsLocked(false)` returned 0, read back unlocked.
+- Run flags are saved in the file: `RunAnalysis` saved AP2 while the lean flags
+  were set, so after reopening, the saved flags had Modal and CS1 off (34 of 38
+  on); `iterate` restores to that.
+- `iterate` on AP2, 30 AP cases + SW, SDL, LL, 1.2D+0.5L, `--weight-tol 0.005`:
+  896.12 → 911.70 (+1.74%) → 913.57 short tons (+0.20%), 429 → 299 → 168
+  frames changing, nothing over 1.0 (steel 0.950, composite 0.587); about 60 s
+  a round.
 - `iterate` on the strength baseline (measured): 3 rounds of SW/SDL/LL + design
   moved 260 → 172 → 76 frames; the last 76 step between neighbouring W14
   sizes both ways, so it had not converged at 3 rounds.

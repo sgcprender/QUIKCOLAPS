@@ -18,7 +18,7 @@ internal static class Results
 {
     private sealed record CaseRow(string Scenario, int Status, double BaseReactionFzKn, double InitialCaseFzKn,
         double IncrementFromReactionsKn, double IncrementExpectedKn, bool ReactionCheckOk);
-    private sealed record MemberRow(string Section, string Kind, double MaxRatio, string GoverningCombo,
+    internal sealed record MemberRow(string Section, string Kind, double MaxRatio, string GoverningCombo,
         string? GoverningScenario, bool Passes, string Status);
     private sealed record ForceRow(double PKn, double V2Kn, double M3Knm);
 
@@ -126,7 +126,7 @@ internal static class Results
     /// construction-stage checks are not collapse checks. The stud ratio and ETABS's overall
     /// ratio and pass/fail (which include them) are kept in the status text.
     /// </summary>
-    private static MemberRow? CompositeResult(cSapModel sap, string frame)
+    internal static MemberRow? CompositeResult(cSapModel sap, string frame)
     {
         int n = 0;
         string[] sect = Array.Empty<string>(), layout = Array.Empty<string>(), passFail = Array.Empty<string>();

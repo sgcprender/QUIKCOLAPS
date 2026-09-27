@@ -1,0 +1,2176 @@
+{
+  "model": "progressive collapse - AP2",
+  "cases": [
+    "SW",
+    "SDL",
+    "LL",
+    "1.2D\u002B0.5L",
+    "AP_SC01",
+    "AP_SC02",
+    "AP_SC03",
+    "AP_SC04",
+    "AP_SC05",
+    "AP_SC06",
+    "AP_SC07",
+    "AP_SC08",
+    "AP_SC09",
+    "AP_SC10",
+    "AP_SC11",
+    "AP_SC12",
+    "AP_SC13",
+    "AP_SC14",
+    "AP_SC15",
+    "AP_SC16",
+    "AP_SC17",
+    "AP_SC18",
+    "AP_SC19",
+    "AP_SC20",
+    "AP_SC21",
+    "AP_SC22",
+    "AP_SC23",
+    "AP_SC24",
+    "AP_SC25",
+    "AP_SC26",
+    "AP_SC27",
+    "AP_SC28",
+    "AP_SC29",
+    "AP_SC30"
+  ],
+  "steel_combos": [
+    "DStlS1",
+    "DStlS2",
+    "AP_SC03_CMB",
+    "AP_SC01_CMB",
+    "AP_SC02_CMB",
+    "AP_SC04_CMB",
+    "AP_SC05_CMB",
+    "AP_SC06_CMB",
+    "AP_SC07_CMB",
+    "AP_SC08_CMB",
+    "AP_SC09_CMB",
+    "AP_SC10_CMB",
+    "AP_SC11_CMB",
+    "AP_SC12_CMB",
+    "AP_SC13_CMB",
+    "AP_SC14_CMB",
+    "AP_SC15_CMB",
+    "AP_SC16_CMB",
+    "AP_SC17_CMB",
+    "AP_SC18_CMB",
+    "AP_SC19_CMB",
+    "AP_SC20_CMB",
+    "AP_SC21_CMB",
+    "AP_SC22_CMB",
+    "AP_SC23_CMB",
+    "AP_SC24_CMB",
+    "AP_SC25_CMB",
+    "AP_SC26_CMB",
+    "AP_SC27_CMB",
+    "AP_SC28_CMB",
+    "AP_SC29_CMB",
+    "AP_SC30_CMB"
+  ],
+  "composite_combos": [
+    "DStlS1",
+    "DStlS2",
+    "AP_SC03_CMB",
+    "AP_SC01_CMB",
+    "AP_SC02_CMB",
+    "AP_SC04_CMB",
+    "AP_SC05_CMB",
+    "AP_SC06_CMB",
+    "AP_SC07_CMB",
+    "AP_SC08_CMB",
+    "AP_SC09_CMB",
+    "AP_SC10_CMB",
+    "AP_SC11_CMB",
+    "AP_SC12_CMB",
+    "AP_SC13_CMB",
+    "AP_SC14_CMB",
+    "AP_SC15_CMB",
+    "AP_SC16_CMB",
+    "AP_SC17_CMB",
+    "AP_SC18_CMB",
+    "AP_SC19_CMB",
+    "AP_SC20_CMB",
+    "AP_SC21_CMB",
+    "AP_SC22_CMB",
+    "AP_SC23_CMB",
+    "AP_SC24_CMB",
+    "AP_SC25_CMB",
+    "AP_SC26_CMB",
+    "AP_SC27_CMB",
+    "AP_SC28_CMB",
+    "AP_SC29_CMB",
+    "AP_SC30_CMB"
+  ],
+  "max_rounds": 3,
+  "weight_tolerance": 0.005,
+  "converged": true,
+  "rounds": [
+    {
+      "number": 1,
+      "frames_differing": 429,
+      "examples": [
+        "1 W14X30-\u003EW14X90",
+        "2 W14X43-\u003EW14X68",
+        "3 W14X43-\u003EW14X30",
+        "5 W14X34-\u003EW14X68",
+        "6 W14X43-\u003EW14X61",
+        "7 W14X43-\u003EW14X38",
+        "9 W14X30-\u003EW14X68",
+        "10 W14X30-\u003EW14X43",
+        "14 W14X30-\u003EW14X48",
+        "17 W14X30-\u003EW14X68"
+      ],
+      "steel_max_ratio": 0.95,
+      "steel_over_one": 0,
+      "composite_max_ratio": 0.587,
+      "composite_over_one": 0,
+      "tons": 896.12,
+      "column_tons": 205.59,
+      "beam_tons": 690.53,
+      "change_percent": null
+    },
+    {
+      "number": 2,
+      "frames_differing": 299,
+      "examples": [
+        "1 W14X90-\u003EW14X120",
+        "5 W14X68-\u003EW14X82",
+        "6 W14X61-\u003EW14X68",
+        "7 W14X38-\u003EW14X34",
+        "8 W14X34-\u003EW14X38",
+        "9 W14X68-\u003EW14X90",
+        "12 W14X30-\u003EW14X34",
+        "13 W14X30-\u003EW14X26",
+        "14 W14X48-\u003EW14X61",
+        "16 W14X30-\u003EW14X34"
+      ],
+      "steel_max_ratio": 0.95,
+      "steel_over_one": 0,
+      "composite_max_ratio": 0.587,
+      "composite_over_one": 0,
+      "tons": 911.7,
+      "column_tons": 223.61,
+      "beam_tons": 688.09,
+      "change_percent": 1.739
+    },
+    {
+      "number": 3,
+      "frames_differing": 168,
+      "examples": [
+        "1 W14X120-\u003EW14X132",
+        "5 W14X82-\u003EW14X74",
+        "6 W14X68-\u003EW14X74",
+        "7 W14X34-\u003EW14X30",
+        "8 W14X38-\u003EW14X43",
+        "9 W14X90-\u003EW14X109",
+        "12 W14X34-\u003EW14X43",
+        "13 W14X26-\u003EW14X22",
+        "14 W14X61-\u003EW14X68",
+        "16 W14X34-\u003EW14X43"
+      ],
+      "steel_max_ratio": 0.95,
+      "steel_over_one": 0,
+      "composite_max_ratio": 0.587,
+      "composite_over_one": 0,
+      "tons": 913.57,
+      "column_tons": 226.76,
+      "beam_tons": 686.81,
+      "change_percent": 0.205
+    }
+  ],
+  "changed_from_start": [
+    {
+      "frame": "1",
+      "from": "W14X30",
+      "to": "W14X120"
+    },
+    {
+      "frame": "2",
+      "from": "W14X43",
+      "to": "W14X68"
+    },
+    {
+      "frame": "3",
+      "from": "W14X43",
+      "to": "W14X30"
+    },
+    {
+      "frame": "5",
+      "from": "W14X34",
+      "to": "W14X82"
+    },
+    {
+      "frame": "6",
+      "from": "W14X43",
+      "to": "W14X68"
+    },
+    {
+      "frame": "7",
+      "from": "W14X43",
+      "to": "W14X34"
+    },
+    {
+      "frame": "8",
+      "from": "W14X34",
+      "to": "W14X38"
+    },
+    {
+      "frame": "9",
+      "from": "W14X30",
+      "to": "W14X90"
+    },
+    {
+      "frame": "10",
+      "from": "W14X30",
+      "to": "W14X43"
+    },
+    {
+      "frame": "12",
+      "from": "W14X30",
+      "to": "W14X34"
+    },
+    {
+      "frame": "13",
+      "from": "W14X30",
+      "to": "W14X26"
+    },
+    {
+      "frame": "14",
+      "from": "W14X30",
+      "to": "W14X61"
+    },
+    {
+      "frame": "16",
+      "from": "W14X30",
+      "to": "W14X34"
+    },
+    {
+      "frame": "17",
+      "from": "W14X30",
+      "to": "W14X90"
+    },
+    {
+      "frame": "18",
+      "from": "W14X30",
+      "to": "W14X43"
+    },
+    {
+      "frame": "20",
+      "from": "W14X30",
+      "to": "W14X34"
+    },
+    {
+      "frame": "21",
+      "from": "W14X30",
+      "to": "W14X34"
+    },
+    {
+      "frame": "24",
+      "from": "W14X30",
+      "to": "W14X34"
+    },
+    {
+      "frame": "25",
+      "from": "W14X34",
+      "to": "W14X43"
+    },
+    {
+      "frame": "26",
+      "from": "W14X43",
+      "to": "W14X90"
+    },
+    {
+      "frame": "27",
+      "from": "W14X43",
+      "to": "W14X38"
+    },
+    {
+      "frame": "28",
+      "from": "W14X34",
+      "to": "W14X38"
+    },
+    {
+      "frame": "29",
+      "from": "W14X30",
+      "to": "W14X90"
+    },
+    {
+      "frame": "30",
+      "from": "W14X43",
+      "to": "W14X109"
+    },
+    {
+      "frame": "31",
+      "from": "W14X43",
+      "to": "W14X90"
+    },
+    {
+      "frame": "32",
+      "from": "W14X30",
+      "to": "W14X26"
+    },
+    {
+      "frame": "33",
+      "from": "W14X34",
+      "to": "W14X109"
+    },
+    {
+      "frame": "34",
+      "from": "W14X53",
+      "to": "W14X109"
+    },
+    {
+      "frame": "35",
+      "from": "W14X53",
+      "to": "W14X38"
+    },
+    {
+      "frame": "36",
+      "from": "W14X34",
+      "to": "W14X30"
+    },
+    {
+      "frame": "37",
+      "from": "W14X43",
+      "to": "W14X109"
+    },
+    {
+      "frame": "38",
+      "from": "W14X53",
+      "to": "W14X120"
+    },
+    {
+      "frame": "39",
+      "from": "W14X53",
+      "to": "W14X48"
+    },
+    {
+      "frame": "40",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "41",
+      "from": "W14X38",
+      "to": "W14X120"
+    },
+    {
+      "frame": "42",
+      "from": "W14X43",
+      "to": "W14X68"
+    },
+    {
+      "frame": "44",
+      "from": "W14X38",
+      "to": "W14X53"
+    },
+    {
+      "frame": "45",
+      "from": "W14X38",
+      "to": "W14X30"
+    },
+    {
+      "frame": "46",
+      "from": "W14X43",
+      "to": "W14X90"
+    },
+    {
+      "frame": "48",
+      "from": "W14X38",
+      "to": "W14X53"
+    },
+    {
+      "frame": "49",
+      "from": "W14X38",
+      "to": "W14X120"
+    },
+    {
+      "frame": "50",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "52",
+      "from": "W14X38",
+      "to": "W14X53"
+    },
+    {
+      "frame": "53",
+      "from": "W14X38",
+      "to": "W14X48"
+    },
+    {
+      "frame": "56",
+      "from": "W14X38",
+      "to": "W14X53"
+    },
+    {
+      "frame": "57",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "58",
+      "from": "W14X53",
+      "to": "W14X109"
+    },
+    {
+      "frame": "60",
+      "from": "W14X43",
+      "to": "W14X53"
+    },
+    {
+      "frame": "61",
+      "from": "W14X34",
+      "to": "W14X99"
+    },
+    {
+      "frame": "62",
+      "from": "W14X53",
+      "to": "W14X99"
+    },
+    {
+      "frame": "63",
+      "from": "W14X53",
+      "to": "W14X132"
+    },
+    {
+      "frame": "64",
+      "from": "W14X34",
+      "to": "W14X30"
+    },
+    {
+      "frame": "65",
+      "from": "W14X38",
+      "to": "W14X120"
+    },
+    {
+      "frame": "66",
+      "from": "W14X61",
+      "to": "W14X109"
+    },
+    {
+      "frame": "67",
+      "from": "W14X61",
+      "to": "W14X43"
+    },
+    {
+      "frame": "69",
+      "from": "W14X43",
+      "to": "W14X109"
+    },
+    {
+      "frame": "70",
+      "from": "W14X61",
+      "to": "W14X145"
+    },
+    {
+      "frame": "72",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "73",
+      "from": "W14X43",
+      "to": "W14X145"
+    },
+    {
+      "frame": "74",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "76",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "77",
+      "from": "W14X43",
+      "to": "W14X38"
+    },
+    {
+      "frame": "78",
+      "from": "W14X61",
+      "to": "W14X159"
+    },
+    {
+      "frame": "80",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "81",
+      "from": "W14X43",
+      "to": "W14X145"
+    },
+    {
+      "frame": "82",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "84",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "85",
+      "from": "W14X43",
+      "to": "W14X53"
+    },
+    {
+      "frame": "88",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "89",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "90",
+      "from": "W14X61",
+      "to": "W14X145"
+    },
+    {
+      "frame": "91",
+      "from": "W14X61",
+      "to": "W14X68"
+    },
+    {
+      "frame": "92",
+      "from": "W14X43",
+      "to": "W14X61"
+    },
+    {
+      "frame": "93",
+      "from": "W14X38",
+      "to": "W14X90"
+    },
+    {
+      "frame": "95",
+      "from": "W14X61",
+      "to": "W14X145"
+    },
+    {
+      "frame": "96",
+      "from": "W14X38",
+      "to": "W14X30"
+    },
+    {
+      "frame": "97",
+      "from": "W14X43",
+      "to": "W14X145"
+    },
+    {
+      "frame": "98",
+      "from": "W14X68",
+      "to": "W14X145"
+    },
+    {
+      "frame": "99",
+      "from": "W14X68",
+      "to": "W14X53"
+    },
+    {
+      "frame": "101",
+      "from": "W14X48",
+      "to": "W14X132"
+    },
+    {
+      "frame": "102",
+      "from": "W14X74",
+      "to": "W14X176"
+    },
+    {
+      "frame": "104",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "105",
+      "from": "W14X48",
+      "to": "W14X159"
+    },
+    {
+      "frame": "106",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "107",
+      "from": "W14X68",
+      "to": "W14X74"
+    },
+    {
+      "frame": "108",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "110",
+      "from": "W14X68",
+      "to": "W14X193"
+    },
+    {
+      "frame": "111",
+      "from": "W14X68",
+      "to": "W14X74"
+    },
+    {
+      "frame": "112",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "113",
+      "from": "W14X48",
+      "to": "W14X159"
+    },
+    {
+      "frame": "114",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "115",
+      "from": "W14X68",
+      "to": "W14X74"
+    },
+    {
+      "frame": "116",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "117",
+      "from": "W14X48",
+      "to": "W14X68"
+    },
+    {
+      "frame": "118",
+      "from": "W14X68",
+      "to": "W14X74"
+    },
+    {
+      "frame": "120",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "121",
+      "from": "W14X48",
+      "to": "W14X74"
+    },
+    {
+      "frame": "122",
+      "from": "W14X74",
+      "to": "W14X176"
+    },
+    {
+      "frame": "123",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "124",
+      "from": "W14X48",
+      "to": "W14X68"
+    },
+    {
+      "frame": "125",
+      "from": "W14X43",
+      "to": "W14X176"
+    },
+    {
+      "frame": "126",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "127",
+      "from": "W14X68",
+      "to": "W14X193"
+    },
+    {
+      "frame": "128",
+      "from": "W14X43",
+      "to": "W14X38"
+    },
+    {
+      "frame": "129",
+      "from": "W14X43",
+      "to": "W14X145"
+    },
+    {
+      "frame": "130",
+      "from": "W14X68",
+      "to": "W14X159"
+    },
+    {
+      "frame": "131",
+      "from": "W14X68",
+      "to": "W14X61"
+    },
+    {
+      "frame": "132",
+      "from": "W14X43",
+      "to": "W14X48"
+    },
+    {
+      "frame": "133",
+      "from": "W14X53",
+      "to": "W14X145"
+    },
+    {
+      "frame": "134",
+      "from": "W14X90",
+      "to": "W14X233"
+    },
+    {
+      "frame": "136",
+      "from": "W14X53",
+      "to": "W14X74"
+    },
+    {
+      "frame": "137",
+      "from": "W14X53",
+      "to": "W14X193"
+    },
+    {
+      "frame": "138",
+      "from": "W14X82",
+      "to": "W14X109"
+    },
+    {
+      "frame": "139",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "140",
+      "from": "W14X53",
+      "to": "W14X82"
+    },
+    {
+      "frame": "142",
+      "from": "W14X82",
+      "to": "W14X233"
+    },
+    {
+      "frame": "143",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "144",
+      "from": "W14X53",
+      "to": "W14X82"
+    },
+    {
+      "frame": "145",
+      "from": "W14X53",
+      "to": "W14X176"
+    },
+    {
+      "frame": "146",
+      "from": "W14X82",
+      "to": "W14X109"
+    },
+    {
+      "frame": "147",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "148",
+      "from": "W14X53",
+      "to": "W14X74"
+    },
+    {
+      "frame": "149",
+      "from": "W14X53",
+      "to": "W14X68"
+    },
+    {
+      "frame": "150",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "151",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "152",
+      "from": "W14X53",
+      "to": "W14X74"
+    },
+    {
+      "frame": "153",
+      "from": "W14X53",
+      "to": "W14X82"
+    },
+    {
+      "frame": "154",
+      "from": "W14X90",
+      "to": "W14X211"
+    },
+    {
+      "frame": "155",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "156",
+      "from": "W14X53",
+      "to": "W14X74"
+    },
+    {
+      "frame": "157",
+      "from": "W14X43",
+      "to": "W14X159"
+    },
+    {
+      "frame": "158",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "159",
+      "from": "W14X68",
+      "to": "W14X211"
+    },
+    {
+      "frame": "161",
+      "from": "W14X48",
+      "to": "W14X159"
+    },
+    {
+      "frame": "162",
+      "from": "W14X74",
+      "to": "W14X176"
+    },
+    {
+      "frame": "163",
+      "from": "W14X74",
+      "to": "W14X68"
+    },
+    {
+      "frame": "165",
+      "from": "W14X61",
+      "to": "W14X159"
+    },
+    {
+      "frame": "166",
+      "from": "W14X90",
+      "to": "W14X257"
+    },
+    {
+      "frame": "167",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "168",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "169",
+      "from": "W14X61",
+      "to": "W14X193"
+    },
+    {
+      "frame": "170",
+      "from": "W14X90",
+      "to": "W14X132"
+    },
+    {
+      "frame": "171",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "172",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "174",
+      "from": "W14X90",
+      "to": "W14X283"
+    },
+    {
+      "frame": "175",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "176",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "177",
+      "from": "W14X61",
+      "to": "W14X211"
+    },
+    {
+      "frame": "178",
+      "from": "W14X90",
+      "to": "W14X132"
+    },
+    {
+      "frame": "179",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "180",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "181",
+      "from": "W14X61",
+      "to": "W14X82"
+    },
+    {
+      "frame": "182",
+      "from": "W14X90",
+      "to": "W14X99"
+    },
+    {
+      "frame": "184",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "185",
+      "from": "W14X61",
+      "to": "W14X99"
+    },
+    {
+      "frame": "186",
+      "from": "W14X90",
+      "to": "W14X233"
+    },
+    {
+      "frame": "187",
+      "from": "W14X90",
+      "to": "W14X120"
+    },
+    {
+      "frame": "188",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "189",
+      "from": "W14X48",
+      "to": "W14X193"
+    },
+    {
+      "frame": "190",
+      "from": "W14X74",
+      "to": "W14X120"
+    },
+    {
+      "frame": "191",
+      "from": "W14X74",
+      "to": "W14X233"
+    },
+    {
+      "frame": "192",
+      "from": "W14X48",
+      "to": "W14X43"
+    },
+    {
+      "frame": "193",
+      "from": "W14X48",
+      "to": "W14X193"
+    },
+    {
+      "frame": "194",
+      "from": "W14X82",
+      "to": "W14X193"
+    },
+    {
+      "frame": "195",
+      "from": "W14X82",
+      "to": "W14X74"
+    },
+    {
+      "frame": "196",
+      "from": "W14X48",
+      "to": "W14X53"
+    },
+    {
+      "frame": "197",
+      "from": "W14X61",
+      "to": "W14X193"
+    },
+    {
+      "frame": "198",
+      "from": "W14X99",
+      "to": "W14X283"
+    },
+    {
+      "frame": "199",
+      "from": "W14X99",
+      "to": "W14X120"
+    },
+    {
+      "frame": "200",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "201",
+      "from": "W14X61",
+      "to": "W14X233"
+    },
+    {
+      "frame": "202",
+      "from": "W14X109",
+      "to": "W14X145"
+    },
+    {
+      "frame": "204",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "206",
+      "from": "W14X109",
+      "to": "W14X283"
+    },
+    {
+      "frame": "208",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "209",
+      "from": "W14X61",
+      "to": "W14X193"
+    },
+    {
+      "frame": "210",
+      "from": "W14X109",
+      "to": "W14X145"
+    },
+    {
+      "frame": "212",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "213",
+      "from": "W14X61",
+      "to": "W14X82"
+    },
+    {
+      "frame": "216",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "217",
+      "from": "W14X61",
+      "to": "W14X99"
+    },
+    {
+      "frame": "218",
+      "from": "W14X99",
+      "to": "W14X257"
+    },
+    {
+      "frame": "219",
+      "from": "W14X99",
+      "to": "W14X132"
+    },
+    {
+      "frame": "220",
+      "from": "W14X61",
+      "to": "W14X90"
+    },
+    {
+      "frame": "221",
+      "from": "W14X48",
+      "to": "W14X176"
+    },
+    {
+      "frame": "222",
+      "from": "W14X82",
+      "to": "W14X90"
+    },
+    {
+      "frame": "223",
+      "from": "W14X82",
+      "to": "W14X233"
+    },
+    {
+      "frame": "225",
+      "from": "W14X48",
+      "to": "W14X176"
+    },
+    {
+      "frame": "226",
+      "from": "W14X90",
+      "to": "W14X193"
+    },
+    {
+      "frame": "228",
+      "from": "W14X48",
+      "to": "W14X53"
+    },
+    {
+      "frame": "229",
+      "from": "W14X61",
+      "to": "W14X193"
+    },
+    {
+      "frame": "230",
+      "from": "W14X120",
+      "to": "W14X311"
+    },
+    {
+      "frame": "231",
+      "from": "W14X120",
+      "to": "W14X132"
+    },
+    {
+      "frame": "232",
+      "from": "W14X61",
+      "to": "W14X99"
+    },
+    {
+      "frame": "233",
+      "from": "W14X68",
+      "to": "W14X233"
+    },
+    {
+      "frame": "234",
+      "from": "W14X120",
+      "to": "W14X159"
+    },
+    {
+      "frame": "236",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "237",
+      "from": "W14X68",
+      "to": "W14X82"
+    },
+    {
+      "frame": "238",
+      "from": "W14X120",
+      "to": "W14X342"
+    },
+    {
+      "frame": "240",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "241",
+      "from": "W14X68",
+      "to": "W14X233"
+    },
+    {
+      "frame": "242",
+      "from": "W14X120",
+      "to": "W14X176"
+    },
+    {
+      "frame": "244",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "245",
+      "from": "W14X68",
+      "to": "W14X90"
+    },
+    {
+      "frame": "248",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "249",
+      "from": "W14X61",
+      "to": "W14X109"
+    },
+    {
+      "frame": "250",
+      "from": "W14X120",
+      "to": "W14X283"
+    },
+    {
+      "frame": "251",
+      "from": "W14X120",
+      "to": "W14X145"
+    },
+    {
+      "frame": "252",
+      "from": "W14X61",
+      "to": "W14X99"
+    },
+    {
+      "frame": "253",
+      "from": "W14X48",
+      "to": "W14X193"
+    },
+    {
+      "frame": "255",
+      "from": "W14X90",
+      "to": "W14X257"
+    },
+    {
+      "frame": "257",
+      "from": "W14X53",
+      "to": "W14X233"
+    },
+    {
+      "frame": "258",
+      "from": "W14X90",
+      "to": "W14X233"
+    },
+    {
+      "frame": "260",
+      "from": "W14X53",
+      "to": "W14X61"
+    },
+    {
+      "frame": "261",
+      "from": "W14X68",
+      "to": "W14X233"
+    },
+    {
+      "frame": "262",
+      "from": "W14X132",
+      "to": "W14X370"
+    },
+    {
+      "frame": "263",
+      "from": "W14X132",
+      "to": "W14X145"
+    },
+    {
+      "frame": "264",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "265",
+      "from": "W14X68",
+      "to": "W14X283"
+    },
+    {
+      "frame": "266",
+      "from": "W14X132",
+      "to": "W14X176"
+    },
+    {
+      "frame": "267",
+      "from": "W14X132",
+      "to": "W14X145"
+    },
+    {
+      "frame": "268",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "269",
+      "from": "W14X68",
+      "to": "W14X90"
+    },
+    {
+      "frame": "270",
+      "from": "W14X132",
+      "to": "W14X370"
+    },
+    {
+      "frame": "271",
+      "from": "W14X132",
+      "to": "W14X145"
+    },
+    {
+      "frame": "272",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "273",
+      "from": "W14X68",
+      "to": "W14X257"
+    },
+    {
+      "frame": "274",
+      "from": "W14X132",
+      "to": "W14X193"
+    },
+    {
+      "frame": "275",
+      "from": "W14X132",
+      "to": "W14X145"
+    },
+    {
+      "frame": "276",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "277",
+      "from": "W14X68",
+      "to": "W14X99"
+    },
+    {
+      "frame": "279",
+      "from": "W14X132",
+      "to": "W14X145"
+    },
+    {
+      "frame": "280",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "281",
+      "from": "W14X68",
+      "to": "W14X132"
+    },
+    {
+      "frame": "282",
+      "from": "W14X132",
+      "to": "W14X342"
+    },
+    {
+      "frame": "283",
+      "from": "W14X132",
+      "to": "W14X176"
+    },
+    {
+      "frame": "284",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "285",
+      "from": "W14X53",
+      "to": "W14X257"
+    },
+    {
+      "frame": "286",
+      "from": "W14X90",
+      "to": "W14X145"
+    },
+    {
+      "frame": "287",
+      "from": "W14X90",
+      "to": "W14X311"
+    },
+    {
+      "frame": "288",
+      "from": "W14X53",
+      "to": "W14X61"
+    },
+    {
+      "frame": "289",
+      "from": "W14X53",
+      "to": "W14X176"
+    },
+    {
+      "frame": "290",
+      "from": "W14X90",
+      "to": "W14X193"
+    },
+    {
+      "frame": "293",
+      "from": "W14X68",
+      "to": "W14X193"
+    },
+    {
+      "frame": "294",
+      "from": "W14X145",
+      "to": "W14X342"
+    },
+    {
+      "frame": "296",
+      "from": "W14X68",
+      "to": "W14X90"
+    },
+    {
+      "frame": "297",
+      "from": "W14X74",
+      "to": "W14X211"
+    },
+    {
+      "frame": "298",
+      "from": "W14X145",
+      "to": "W14X193"
+    },
+    {
+      "frame": "300",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "302",
+      "from": "W14X145",
+      "to": "W14X342"
+    },
+    {
+      "frame": "304",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "305",
+      "from": "W14X74",
+      "to": "W14X211"
+    },
+    {
+      "frame": "306",
+      "from": "W14X145",
+      "to": "W14X193"
+    },
+    {
+      "frame": "308",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "309",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "312",
+      "from": "W14X74",
+      "to": "W14X90"
+    },
+    {
+      "frame": "313",
+      "from": "W14X68",
+      "to": "W14X109"
+    },
+    {
+      "frame": "314",
+      "from": "W14X145",
+      "to": "W14X342"
+    },
+    {
+      "frame": "315",
+      "from": "W14X145",
+      "to": "W14X193"
+    },
+    {
+      "frame": "316",
+      "from": "W14X68",
+      "to": "W14X90"
+    },
+    {
+      "frame": "317",
+      "from": "W14X53",
+      "to": "W14X159"
+    },
+    {
+      "frame": "318",
+      "from": "W14X90",
+      "to": "W14X82"
+    },
+    {
+      "frame": "319",
+      "from": "W14X90",
+      "to": "W14X257"
+    },
+    {
+      "frame": "320",
+      "from": "W14X53",
+      "to": "W14X48"
+    },
+    {
+      "frame": "321",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "322",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "323",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "324",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "325",
+      "from": "W24X62",
+      "to": "W24X68"
+    },
+    {
+      "frame": "333",
+      "from": "W24X62",
+      "to": "W24X68"
+    },
+    {
+      "frame": "334",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "349",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "350",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "352",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "353",
+      "from": "W24X55",
+      "to": "W24X84"
+    },
+    {
+      "frame": "354",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "355",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "357",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "358",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "359",
+      "from": "W24X55",
+      "to": "W24X84"
+    },
+    {
+      "frame": "360",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "361",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "363",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "364",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "366",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "368",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "369",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "370",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "371",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "372",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "373",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "374",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "375",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "376",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "380",
+      "from": "W24X68",
+      "to": "W24X62"
+    },
+    {
+      "frame": "386",
+      "from": "W24X68",
+      "to": "W24X103"
+    },
+    {
+      "frame": "387",
+      "from": "W24X68",
+      "to": "W24X62"
+    },
+    {
+      "frame": "393",
+      "from": "W24X68",
+      "to": "W24X62"
+    },
+    {
+      "frame": "401",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "404",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "405",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "407",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "409",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "410",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "411",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "412",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "413",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "415",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "416",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "418",
+      "from": "W24X62",
+      "to": "W24X55"
+    },
+    {
+      "frame": "422",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "423",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "424",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "425",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "426",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "427",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "428",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "438",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "453",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "456",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "457",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "462",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "463",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "474",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "475",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "477",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "478",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "479",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "480",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "490",
+      "from": "W24X62",
+      "to": "W24X103"
+    },
+    {
+      "frame": "505",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "508",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "509",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "514",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "515",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "526",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "527",
+      "from": "W24X55",
+      "to": "W24X94"
+    },
+    {
+      "frame": "529",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "530",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "531",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "532",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "542",
+      "from": "W24X62",
+      "to": "W24X117"
+    },
+    {
+      "frame": "557",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "560",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "561",
+      "from": "W24X55",
+      "to": "W24X62"
+    },
+    {
+      "frame": "566",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "578",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "579",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "581",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "582",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "583",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "584",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "594",
+      "from": "W24X62",
+      "to": "W24X117"
+    },
+    {
+      "frame": "609",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "612",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "618",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "630",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "631",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "633",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "634",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "635",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "636",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "646",
+      "from": "W24X62",
+      "to": "W24X117"
+    },
+    {
+      "frame": "661",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "664",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "670",
+      "from": "W24X55",
+      "to": "W24X104"
+    },
+    {
+      "frame": "682",
+      "from": "W24X55",
+      "to": "W24X68"
+    },
+    {
+      "frame": "683",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "685",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "686",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "687",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "688",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "698",
+      "from": "W24X62",
+      "to": "W24X104"
+    },
+    {
+      "frame": "713",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "716",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "722",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "734",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "735",
+      "from": "W24X55",
+      "to": "W24X103"
+    },
+    {
+      "frame": "737",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "738",
+      "from": "W24X62",
+      "to": "W24X103"
+    },
+    {
+      "frame": "739",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "740",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "750",
+      "from": "W24X62",
+      "to": "W24X131"
+    },
+    {
+      "frame": "765",
+      "from": "W24X55",
+      "to": "W24X84"
+    },
+    {
+      "frame": "768",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "774",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "786",
+      "from": "W24X55",
+      "to": "W24X84"
+    },
+    {
+      "frame": "787",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "789",
+      "from": "W24X62",
+      "to": "W24X84"
+    },
+    {
+      "frame": "790",
+      "from": "W24X62",
+      "to": "W24X103"
+    },
+    {
+      "frame": "791",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "792",
+      "from": "W24X62",
+      "to": "W24X94"
+    },
+    {
+      "frame": "802",
+      "from": "W24X62",
+      "to": "W24X117"
+    },
+    {
+      "frame": "817",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "820",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "826",
+      "from": "W24X55",
+      "to": "W24X117"
+    },
+    {
+      "frame": "838",
+      "from": "W24X55",
+      "to": "W24X76"
+    },
+    {
+      "frame": "839",
+      "from": "W24X55",
+      "to": "W24X104"
+    }
+  ]
+}
