@@ -1,0 +1,303 @@
+{
+ "model": "progressive collapse - AP2",
+ "date": "2026-09-26",
+ "units": "short tons (2000 lb)",
+ "state": "658 fixed sections from propagation.json; all 30 AP cases run; design once (composite, then steel)",
+ "tonnage": {
+  "total": 1155.1,
+  "columns": 372.03,
+  "steel_beams": 505.87,
+  "composite_beams": 277.2
+ },
+ "baseline_total": 790.18,
+ "premium": {
+  "short_tons": 364.92,
+  "percent": 46.2
+ },
+ "split_over_original_sections": {
+  "original": 776.74,
+  "collapse_driven": 175.73,
+  "propagated": 203.31,
+  "strength_and_other": -0.67
+ },
+ "split_of_premium_over_baseline": {
+  "collapse_driven": 175.73,
+  "propagated": 203.31,
+  "strength": -14.11,
+  "note": "strength = unassigned frames' change over the original (-0.67) less the baseline's own strength redesign over the original (13.44)"
+ },
+ "check": {
+  "all_at_or_below_1": false,
+  "steel_max": 1.144,
+  "composite_max": 0.587,
+  "over_1": [
+   {
+    "frame": "9",
+    "section": "W14X109",
+    "ratio": 1.144,
+    "governing_combo": "AP_SC15_CMB(C)"
+   },
+   {
+    "frame": "29",
+    "section": "W14X145",
+    "ratio": 1.097,
+    "governing_combo": "AP_SC22_CMB(C)"
+   },
+   {
+    "frame": "46",
+    "section": "W14X120",
+    "ratio": 1.027,
+    "governing_combo": "AP_SC14_CMB(C)"
+   },
+   {
+    "frame": "61",
+    "section": "W14X145",
+    "ratio": 1.02,
+    "governing_combo": "AP_SC21_CMB(C)"
+   }
+  ]
+ },
+ "reactions_vs_fresh_export": [
+  {
+   "scenario": "SC01",
+   "status": 4,
+   "expected_kn": 8023.6,
+   "from_reactions_kn": 7986.5,
+   "diff_percent": -0.46,
+   "ok": true
+  },
+  {
+   "scenario": "SC02",
+   "status": 4,
+   "expected_kn": 6410.1,
+   "from_reactions_kn": 6376.7,
+   "diff_percent": -0.52,
+   "ok": true
+  },
+  {
+   "scenario": "SC03",
+   "status": 4,
+   "expected_kn": 4803.3,
+   "from_reactions_kn": 4775.3,
+   "diff_percent": -0.58,
+   "ok": true
+  },
+  {
+   "scenario": "SC04",
+   "status": 4,
+   "expected_kn": 4000.6,
+   "from_reactions_kn": 3976.4,
+   "diff_percent": -0.61,
+   "ok": true
+  },
+  {
+   "scenario": "SC05",
+   "status": 4,
+   "expected_kn": 2397.4,
+   "from_reactions_kn": 2382.2,
+   "diff_percent": -0.63,
+   "ok": true
+  },
+  {
+   "scenario": "SC06",
+   "status": 4,
+   "expected_kn": 1600.3,
+   "from_reactions_kn": 1586.4,
+   "diff_percent": -0.87,
+   "ok": true
+  },
+  {
+   "scenario": "SC07",
+   "status": 4,
+   "expected_kn": 801.9,
+   "from_reactions_kn": 790.2,
+   "diff_percent": -1.45,
+   "ok": false
+  },
+  {
+   "scenario": "SC08",
+   "status": 4,
+   "expected_kn": 15823.4,
+   "from_reactions_kn": 15770.7,
+   "diff_percent": -0.33,
+   "ok": true
+  },
+  {
+   "scenario": "SC09",
+   "status": 4,
+   "expected_kn": 14236.8,
+   "from_reactions_kn": 14183.8,
+   "diff_percent": -0.37,
+   "ok": true
+  },
+  {
+   "scenario": "SC10",
+   "status": 4,
+   "expected_kn": 11063.8,
+   "from_reactions_kn": 11024.2,
+   "diff_percent": -0.36,
+   "ok": true
+  },
+  {
+   "scenario": "SC11",
+   "status": 4,
+   "expected_kn": 9480.5,
+   "from_reactions_kn": 9444.9,
+   "diff_percent": -0.37,
+   "ok": true
+  },
+  {
+   "scenario": "SC12",
+   "status": 4,
+   "expected_kn": 7897.2,
+   "from_reactions_kn": 7866.8,
+   "diff_percent": -0.38,
+   "ok": true
+  },
+  {
+   "scenario": "SC13",
+   "status": 4,
+   "expected_kn": 6316.8,
+   "from_reactions_kn": 6291.4,
+   "diff_percent": -0.4,
+   "ok": true
+  },
+  {
+   "scenario": "SC14",
+   "status": 4,
+   "expected_kn": 4736.5,
+   "from_reactions_kn": 4716.0,
+   "diff_percent": -0.43,
+   "ok": true
+  },
+  {
+   "scenario": "SC15",
+   "status": 4,
+   "expected_kn": 3156.1,
+   "from_reactions_kn": 3141.1,
+   "diff_percent": -0.48,
+   "ok": true
+  },
+  {
+   "scenario": "SC16",
+   "status": 4,
+   "expected_kn": 1578.1,
+   "from_reactions_kn": 1568.0,
+   "diff_percent": -0.64,
+   "ok": true
+  },
+  {
+   "scenario": "SC17",
+   "status": 4,
+   "expected_kn": 14860.7,
+   "from_reactions_kn": 14800.8,
+   "diff_percent": -0.4,
+   "ok": true
+  },
+  {
+   "scenario": "SC18",
+   "status": 4,
+   "expected_kn": 10389.1,
+   "from_reactions_kn": 10344.0,
+   "diff_percent": -0.43,
+   "ok": true
+  },
+  {
+   "scenario": "SC19",
+   "status": 4,
+   "expected_kn": 8901.5,
+   "from_reactions_kn": 8859.5,
+   "diff_percent": -0.47,
+   "ok": true
+  },
+  {
+   "scenario": "SC20",
+   "status": 4,
+   "expected_kn": 7414.6,
+   "from_reactions_kn": 7378.8,
+   "diff_percent": -0.48,
+   "ok": true
+  },
+  {
+   "scenario": "SC21",
+   "status": 4,
+   "expected_kn": 4446.0,
+   "from_reactions_kn": 4423.8,
+   "diff_percent": -0.5,
+   "ok": true
+  },
+  {
+   "scenario": "SC22",
+   "status": 4,
+   "expected_kn": 2967.9,
+   "from_reactions_kn": 2949.6,
+   "diff_percent": -0.62,
+   "ok": true
+  },
+  {
+   "scenario": "SC23",
+   "status": 4,
+   "expected_kn": 1485.5,
+   "from_reactions_kn": 1473.0,
+   "diff_percent": -0.84,
+   "ok": true
+  },
+  {
+   "scenario": "SC24",
+   "status": 4,
+   "expected_kn": 15839.5,
+   "from_reactions_kn": 15787.1,
+   "diff_percent": -0.33,
+   "ok": true
+  },
+  {
+   "scenario": "SC25",
+   "status": 4,
+   "expected_kn": 12660.1,
+   "from_reactions_kn": 12616.8,
+   "diff_percent": -0.34,
+   "ok": true
+  },
+  {
+   "scenario": "SC26",
+   "status": 4,
+   "expected_kn": 9489.7,
+   "from_reactions_kn": 9457.0,
+   "diff_percent": -0.34,
+   "ok": true
+  },
+  {
+   "scenario": "SC27",
+   "status": 4,
+   "expected_kn": 7905.2,
+   "from_reactions_kn": 7876.6,
+   "diff_percent": -0.36,
+   "ok": true
+  },
+  {
+   "scenario": "SC28",
+   "status": 4,
+   "expected_kn": 6320.7,
+   "from_reactions_kn": 6297.0,
+   "diff_percent": -0.37,
+   "ok": true
+  },
+  {
+   "scenario": "SC29",
+   "status": 4,
+   "expected_kn": 4739.7,
+   "from_reactions_kn": 4722.1,
+   "diff_percent": -0.37,
+   "ok": true
+  },
+  {
+   "scenario": "SC30",
+   "status": 4,
+   "expected_kn": 1583.2,
+   "from_reactions_kn": 1574.4,
+   "diff_percent": -0.55,
+   "ok": true
+  }
+ ],
+ "takeoff_csv": "takeoffs/collapse_final.csv"
+}
