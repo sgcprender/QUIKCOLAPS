@@ -27,10 +27,12 @@ internal static class Results
     {
         if (run && !SectionGuard.Allows(sap, acceptDesignSections)) return SectionGuard.ExitSectionsDiffer;
         if (run) Api.Check(Watch.During(pid, "Analyze.RunAnalysis", () => sap.Analyze.RunAnalysis()), "Analyze.RunAnalysis");
-        if (design) Api.Check(Watch.During(pid, "DesignSteel.StartDesign", () => sap.DesignSteel.StartDesign()), "DesignSteel.StartDesign");
+        // Composite first: composite beam design resets every steel frame's design section to its
+        // analysis section and leaves the steel ratios (measured, CLAUDE.md), so steel runs last.
         var composite = FramesWithProcedure(sap, CompositeBeamDesign);
         if (design && composite.Count > 0)
             Api.Check(Watch.During(pid, "DesignCompositeBeam.StartDesign", () => sap.DesignCompositeBeam.StartDesign()), "DesignCompositeBeam.StartDesign");
+        if (design) Api.Check(Watch.During(pid, "DesignSteel.StartDesign", () => sap.DesignSteel.StartDesign()), "DesignSteel.StartDesign");
 
         var template = CaseTemplate.Read(sap, templateName);
         var scenarios = Json.ActiveScenarios(Json.Read(scenariosPath)).ToList();

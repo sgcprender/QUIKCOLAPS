@@ -95,7 +95,7 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 | Step | Owner | State |
 |---|---|---|
 | Existing: attach, stacks, cases, combos, design selection, takeoff | src/, tools/Cli | working on the team model |
-| 1, 5, 6 | tools/Quikcolaps.Bridge | working on the AP2 working copy: export checked against base reactions, 23 scenarios applied, run, converged and within 1% on reactions; design runs, but AP-combo design ratios are not trusted (see next session) |
+| 1, 5, 6 | tools/Quikcolaps.Bridge | working on the AP2 working copy: export checked against base reactions, 23 scenarios applied, run, converged and within 1% on reactions; steel and composite design results in `web/data/results.json` (one design pass, before any redesign iteration) |
 | 3 (stacks), 7 | tools/Quikcolaps.Bridge | written, not yet run |
 | 2, 4 | web | working on the synthetic fixture |
 | 3 (rules, ETABS-region merge) | core | working, tested on the fixture |
@@ -105,13 +105,9 @@ existing `src/Quikcolaps.Etabs` library); everything else is Python under `ap/`.
 
 ## Next session
 
-1. **Design forces for staged combos.** Steel design does not seem to use the
-   staged cases' final forces for `AP_*_CMB`: column 165 carries 3,914 kN
-   under `AP_SC02_CMB` but stays W14X61 at ratio 0.903 (axial part 0.49);
-   switching "Multi-Response Case Design" to Last step changed nothing.
-   Details in `tools/Quikcolaps.Bridge/CLAUDE.md` (open issue). Until fixed,
-   design ratios for AP combos (steel and composite) are not used and
-   `results.json` is not committed.
+1. ~~**Design forces for staged combos.**~~ Resolved 2026-09-26: composite beam
+   design was resetting the steel design sections after steel design; the
+   bridge now runs composite first (`tools/Quikcolaps.Bridge/CLAUDE.md`).
 2. **Redesign loop with similarity.** Propose section changes for failing
    members and similar members (`results.redesign`), apply with approval,
    re-run with `--accept-design-sections` as a deliberate iteration.

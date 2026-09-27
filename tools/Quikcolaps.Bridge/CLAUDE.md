@@ -38,20 +38,22 @@ total from `building.json` against ETABS base reaction FZ:
 | SDL | 4.788 kPa × 11,237.8 m² = 53,806.8 kN | 53,806.8 kN | 0.00% |
 | LL | 4.788 kPa × 11,237.8 m² = 53,806.8 kN | 53,806.8 kN | 0.00% |
 
-## Open issue: design ratios for staged combos are not trusted
+## Resolved: composite design reset the steel design sections
 
-On AP2 (2026-09-26), all 23 scenarios run and pass the reaction check, but
-steel design does not appear to use the staged cases' final forces for the
-`AP_*_CMB` combos. Column 165 carries P = 3,914 kN, M3 = 433 kN·m under
-`AP_SC02_CMB` (4,094 kN under `AP_SC03_CMB`), more than a W14X61's squash
-load (about 3,580 kN), yet design keeps W14X61 at ratio 0.903 (axial part
-0.49), governed by `AP_SC02_CMB(C)`. No auto-select frame changed size. The
-first working copy, with only SC03 applied, did move 165 to W14X120.
-Changing "Multi-Response Case Design" (AISC 360-16 item 2) from 5
-(Step-by-Step - All) to 3 (Last step) changed nothing; it was put back to 5.
-Until this is explained, **do not use steel or composite design ratios from
-`results` for AP combos** (`results.json` is not committed). Reactions and
-frame forces (`forces`) are fine.
+Symptom (AP2, 2026-09-26): column 165 under `AP_SC02_CMB` (P = 3,914 kN,
+M3 = 433 kN·m, more than a W14X61 can carry) was reported as W14X61 at ratio
+0.903, and no auto-select frame changed size.
+Cause (measured, two-step test): design did use the final staged forces
+("Design Forces - Columns" shows them) and auto-selected W14X145, which the
+ratio fits (P part 0.49 = 880 kips / φPn 1,798 kips). Then
+`DesignCompositeBeam.StartDesign` **reset every steel frame's design section to
+its analysis section and left the steel ratios**: after steel design 165 read
+W14X145 and `DesignSteel.VerifySections` listed 400 frames; after composite
+design 165 read W14X61 and it listed 0. The "Multi-Response Case Design"
+preference was never the problem.
+Fix: `results --design` runs composite design first, then steel design. Checked:
+165 reads W14X61 → W14X145 at 0.903, `VerifySections` 400, composite results
+still available (420, sections match).
 
 ## Contract
 
