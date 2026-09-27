@@ -17,6 +17,9 @@ namespace Quikcolaps.Bridge;
 ///   forces   --case NAME --frames F1,F2 --out forces.json            for the staged-case validation
 ///   axial    --case "1.2D+0.5L" --out intact_axial.json               every column's axial force (read-only)
 ///   assign-sections --file propagation.json [--commit]                fixed analysis sections from a file
+///   open     --file PATH                                               open another model file (never saves)
+///   design-select --combos DStlS1,DStlS2 [--commit]                   steel + composite strength selection
+///   iterate  --cases SW,SDL,LL [--max-rounds 3] --out rounds.json [--commit]   run → design until no section changes
 ///   sections                                                          auto-select frames: analysis vs design section
 ///
 /// results --run stops (exit 4) when an auto-select frame's design section differs from its analysis
@@ -46,6 +49,10 @@ internal static class Program
                 "sections" => SectionGuard.Allows(sap, false) ? 0 : SectionGuard.ExitSectionsDiffer,
                 "forces" => Results.Forces(sap, Arg("--case", ""), Arg("--frames", ""), Arg("--out", "forces.json")),
                 "axial" => Axial.Run(sap, inst.ModelPath, Arg("--case", ""), Arg("--out", "intact_axial.json")),
+                "open" => OpenModel.Run(sap, inst.ProcessId, Arg("--file", "")),
+                "design-select" => DesignSelect.Run(sap, Arg("--combos", ""), args.Contains("--commit")),
+                "iterate" => Iterate.Run(sap, inst.ProcessId, inst.ModelPath, Arg("--cases", ""), int.TryParse(Arg("--max-rounds", "3"), out var mr) ? mr : 3,
+                    Arg("--out", "rounds.json"), args.Contains("--commit")),
                 "assign-sections" => AssignSections.Run(sap, Arg("--file", "ap/web/data/propagation.json"), args.Contains("--commit")),
                 _ => Usage()
             };
@@ -59,7 +66,7 @@ internal static class Program
 
     private static int Usage()
     {
-        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|sections [--model NAME] ... (see Program.cs)");
+        Console.Error.WriteLine("quikcolaps-bridge export|stacks|apply|results|forces|axial|assign-sections|open|design-select|iterate|sections [--model NAME] ... (see Program.cs)");
         return 2;
     }
 }

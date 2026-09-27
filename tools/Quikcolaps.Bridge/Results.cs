@@ -113,7 +113,7 @@ internal static class Results
     /// <summary>FrameObj.GetDesignProcedure codes (documented): 1 steel frame, 3 composite beam.</summary>
     private const int CompositeBeamDesign = 3;
 
-    private static List<string> FramesWithProcedure(cSapModel sap, int procedure)
+    internal static List<string> FramesWithProcedure(cSapModel sap, int procedure)
     {
         int n = 0; string[] frames = Array.Empty<string>();
         Api.Check(sap.FrameObj.GetNameList(ref n, ref frames), "FrameObj.GetNameList");

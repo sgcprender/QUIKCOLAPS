@@ -15,6 +15,9 @@ dotnet run --project tools/Quikcolaps.Bridge -- sections                        
 dotnet run --project tools/Quikcolaps.Bridge -- axial   --case "1.2D+0.5L" --out ap/web/data/intact_axial.json
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json            # dry run
 dotnet run --project tools/Quikcolaps.Bridge -- assign-sections --file ap/web/data/propagation.json --commit
+dotnet run --project tools/Quikcolaps.Bridge -- open    --file "<path>.EDB"                 # switch model (never saves)
+dotnet run --project tools/Quikcolaps.Bridge -- design-select --combos DStlS1,DStlS2 [--commit]
+dotnet run --project tools/Quikcolaps.Bridge -- iterate --cases SW,SDL,LL --max-rounds 3 --out rounds.json [--commit]
 ```
 Common flags: `--model` (default `progressive collapse`), `--template` (default `CS1`),
 `--plan-tolerance` (model length units, default 1.0). `--model` matches the
@@ -71,8 +74,13 @@ still available (420, sections match).
 | `axial` | one run case | `intact_axial.json`: every column's max \|P\| at the last step, with label and story, plus the lowest-columns sum against the base reaction FZ | none |
 | `assign-sections` | `propagation.json` (`assignments`: frame, section, optional `from`) | — | with `--commit`: unlocks, then fixed analysis sections (auto-select list removed), each read back; refuses the whole file if a frame, section or `from` doesn't match |
 
+| `open` | a model file | — | opens it in the running ETABS; the previous model is closed unsaved (bridge never saves) |
+| `design-select` | combos | — | with `--commit`: steel and composite strength selection = exactly these, read back |
+| `iterate` | cases, design selection | `rounds.json` | with `--commit`: lean run → composite → steel design, repeated until no auto-select frame would change or `--max-rounds`; flags restored |
+
 Every command exits non-zero with a message on failure: 1 error, 2 usage,
-3 unknown ETABS message box, 4 sections differ (`results --run`, `sections`).
+3 unknown ETABS message box, 4 sections differ (`results --run`, `sections`),
+5 `iterate` not converged within `--max-rounds`.
 Unlocking is shared (`ModelLock`): nothing when unlocked, a message on a dry
 run, unlock + read-back with `--commit`. Tested 2026-09-26 on locked AP2 with
 dry runs only (lock and results kept); the unlock itself first runs at the
@@ -228,6 +236,14 @@ seen on the working copy, ETABS 23, 2026-09-26.
   overall ratio and pass/fail (which include deflection and construction
   stage) go in the status text. The conventional check this covers is gravity
   strength only (DStlS1, DStlS2).
+- `File.OpenFile` (measured 2026-09-26, AP2 ↔ `baseline strength.EDB`): no
+  question box either way; the model that was open is closed **without saving**.
+  AP2 reopened locked with its analysis results (axial read identical) but **no
+  design results** (`sections` 0 differing; the steel design sections were
+  back to the analysis sections). Design again after reopening.
+- `iterate` on the strength baseline (measured): 3 rounds of SW/SDL/LL + design
+  moved 260 → 172 → 76 frames; the last 76 step between neighbouring W14
+  sizes both ways, so it had not converged at 3 rounds.
 - `Analyze.GetRunCaseFlag` (measured): after an analysis it no longer lists the
   internal `~LLRF` case, though the case and pattern are still defined.
 - `DesignSteel.AISC360_16.GetPreference`/`SetPreference(Item, Value)`

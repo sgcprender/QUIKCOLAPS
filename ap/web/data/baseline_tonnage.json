@@ -1,0 +1,1875 @@
+{
+ "model": "baseline strength",
+ "source_model": "QUIKCOLAPS.EDB (copied on disk, not opened)",
+ "date": "2026-09-26",
+ "units": "short tons (2000 lb); nominal lb/ft from the AISC name x length",
+ "design": {
+  "steel_combos": [
+   "DStlS1",
+   "DStlS2"
+  ],
+  "composite_combos": [
+   "DStlS1",
+   "DStlS2"
+  ],
+  "cases_run": [
+   "SW",
+   "SDL",
+   "LL"
+  ],
+  "rounds": 3,
+  "max_rounds": 3,
+  "converged": false,
+  "frames_differing_after_each_round": [
+   260,
+   172,
+   76
+  ],
+  "steel_max_ratio_last_round": 0.948,
+  "note": "not converged within 3 rounds: the last design would still change 76 auto-select frames (the 60 listed by `sections` are W14 columns moving one or two sizes, 5-10 lb/ft, 36 up and 24 down); weighed with the last design sections (steel max ratio 0.948)"
+ },
+ "tonnage": {
+  "total": 790.18,
+  "columns": 146.26,
+  "beams": 643.92,
+  "steel_beams": 366.72,
+  "composite_beams": 277.2,
+  "original_sections_total": 776.74
+ },
+ "changed_from_original": {
+  "frames": 228,
+  "heavier": 144,
+  "lighter": 84,
+  "by_kind": {
+   "column": 204,
+   "steel beam": 24
+  },
+  "rows": [
+   {
+    "frame": "2",
+    "label": "C2",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "3",
+    "label": "C3",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "6",
+    "label": "C6",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "7",
+    "label": "C7",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "9",
+    "label": "C9",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "12",
+    "label": "C12",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "13",
+    "label": "C13",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "16",
+    "label": "C16",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "17",
+    "label": "C17",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "20",
+    "label": "C20",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "21",
+    "label": "C21",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "24",
+    "label": "C24",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X30",
+    "to": "W14X34"
+   },
+   {
+    "frame": "26",
+    "label": "C26",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "27",
+    "label": "C27",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "30",
+    "label": "C30",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "31",
+    "label": "C31",
+    "story": "Story10",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X30"
+   },
+   {
+    "frame": "33",
+    "label": "C1",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X34",
+    "to": "W14X30"
+   },
+   {
+    "frame": "34",
+    "label": "C2",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X38"
+   },
+   {
+    "frame": "35",
+    "label": "C3",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X38"
+   },
+   {
+    "frame": "36",
+    "label": "C4",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X34",
+    "to": "W14X30"
+   },
+   {
+    "frame": "37",
+    "label": "C5",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X53"
+   },
+   {
+    "frame": "38",
+    "label": "C6",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X43"
+   },
+   {
+    "frame": "39",
+    "label": "C7",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X43"
+   },
+   {
+    "frame": "40",
+    "label": "C8",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X53"
+   },
+   {
+    "frame": "41",
+    "label": "C9",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "44",
+    "label": "C12",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "45",
+    "label": "C13",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "48",
+    "label": "C16",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "49",
+    "label": "C17",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "52",
+    "label": "C20",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "53",
+    "label": "C21",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "56",
+    "label": "C24",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X53"
+   },
+   {
+    "frame": "57",
+    "label": "C25",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X53"
+   },
+   {
+    "frame": "58",
+    "label": "C26",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X43"
+   },
+   {
+    "frame": "59",
+    "label": "C27",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X43"
+   },
+   {
+    "frame": "60",
+    "label": "C28",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X53"
+   },
+   {
+    "frame": "61",
+    "label": "C29",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X34",
+    "to": "W14X30"
+   },
+   {
+    "frame": "62",
+    "label": "C30",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X38"
+   },
+   {
+    "frame": "63",
+    "label": "C31",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X38"
+   },
+   {
+    "frame": "64",
+    "label": "C32",
+    "story": "Story9",
+    "kind": "column",
+    "from": "W14X34",
+    "to": "W14X30"
+   },
+   {
+    "frame": "65",
+    "label": "C1",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X34"
+   },
+   {
+    "frame": "66",
+    "label": "C2",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X43"
+   },
+   {
+    "frame": "67",
+    "label": "C3",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X43"
+   },
+   {
+    "frame": "68",
+    "label": "C4",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X34"
+   },
+   {
+    "frame": "69",
+    "label": "C5",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "72",
+    "label": "C8",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "73",
+    "label": "C9",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "76",
+    "label": "C12",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "77",
+    "label": "C13",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "80",
+    "label": "C16",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "81",
+    "label": "C17",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "84",
+    "label": "C20",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "85",
+    "label": "C21",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "88",
+    "label": "C24",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "89",
+    "label": "C25",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "92",
+    "label": "C28",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X43",
+    "to": "W14X68"
+   },
+   {
+    "frame": "93",
+    "label": "C29",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X34"
+   },
+   {
+    "frame": "94",
+    "label": "C30",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X43"
+   },
+   {
+    "frame": "95",
+    "label": "C31",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X43"
+   },
+   {
+    "frame": "96",
+    "label": "C32",
+    "story": "Story8",
+    "kind": "column",
+    "from": "W14X38",
+    "to": "W14X34"
+   },
+   {
+    "frame": "98",
+    "label": "C2",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X53"
+   },
+   {
+    "frame": "99",
+    "label": "C3",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X53"
+   },
+   {
+    "frame": "101",
+    "label": "C5",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "102",
+    "label": "C6",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "103",
+    "label": "C7",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "104",
+    "label": "C8",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "105",
+    "label": "C9",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "108",
+    "label": "C12",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "109",
+    "label": "C13",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "112",
+    "label": "C16",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "113",
+    "label": "C17",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "116",
+    "label": "C20",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "117",
+    "label": "C21",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "120",
+    "label": "C24",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "121",
+    "label": "C25",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "122",
+    "label": "C26",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "123",
+    "label": "C27",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "124",
+    "label": "C28",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X74"
+   },
+   {
+    "frame": "126",
+    "label": "C30",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X53"
+   },
+   {
+    "frame": "127",
+    "label": "C31",
+    "story": "Story7",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X53"
+   },
+   {
+    "frame": "130",
+    "label": "C2",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X61"
+   },
+   {
+    "frame": "131",
+    "label": "C3",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X61"
+   },
+   {
+    "frame": "133",
+    "label": "C5",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "134",
+    "label": "C6",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "135",
+    "label": "C7",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "136",
+    "label": "C8",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "137",
+    "label": "C9",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "140",
+    "label": "C12",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "141",
+    "label": "C13",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "144",
+    "label": "C16",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "145",
+    "label": "C17",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "148",
+    "label": "C20",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "149",
+    "label": "C21",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "152",
+    "label": "C24",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "153",
+    "label": "C25",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "154",
+    "label": "C26",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "155",
+    "label": "C27",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "156",
+    "label": "C28",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X74"
+   },
+   {
+    "frame": "158",
+    "label": "C30",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X61"
+   },
+   {
+    "frame": "159",
+    "label": "C31",
+    "story": "Story6",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X61"
+   },
+   {
+    "frame": "162",
+    "label": "C2",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "163",
+    "label": "C3",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "165",
+    "label": "C5",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "168",
+    "label": "C8",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "169",
+    "label": "C9",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "172",
+    "label": "C12",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "173",
+    "label": "C13",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "176",
+    "label": "C16",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "177",
+    "label": "C17",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "180",
+    "label": "C20",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "181",
+    "label": "C21",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "184",
+    "label": "C24",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "185",
+    "label": "C25",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "188",
+    "label": "C28",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "190",
+    "label": "C30",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "191",
+    "label": "C31",
+    "story": "Story5",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X68"
+   },
+   {
+    "frame": "193",
+    "label": "C1",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "194",
+    "label": "C2",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X82",
+    "to": "W14X74"
+   },
+   {
+    "frame": "195",
+    "label": "C3",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X82",
+    "to": "W14X74"
+   },
+   {
+    "frame": "196",
+    "label": "C4",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "197",
+    "label": "C5",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "198",
+    "label": "C6",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X99",
+    "to": "W14X109"
+   },
+   {
+    "frame": "199",
+    "label": "C7",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X99",
+    "to": "W14X109"
+   },
+   {
+    "frame": "200",
+    "label": "C8",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "201",
+    "label": "C9",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "204",
+    "label": "C12",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "205",
+    "label": "C13",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "208",
+    "label": "C16",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "209",
+    "label": "C17",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "212",
+    "label": "C20",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "213",
+    "label": "C21",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "216",
+    "label": "C24",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "217",
+    "label": "C25",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "218",
+    "label": "C26",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X99",
+    "to": "W14X109"
+   },
+   {
+    "frame": "219",
+    "label": "C27",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X99",
+    "to": "W14X109"
+   },
+   {
+    "frame": "220",
+    "label": "C28",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X90"
+   },
+   {
+    "frame": "221",
+    "label": "C29",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "222",
+    "label": "C30",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X82",
+    "to": "W14X74"
+   },
+   {
+    "frame": "223",
+    "label": "C31",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X82",
+    "to": "W14X74"
+   },
+   {
+    "frame": "224",
+    "label": "C32",
+    "story": "Story4",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "225",
+    "label": "C1",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "226",
+    "label": "C2",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "227",
+    "label": "C3",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "228",
+    "label": "C4",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "229",
+    "label": "C5",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X99"
+   },
+   {
+    "frame": "232",
+    "label": "C8",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X99"
+   },
+   {
+    "frame": "233",
+    "label": "C9",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "236",
+    "label": "C12",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "237",
+    "label": "C13",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "240",
+    "label": "C16",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "241",
+    "label": "C17",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "244",
+    "label": "C20",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "245",
+    "label": "C21",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "248",
+    "label": "C24",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X99"
+   },
+   {
+    "frame": "249",
+    "label": "C25",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X99"
+   },
+   {
+    "frame": "252",
+    "label": "C28",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X61",
+    "to": "W14X99"
+   },
+   {
+    "frame": "253",
+    "label": "C29",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "254",
+    "label": "C30",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "255",
+    "label": "C31",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X90",
+    "to": "W14X82"
+   },
+   {
+    "frame": "256",
+    "label": "C32",
+    "story": "Story3",
+    "kind": "column",
+    "from": "W14X48",
+    "to": "W14X53"
+   },
+   {
+    "frame": "257",
+    "label": "C1",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X61"
+   },
+   {
+    "frame": "260",
+    "label": "C4",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X61"
+   },
+   {
+    "frame": "261",
+    "label": "C5",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "262",
+    "label": "C6",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "263",
+    "label": "C7",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "264",
+    "label": "C8",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "265",
+    "label": "C9",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "266",
+    "label": "C10",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "267",
+    "label": "C11",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "268",
+    "label": "C12",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "269",
+    "label": "C13",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "270",
+    "label": "C14",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "271",
+    "label": "C15",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "272",
+    "label": "C16",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "273",
+    "label": "C17",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "274",
+    "label": "C18",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "275",
+    "label": "C19",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "276",
+    "label": "C20",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "277",
+    "label": "C21",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "278",
+    "label": "C22",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "279",
+    "label": "C23",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "280",
+    "label": "C24",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "281",
+    "label": "C25",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "282",
+    "label": "C26",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "283",
+    "label": "C27",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X132",
+    "to": "W14X145"
+   },
+   {
+    "frame": "284",
+    "label": "C28",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X109"
+   },
+   {
+    "frame": "285",
+    "label": "C29",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X61"
+   },
+   {
+    "frame": "288",
+    "label": "C32",
+    "story": "Story2",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X61"
+   },
+   {
+    "frame": "289",
+    "label": "C1",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X48"
+   },
+   {
+    "frame": "292",
+    "label": "C4",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X48"
+   },
+   {
+    "frame": "293",
+    "label": "C5",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X90"
+   },
+   {
+    "frame": "296",
+    "label": "C8",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X90"
+   },
+   {
+    "frame": "297",
+    "label": "C9",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "300",
+    "label": "C12",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "301",
+    "label": "C13",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "304",
+    "label": "C16",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "305",
+    "label": "C17",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "308",
+    "label": "C20",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "309",
+    "label": "C21",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "312",
+    "label": "C24",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X74",
+    "to": "W14X90"
+   },
+   {
+    "frame": "313",
+    "label": "C25",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X90"
+   },
+   {
+    "frame": "316",
+    "label": "C28",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X68",
+    "to": "W14X90"
+   },
+   {
+    "frame": "317",
+    "label": "C29",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X48"
+   },
+   {
+    "frame": "320",
+    "label": "C32",
+    "story": "Story1",
+    "kind": "column",
+    "from": "W14X53",
+    "to": "W14X48"
+   },
+   {
+    "frame": "352",
+    "label": "B74",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "354",
+    "label": "B76",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "355",
+    "label": "B77",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "357",
+    "label": "B79",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "358",
+    "label": "B80",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "360",
+    "label": "B82",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "361",
+    "label": "B83",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "363",
+    "label": "B85",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "364",
+    "label": "B86",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "366",
+    "label": "B88",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "367",
+    "label": "B89",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "369",
+    "label": "B91",
+    "story": "Story10",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "380",
+    "label": "B50",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X68",
+    "to": "W24X62"
+   },
+   {
+    "frame": "386",
+    "label": "B56",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X68",
+    "to": "W24X62"
+   },
+   {
+    "frame": "387",
+    "label": "B57",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X68",
+    "to": "W24X62"
+   },
+   {
+    "frame": "393",
+    "label": "B63",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X68",
+    "to": "W24X62"
+   },
+   {
+    "frame": "407",
+    "label": "B77",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "409",
+    "label": "B79",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "410",
+    "label": "B80",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "412",
+    "label": "B82",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "413",
+    "label": "B83",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "415",
+    "label": "B85",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "416",
+    "label": "B86",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   },
+   {
+    "frame": "418",
+    "label": "B88",
+    "story": "Story9",
+    "kind": "steel beam",
+    "from": "W24X62",
+    "to": "W24X55"
+   }
+  ]
+ },
+ "takeoff_csv": "takeoffs/baseline_strength.csv"
+}
