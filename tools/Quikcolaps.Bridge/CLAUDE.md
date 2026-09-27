@@ -170,7 +170,7 @@ seen on the working copy, ETABS 23, 2026-09-26.
   2 concrete, 3 composite beam, 4 joist, 7 none, 13 composite column) and get
   no ratio from it. `PMMCombo` comes back **with a suffix**, e.g.
   `AP_SC03_CMB(C)`, so matching it to a combo name needs the suffix removed
-  (`Results.Run` matches exactly today, so `by_scenario` stays empty).
+  (`Results.ComboName` strips a trailing `(...)` before matching).
 - Auto-select lists (measured): all columns `AS-W14` (35 sections), all
   girders `AS-W24` (21 sections), start Median; infill beams fixed W24X55.
   `FrameObj.GetSection` gives the current analysis section and the list name;

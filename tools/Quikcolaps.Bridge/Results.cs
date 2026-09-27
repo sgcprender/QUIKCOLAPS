@@ -60,7 +60,7 @@ internal static class Results
         var byScenario = scenarios.ToDictionary(s => (string)s["id"]!, _ => (Max: 0.0, Failing: new List<string>()));
         for (var k = 0; k < n; k++)
         {
-            comboToScenario.TryGetValue(pmm[k], out var sid);
+            comboToScenario.TryGetValue(ComboName(pmm[k]), out var sid);
             var passes = r[k] <= 1.0 && !st[k].Contains("fail", StringComparison.OrdinalIgnoreCase);
             members[frame[k]] = new MemberRow(sect[k], type[k].ToString(), r[k], pmm[k], sid, passes, st[k]);
             if (sid is null) continue;
@@ -79,6 +79,18 @@ internal static class Results
         Console.Error.WriteLine($"{cases.Count} cases, {cases.Values.Count(c => !c.ReactionCheckOk)} failing the reaction check; " +
                                 $"{members.Count} designed frames, {members.Values.Count(m => !m.Passes)} over 1.0");
         return 0;
+    }
+
+    /// <summary>
+    /// The combination's own name from a governing-combo string: design results report it with a
+    /// suffix, e.g. <c>AP_SC03_CMB(C)</c> (measured), so a trailing parenthesised tag is removed.
+    /// </summary>
+    internal static string ComboName(string reported)
+    {
+        var s = reported.TrimEnd();
+        if (!s.EndsWith(')')) return s;
+        var open = s.LastIndexOf('(');
+        return open > 0 ? s[..open].TrimEnd() : s;
     }
 
     /// <summary>Total vertical base reaction at the last step of a case, kN (call inside Si.With).</summary>
